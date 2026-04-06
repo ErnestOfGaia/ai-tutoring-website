@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
+/* ─── Brand tokens ─────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --teal:  #1D9E75;
+  --dark:  #2C2C2A;
+  --white: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-teal:  var(--teal);
+  --color-dark:  var(--dark);
+  --font-sans:   var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body { height: 100%; }
+
+/* ─── Top bar ──────────────────────────────────────────────── */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(44, 44, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.65rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+.top-bar a {
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.top-bar a:hover { color: var(--teal); }
+
+/* ─── Hero section ─────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  background-image: url('/images/background.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 1rem 2rem;
+}
+
+/* ─── Frosted card ─────────────────────────────────────────── */
+.hero-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  color: var(--white);
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 0.6rem;
+}
+
+.hero-card h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.hero-body {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1rem;
+}
+
+.tagline {
+  font-size: 1rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.1rem;
+}
+
+.location-pill {
+  display: inline-block;
+  background: rgba(29, 158, 117, 0.20);
+  border: 1px solid var(--teal);
+  border-radius: 999px;
+  padding: 0.3rem 1.1rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 1.4rem;
+}
+
+/* ─── Service cards ────────────────────────────────────────── */
+.services {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+}
+
+.service-card {
+  background: rgba(29, 158, 117, 0.15);
+  border: 1px solid rgba(29, 158, 117, 0.55);
+  border-radius: 8px;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 0.01em;
+}
+
+/* ─── CTA button ───────────────────────────────────────────── */
+.cta-btn {
+  background: var(--teal);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.1s;
+}
+.cta-btn:hover  { background: #178a63; }
+.cta-btn:active { transform: scale(0.98); }
+
+/* ─── Mobile (≤ 640px) ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .top-bar {
+    gap: 0.6rem;
+    padding: 0.55rem 0.9rem;
+    justify-content: flex-start;
   }
-}
+  .top-bar a { font-size: 0.76rem; }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  .hero {
+    padding-top: 88px;
+    background-attachment: scroll; /* fixed causes issues on iOS */
+  }
+
+  .hero-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 12px;
+  }
+
+  .hero-card h1  { font-size: 1.9rem; }
+  .hero-body     { font-size: 0.93rem; }
+
+  .services      { gap: 0.45rem; }
+  .service-card  { font-size: 0.78rem; padding: 0.4rem 0.75rem; }
+
+  .cta-btn       { width: 100%; }
 }
