@@ -2,13 +2,19 @@
 
 /* ─── Brand tokens ─────────────────────────────────────────── */
 :root {
-  --teal:  #1D9E75;
-  --dark:  #2C2C2A;
+  --teal:  #2E7A74;
+  --navy:  #2C3B4A;
+  --sky:   #7DB4C7;
+  --sage:  #6B8F70;
+  --cream: #EDE4C2;
+  --gold:  #C4A46A;
+  --dark:  #1C2830;
   --white: #ffffff;
 }
 
 @theme inline {
   --color-teal:  var(--teal);
+  --color-navy:  var(--navy);
   --color-dark:  var(--dark);
   --font-sans:   var(--font-inter);
 }
@@ -26,7 +32,7 @@ html, body { height: 100%; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(44, 44, 42, 0.85);
+  background: rgba(28, 40, 48, 0.90);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -61,8 +67,8 @@ html, body { height: 100%; }
 
 /* ─── Frosted card ─────────────────────────────────────────── */
 .hero-card {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.30);
+  background: rgba(44, 59, 74, 0.88);
+  border: 1px solid rgba(125, 180, 199, 0.25);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: 16px;
@@ -71,6 +77,7 @@ html, body { height: 100%; }
   width: 100%;
   text-align: center;
   color: var(--white);
+  min-height: 380px;
 }
 
 .eyebrow {
@@ -146,7 +153,7 @@ html, body { height: 100%; }
   font-family: inherit;
   transition: background 0.2s, transform 0.1s;
 }
-.cta-btn:hover  { background: #178a63; }
+.cta-btn:hover  { background: #256560; }
 .cta-btn:active { transform: scale(0.98); }
 
 /* ─── Mobile (≤ 640px) ─────────────────────────────────────── */
@@ -175,4 +182,108 @@ html, body { height: 100%; }
   .service-card  { font-size: 0.78rem; padding: 0.4rem 0.75rem; }
 
   .cta-btn       { width: 100%; }
+}
+
+/* ─── Card content fade ─────────────────────────────────────── */
+.card-content {
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Chat layout ───────────────────────────────────────────── */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 320px;
+}
+
+.back-btn {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s, color 0.2s;
+}
+.back-btn:hover { border-color: var(--teal); color: var(--white); }
+
+/* ─── Message list ──────────────────────────────────────────── */
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 260px;
+  padding-right: 0.25rem;
+}
+
+.message {
+  max-width: 85%;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.message--user {
+  align-self: flex-end;
+  background: rgba(29, 158, 117, 0.35);
+  color: var(--white);
+}
+.message--agent {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ─── Chat input row ────────────────────────────────────────── */
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.chat-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.chat-input::placeholder { color: rgba(255, 255, 255, 0.40); }
+.chat-input:focus { border-color: var(--teal); }
+.send-btn {
+  background: var(--teal);
+  border: none;
+  border-radius: 8px;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.send-btn:hover:not(:disabled) { background: #256560; }
+.send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ─── Mobile chat adjustments (≤ 640px) ────────────────────── */
+@media (max-width: 640px) {
+  .message-list { max-height: 200px; }
+  .chat-input   { font-size: 0.85rem; }
+  .send-btn     { padding: 0.55rem 0.85rem; }
 }
