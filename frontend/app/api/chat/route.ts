@@ -6,7 +6,7 @@ function classifyIntent(message: string): "coaching" | "scheduling" | "jobs" | "
   const lower = message.toLowerCase();
   if (/coach|learn|ai|tool|help|skill|train/.test(lower)) return "coaching";
   if (/schedul|book|appoint|meet|time|session|when|availab/.test(lower)) return "scheduling";
-  if (/job|hire|work|partner|collaborat|opportunit|collab/.test(lower)) return "jobs";
+  if (/job|hire|work|partner|collaborat|opportunit|collab|consult|contract|recruit/.test(lower)) return "jobs";
   return "fallback";
 }
 
