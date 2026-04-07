@@ -1,5 +1,6 @@
 import { marketerAgent } from "@/lib/agents/marketerAgent";
 import { secretaryAgent } from "@/lib/agents/secretaryAgent";
+import { recruiterAgent } from "@/lib/agents/recruiterAgent";
 
 function classifyIntent(message: string): "coaching" | "scheduling" | "jobs" | "fallback" {
   const lower = message.toLowerCase();
@@ -8,9 +9,6 @@ function classifyIntent(message: string): "coaching" | "scheduling" | "jobs" | "
   if (/job|hire|work|partner|collaborat|opportunit|collab/.test(lower)) return "jobs";
   return "fallback";
 }
-
-const JOBS_REPLY =
-  "Ernest is open to collaboration — tell me more about what you have in mind. Reach out at eog@ErnestOfGaia.xyz or connect on LinkedIn: linkedin.com/in/ernestofgaia";
 
 const FALLBACK_REPLY =
   "Happy to help! Are you interested in AI coaching, scheduling a session, or something else?";
@@ -34,7 +32,7 @@ export async function POST(req: Request) {
         reply = await secretaryAgent(message);
         break;
       case "jobs":
-        reply = JOBS_REPLY;
+        reply = await recruiterAgent(message);
         break;
       default:
         reply = FALLBACK_REPLY;
