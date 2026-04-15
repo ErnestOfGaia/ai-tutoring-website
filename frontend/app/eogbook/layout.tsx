@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ChatButton from "../_components/ChatButton";
 
 export const metadata: Metadata = {
   title: {
@@ -34,9 +35,7 @@ export default function EOGbookLayout({
         >
           @ErnestOfGaia
         </a>
-        <a href="/?chat=open" style={{ fontWeight: 700, padding: "0.2rem 0.5rem", border: "1px solid currentColor", borderRadius: "4px", textDecoration: "none" }}>
-          Chat W/ Agents
-        </a>
+        <ChatButton style={{ fontWeight: 700, padding: "0.2rem 0.5rem", border: "1px solid currentColor", borderRadius: "4px", textDecoration: "none", background: "transparent", color: "inherit", cursor: "pointer" }} />
         <a href="/">← Home</a>
       </header>
 
