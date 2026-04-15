@@ -287,3 +287,466 @@ html, body { height: 100%; }
   .chat-input   { font-size: 0.85rem; }
   .send-btn     { padding: 0.55rem 0.85rem; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   EOGbook — Gitbook-style information architecture
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── EOGbook card overrides ────────────────────────────────── */
+.eogbook-card {
+  text-align: left;
+  min-height: auto;
+  max-height: calc(100vh - 110px);
+  width: 61.8vw;
+  max-width: 1200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(125, 180, 199, 0.3) transparent;
+}
+.eogbook-card::-webkit-scrollbar { width: 4px; }
+.eogbook-card::-webkit-scrollbar-thumb {
+  background: rgba(125, 180, 199, 0.3);
+  border-radius: 2px;
+}
+
+/* ─── EOGbook page layout ────────────────────────────────────── */
+.eogbook-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.eogbook-content {
+  flex: 1;
+}
+
+/* ─── Heading scale ──────────────────────────────────────────── */
+.eogbook-content h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+.eogbook-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.eogbook-content h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.15;
+  margin-top: 1rem;
+  margin-bottom: 0.35rem;
+}
+.eogbook-content p {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.75rem;
+}
+.eogbook-content ul,
+.eogbook-content ol {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.eogbook-content li { margin-bottom: 0.25rem; }
+.eogbook-content strong { color: var(--white); font-weight: 700; }
+.eogbook-content em { font-style: italic; }
+
+/* ─── Inline links ───────────────────────────────────────────── */
+.eogbook-content a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+  text-underline-offset: 2px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.eogbook-content a:hover {
+  color: var(--white);
+  text-decoration-color: var(--teal);
+}
+
+/* ─── Breadcrumb ─────────────────────────────────────────────── */
+.eogbook-breadcrumb {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  align-items: center;
+}
+.eogbook-breadcrumb a {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.eogbook-breadcrumb a:hover { color: var(--teal); }
+.eogbook-breadcrumb [aria-current="page"] { color: rgba(255, 255, 255, 0.85); }
+.breadcrumb-sep { color: rgba(255, 255, 255, 0.3); }
+
+/* ─── Navigation buttons ─────────────────────────────────────── */
+.eogbook-nav {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+}
+.eogbook-home-btn {
+  margin: 0 auto;
+  text-decoration: none !important;
+}
+.eogbook-next-btn { margin-left: auto; }
+.back-btn--disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+.back-btn { text-decoration: none !important; }
+
+/* ─── Directory tiles ────────────────────────────────────────── */
+.eogbook-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+.eogbook-tile {
+  display: block;
+  background: rgba(29, 158, 117, 0.12);
+  border: 1px solid rgba(29, 158, 117, 0.40);
+  border-radius: 8px;
+  padding: 0.7rem 0.85rem;
+  text-decoration: none !important;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.eogbook-tile:hover {
+  background: rgba(29, 158, 117, 0.22);
+  border-color: var(--teal);
+}
+.eogbook-tile-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+  display: block;
+  margin-bottom: 0.15rem;
+}
+.eogbook-tile-desc {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.4;
+}
+.eogbook-tile-num {
+  font-size: 0.7rem;
+  color: var(--teal);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+/* ─── Drill-down link cards ──────────────────────────────────── */
+.eogbook-drilldown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.eogbook-drill-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none !important;
+  transition: background 0.2s, border-color 0.2s;
+}
+.eogbook-drill-link:hover {
+  background: rgba(29, 158, 117, 0.15);
+  border-color: var(--teal);
+  color: var(--white);
+}
+.eogbook-drill-link::after {
+  content: "→";
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.4);
+}
+.eogbook-drill-link:hover::after { color: var(--teal); }
+
+/* ─── Table component ────────────────────────────────────────── */
+.eogbook-table-wrap { overflow-x: auto; margin-bottom: 0.75rem; }
+.eogbook-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+.eogbook-table th {
+  background: rgba(29, 158, 117, 0.20);
+  color: var(--white);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+}
+.eogbook-table td {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  vertical-align: top;
+}
+.eogbook-table tr:nth-child(even) td { background: rgba(255, 255, 255, 0.08); }
+
+/* ─── Tier cards ─────────────────────────────────────────────── */
+.eogbook-tier-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+.eogbook-tier-card {
+  background: rgba(29, 158, 117, 0.10);
+  border: 1px solid rgba(29, 158, 117, 0.40);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+}
+.eogbook-tier-card--popular {
+  border-color: var(--teal);
+  background: rgba(29, 158, 117, 0.18);
+}
+.eogbook-tier-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+.eogbook-tier-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+.eogbook-tier-meta {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.5rem;
+}
+.eogbook-badge {
+  display: inline-block;
+  background: var(--teal);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+/* ─── Step items ─────────────────────────────────────────────── */
+.eogbook-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0.75rem 0;
+}
+.eogbook-step {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.eogbook-step-num {
+  flex-shrink: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: rgba(29, 158, 117, 0.25);
+  border: 1px solid var(--teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-top: 0.1rem;
+}
+.eogbook-step-body {
+  flex: 1;
+}
+.eogbook-step-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.1rem;
+}
+.eogbook-step-desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+/* ─── Trust signals bar ──────────────────────────────────────── */
+.eogbook-trust-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+.eogbook-signal {
+  background: rgba(29, 158, 117, 0.15);
+  border: 1px solid rgba(29, 158, 117, 0.45);
+  border-radius: 6px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ─── FAQ accordion ──────────────────────────────────────────── */
+.eogbook-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.eogbook-faq-item {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.eogbook-faq-q {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.07);
+  border: none;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.eogbook-faq-q:hover { background: rgba(29, 158, 117, 0.15); }
+.eogbook-faq-q[aria-expanded="true"] { background: rgba(29, 158, 117, 0.20); }
+.eogbook-faq-q-icon { flex-shrink: 0; transition: transform 0.2s; }
+.eogbook-faq-q[aria-expanded="true"] .eogbook-faq-q-icon { transform: rotate(180deg); }
+.eogbook-faq-a {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  display: none;
+}
+.eogbook-faq-a--open { display: block; }
+
+/* ─── CTA section ────────────────────────────────────────────── */
+.eogbook-cta-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+.eogbook-cta-row .cta-btn { flex: 1; min-width: 140px; }
+
+/* ─── Eyebrow label ──────────────────────────────────────────── */
+.eogbook-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+/* ─── Section divider ────────────────────────────────────────── */
+.eogbook-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1rem 0;
+}
+
+/* ─── Tablet (640px–1024px) ──────────────────────────────────── */
+@media (min-width: 640px) {
+  .eogbook-card {
+    padding: 2rem 1.75rem;
+    border-radius: 14px;
+    max-height: calc(100vh - 120px);
+    width: 61.8vw;
+    max-width: 1200px;
+  }
+  .eogbook-content h1 { font-size: 2.2rem; }
+  .eogbook-content h2 { font-size: 1.6rem; }
+  .eogbook-content h3 { font-size: 1.2rem; }
+  .eogbook-content p,
+  .eogbook-content ul,
+  .eogbook-content ol { font-size: 0.95rem; }
+  .eogbook-table { font-size: 0.85rem; }
+}
+
+/* ─── Desktop (≥ 1024px) ─────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .eogbook-card {
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    max-height: calc(100vh - 110px);
+    width: 61.8vw;
+    max-width: 1200px;
+  }
+  .eogbook-content h1 { font-size: 2.6rem; }
+  .eogbook-content h2 { font-size: 1.8rem; }
+  .eogbook-content h3 { font-size: 1.3rem; }
+  .eogbook-content p,
+  .eogbook-content ul,
+  .eogbook-content ol { font-size: 1rem; }
+  .eogbook-tier-grid { flex-direction: row; }
+  .eogbook-tier-card { flex: 1; }
+}
+
+/* ─── Mobile (≤ 640px) EOGbook overrides ─────────────────────── */
+@media (max-width: 640px) {
+  .eogbook-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 12px;
+    max-height: calc(100dvh - 100px);
+    width: 93vw;
+    max-width: 100%;
+  }
+  .eogbook-content h1 { font-size: 1.9rem; }
+  .eogbook-content h2 { font-size: 1.4rem; }
+  .eogbook-content h3 { font-size: 1.1rem; }
+  .eogbook-content p,
+  .eogbook-content ul,
+  .eogbook-content ol { font-size: 0.93rem; }
+  .eogbook-tiles { grid-template-columns: 1fr; }
+  .eogbook-nav { flex-wrap: wrap; }
+  .eogbook-home-btn { order: -1; width: 100%; text-align: center; }
+  .eogbook-next-btn { margin-left: 0; }
+  .cta-btn { width: 100%; }
+  .eogbook-cta-row { flex-direction: column; }
+  .eogbook-table { font-size: 0.78rem; }
+  .eogbook-tier-grid { flex-direction: column; }
+}

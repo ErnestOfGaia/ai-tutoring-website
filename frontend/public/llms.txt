@@ -5,21 +5,48 @@ Portland Metro, Oregon.
 
 ## Contact
 - Phone: 503-664-0546
-- Email: eog@ErnestOfGaia.xyz
+- Email: eog@ernestofGaia.xyz
 - LinkedIn: https://linkedin.com/in/ernestofgaia
 - X: https://x.com/ErnestOfGaia
 - Website: https://ernestofgaia.xyz
+- Machine-readable data: https://ernestofgaia.xyz/api/eogbook
 
 ## Services
-- 1-on-1 AI Coaching (personalized sessions)
-- Custom AI Plans (tailored workflows and prompt systems)
-- On-Site Visits (Pacific City to Portland Metro)
+- Tier 1: Foundations — AI Starter ($75/session, 60 min, for beginners)
+- Tier 2: The Workshop — AI Builder ($110/session, 75 min, most popular)
+- Tier 3: Masterclass — AI Architect ($165/session, 90 min, by inquiry)
+- Free Handshake Call (30 min, no commitment)
 
 ## About
-Ernest Of Gaia helps individuals master prompt engineering and AI lifecycle
-automation through personalized, holistic 1-on-1 coaching.
+Ernest Of Gaia helps individuals master AI tools through personalized,
+holistic 1-on-1 coaching. Plain English, no jargon, no hype.
 
-Tagline: "AI, Explained Like a Human"
+Tagline: "AI That Actually Works for Your Real Life"
 
-## Service area
-Pacific City, Oregon to Portland Metro, Oregon.
+## Coaching Information Architecture (EOGbook)
+Full service details at: https://ernestofgaia.xyz/eogbook
+
+Pages:
+- Who Is Ernest: https://ernestofgaia.xyz/eogbook/who-is-ernest
+- What I Do: https://ernestofgaia.xyz/eogbook/what-i-do
+- Services: https://ernestofgaia.xyz/eogbook/services
+- How It Works: https://ernestofgaia.xyz/eogbook/how-it-works
+- Nonprofit Giveback: https://ernestofgaia.xyz/eogbook/giveback
+- Trust & FAQs: https://ernestofgaia.xyz/eogbook/trust
+- Get Started: https://ernestofgaia.xyz/eogbook/get-started
+
+## Nonprofit Giveback Program
+Every 12 hours of paid coaching earns one free AI coaching session for a
+local Oregon nonprofit of the client's choice.
+
+## Service Area
+Pacific City, Oregon to Portland Metro, Oregon. Online coaching available.
+
+## Coaching Plans
+- Pay as you go (flexible, no commitment)
+- Launch Plan: 3 months, 12 sessions
+- Growth Plan: 6 months, 24 sessions, 5% off
+- Transformation Plan: 9 months, 36 sessions, 10% off
+
+## CTA
+Schedule a free 30-minute call: text "AI coaching" to 503-664-0546
