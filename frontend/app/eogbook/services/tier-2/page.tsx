@@ -36,8 +36,8 @@ export default function Tier2() {
     <PageLayout
       prev="/eogbook/services/tier-1"
       prevLabel="← Tier 1"
-      next="/eogbook/services/tier-3"
-      nextLabel="Tier 3 →"
+      next="/eogbook/services/plans"
+      nextLabel="Plans →"
       breadcrumbs={[
         { label: "Services", href: "/eogbook/services" },
         { label: "Tier 2: The Workshop", href: "/eogbook/services/tier-2" },

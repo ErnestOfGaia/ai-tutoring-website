@@ -47,18 +47,6 @@ const eogbookData = {
         "Build real workflows. Custom prompts, content pipelines, multi-tool integrations.",
       url: "/eogbook/services/tier-2",
     },
-    {
-      id: "tier-3",
-      name: "Tier 3: Masterclass — AI Architect",
-      price: 165,
-      priceCurrency: "USD",
-      duration: "90 minutes",
-      format: "In-person or online",
-      availability: "By special inquiry",
-      description:
-        "Full AI operations strategy, automation, team training, ROI frameworks.",
-      url: "/eogbook/services/tier-3",
-    },
   ],
   plans: [
     {

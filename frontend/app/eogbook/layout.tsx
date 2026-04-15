@@ -34,6 +34,9 @@ export default function EOGbookLayout({
         >
           @ErnestOfGaia
         </a>
+        <a href="/?chat=open" style={{ fontWeight: 700, padding: "0.2rem 0.5rem", border: "1px solid currentColor", borderRadius: "4px", textDecoration: "none" }}>
+          Chat W/ Agents
+        </a>
         <a href="/">← Home</a>
       </header>
 

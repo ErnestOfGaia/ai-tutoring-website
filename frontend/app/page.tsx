@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 
 type Message = { role: "user" | "agent"; text: string };
 
@@ -14,6 +15,16 @@ export default function Home() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("chat") === "open") {
+        setIsChatOpen(true);
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    }
+  }, []);
 
   const openChat = () => {
     setIsChatOpen(true);
@@ -90,14 +101,19 @@ export default function Home() {
               <div className="location-pill">Pacific City → Portland, Oregon</div>
 
               <div className="services">
-                <div className="service-card">1-on-1 Coaching</div>
-                <div className="service-card">Custom Plans</div>
-                <div className="service-card">On-Site Visits</div>
+                <Link href="/eogbook/what-i-do" className="service-card" style={{ textDecoration: 'none', color: 'inherit' }}>Custom Workflows</Link>
+                <Link href="/eogbook/services/tier-1" className="service-card" style={{ textDecoration: 'none', color: 'inherit' }}>Foundations (Tier 1)</Link>
+                <Link href="/eogbook/services/tier-2" className="service-card" style={{ textDecoration: 'none', color: 'inherit' }}>The Workshop (Tier 2)</Link>
               </div>
 
-              <button type="button" className="cta-btn" onClick={openChat}>
-                Chat with me
-              </button>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <Link href="/eogbook" className="cta-btn" style={{ textDecoration: 'none', background: 'transparent', color: 'var(--foreground)', border: '1px solid var(--foreground)' }}>
+                  Open Book
+                </Link>
+                <button type="button" className="cta-btn" onClick={openChat}>
+                  Chat W/ Agents
+                </button>
+              </div>
             </div>
           ) : (
             <div key="chat" className="card-content chat-container">

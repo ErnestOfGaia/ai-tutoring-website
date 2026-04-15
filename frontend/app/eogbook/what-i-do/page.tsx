@@ -46,14 +46,6 @@ const serviceJsonLd = {
           description: "AI Builder coaching for workflow creation",
         },
       },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Tier 3: Masterclass",
-          description: "AI Architect coaching for business strategy",
-        },
-      },
     ],
   },
 };

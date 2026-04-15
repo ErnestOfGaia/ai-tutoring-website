@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 export default function Plans() {
   return (
     <PageLayout
-      prev="/eogbook/services/tier-3"
-      prevLabel="← Tier 3"
+      prev="/eogbook/services/tier-2"
+      prevLabel="← Tier 2"
       next="/eogbook/how-it-works"
       nextLabel="How It Works →"
       breadcrumbs={[

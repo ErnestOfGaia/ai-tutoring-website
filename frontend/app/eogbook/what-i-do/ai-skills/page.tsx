@@ -56,15 +56,6 @@ export default function AiSkills() {
         </li>
       </ul>
 
-      <h3>Architect Skills (Tier 3)</h3>
-      <ul>
-        <li>Full AI operations strategy for your business or department</li>
-        <li>Multi-step automation and agentic workflow design</li>
-        <li>Claude API orientation — what it is and when to use it</li>
-        <li>Team rollout planning and training structures</li>
-        <li>ROI measurement and AI implementation frameworks</li>
-      </ul>
-
       <div className="eogbook-cta-row">
         <a href="/eogbook/services" className="back-btn">
           See service tiers and pricing
