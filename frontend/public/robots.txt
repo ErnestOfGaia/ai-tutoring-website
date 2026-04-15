@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /eogbook/
+Allow: /eogbook/*
+Disallow: /admin
+Disallow: /api/internal
+
+Sitemap: https://ernestofgaia.xyz/sitemap.xml
