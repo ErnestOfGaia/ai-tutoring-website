@@ -60,24 +60,27 @@ html, body { height: 100%; }
   background-position: center;
   background-attachment: fixed;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  padding: 80px 1rem 2rem;
+  align-items: center;
+  padding: 120px 1rem 4rem;
 }
 
 /* ─── Frosted card ─────────────────────────────────────────── */
 .hero-card {
-  background: rgba(44, 59, 74, 0.88);
-  border: 1px solid rgba(125, 180, 199, 0.25);
+  background: rgba(28, 40, 48, 0.65);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(125, 180, 199, 0.25);
   border-radius: 16px;
   padding: 2.5rem 2rem;
   max-width: 600px;
   width: 100%;
   text-align: center;
   color: var(--white);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  position: relative;
   min-height: 380px;
+  margin: auto;
 }
 
 .eyebrow {
@@ -155,6 +158,23 @@ html, body { height: 100%; }
 }
 .cta-btn:hover  { background: #256560; }
 .cta-btn:active { transform: scale(0.98); }
+
+.top-nav-cta {
+  background: var(--teal);
+  color: var(--white) !important;
+  padding: 0.35rem 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  border: none !important;
+  text-decoration: none !important;
+  transition: background 0.2s, transform 0.1s;
+  cursor: pointer;
+  display: inline-block;
+}
+.top-nav-cta:hover {
+  background: #256560 !important;
+  transform: scale(0.98);
+}
 
 /* ─── Mobile (≤ 640px) ─────────────────────────────────────── */
 @media (max-width: 640px) {

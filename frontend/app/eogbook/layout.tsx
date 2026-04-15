@@ -35,7 +35,7 @@ export default function EOGbookLayout({
         >
           @ErnestOfGaia
         </a>
-        <ChatButton style={{ fontWeight: 700, padding: "0.2rem 0.5rem", border: "1px solid currentColor", borderRadius: "4px", textDecoration: "none", background: "transparent", color: "inherit", cursor: "pointer" }} />
+        <ChatButton className="top-nav-cta" />
         <a href="/">← Home</a>
       </header>
 

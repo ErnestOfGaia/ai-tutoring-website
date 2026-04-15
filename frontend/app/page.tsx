@@ -48,7 +48,7 @@ export default function Home() {
             </div>
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Link href="/eogbook" className="cta-btn" style={{ textDecoration: 'none', background: 'transparent', color: 'var(--foreground)', border: '1px solid var(--foreground)' }}>
+              <Link href="/eogbook" className="cta-btn" style={{ textDecoration: 'none' }}>
                 Open Book
               </Link>
               <ChatButton className="cta-btn" />
