@@ -12,7 +12,7 @@ export default function ChatOverlay() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "agent",
-      content: "Hello! I'm Pellito, an AI learning from Ernest. How can I assist you today?",
+      content: "Hello! I'm the Ernest Of Gaia routing agent. Are you interested in AI coaching, scheduling a session, or something else?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -42,9 +42,10 @@ export default function ChatOverlay() {
   }, []);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    const text = input.trim();
+    if (!text || loading) return;
 
-    const userMessage: Message = { role: "user", content: input };
+    const userMessage: Message = { role: "user", content: text };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
@@ -53,12 +54,7 @@ export default function ChatOverlay() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [...messages, userMessage].map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
-        }),
+        body: JSON.stringify({ message: text }),
       });
 
       if (!res.ok) {
@@ -66,7 +62,7 @@ export default function ChatOverlay() {
       }
 
       const data = await res.json();
-      const agentMsg = data.text || "I'm sorry, I couldn't process that.";
+      const agentMsg = data.reply || "I'm sorry, I couldn't process that.";
 
       setMessages((prev) => [...prev, { role: "agent", content: agentMsg }]);
     } catch (err) {
