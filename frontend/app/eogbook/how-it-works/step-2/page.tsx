@@ -4,7 +4,7 @@ import PageLayout from "../../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Step 2: Choose Your Tier",
   description:
-    "After the free handshake call, choose the right AI coaching tier: Tier 1 Foundations for beginners, Tier 2 Workshop for workflow builders, Tier 3 Masterclass for operations leads.",
+    "After the free handshake call, choose the right AI coaching tier: Tier 1 Foundations for beginners, Tier 2 Workshop for workflow builders.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/eogbook/how-it-works/step-2",
   },
@@ -46,13 +46,6 @@ export default function Step2() {
         You&apos;ve used AI a bit and want to go deeper — custom prompts,
         automations, real integrations with your work. This is the most popular
         tier. <strong>$110/session · 75 minutes.</strong>
-      </p>
-
-      <h3>Tier 3 Masterclass — If You&apos;re Ready for Strategy</h3>
-      <p>
-        Full AI operations for a team or business. Requires foundational
-        work in Tier 1 or 2 first. Available by arrangement.{" "}
-        <strong>$165/session · 90 minutes.</strong>
       </p>
 
       <h3>Not Sure? That&apos;s Normal</h3>

@@ -56,19 +56,6 @@ const localBusinessJsonLd = {
         duration: "PT75M",
       },
     },
-    {
-      "@type": "Service",
-      name: "Tier 3: Masterclass",
-      description:
-        "AI Architect coaching for founders and operations leads. 90-minute sessions on full AI operations strategy, automation, and team rollout.",
-      provider: { "@type": "Person", name: "Ernest Of Gaia" },
-      offers: {
-        "@type": "Offer",
-        price: "165",
-        priceCurrency: "USD",
-        duration: "PT90M",
-      },
-    },
   ],
 };
 

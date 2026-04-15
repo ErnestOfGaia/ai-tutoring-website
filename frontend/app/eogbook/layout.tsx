@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ChatButton from "../_components/ChatButton";
 
 export const metadata: Metadata = {
   title: {
@@ -34,6 +35,7 @@ export default function EOGbookLayout({
         >
           @ErnestOfGaia
         </a>
+        <ChatButton className="top-nav-cta" />
         <a href="/">← Home</a>
       </header>
 

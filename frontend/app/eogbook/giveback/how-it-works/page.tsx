@@ -39,8 +39,7 @@ export default function GivebackHowItWorks() {
           <div className="eogbook-step-body">
             <div className="eogbook-step-title">Complete 12 hours of paid coaching</div>
             <div className="eogbook-step-desc">
-              That&apos;s 12 sessions at Tier 1, 8 sessions at Tier 2, or 7
-              sessions at Tier 3. Hours can span any plan — they accumulate
+              That&apos;s 12 sessions at Tier 1, or 8 sessions at Tier 2. Hours can span any plan — they accumulate
               over time.
             </div>
           </div>

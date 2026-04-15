@@ -46,7 +46,7 @@ export default function Giveback() {
       <p>
         When you invest in coaching, you invest in your community too. For every{" "}
         <strong>12 hours of paid coaching</strong> — that&apos;s 12 sessions at
-        Tier 1, 8 sessions at Tier 2, or 7 sessions at Tier 3 — I donate one
+        Tier 1, or 8 sessions at Tier 2 — I donate one
         complimentary AI coaching session to a local Oregon nonprofit of{" "}
         <em>your</em> choice.
       </p>

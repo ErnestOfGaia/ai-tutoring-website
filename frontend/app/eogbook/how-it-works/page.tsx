@@ -28,7 +28,7 @@ const howToJsonLd = {
       "@type": "HowToStep",
       position: 2,
       name: "Choose Your Tier",
-      text: "Based on what you shared in the handshake call, we'll agree on the right tier for you: Tier 1 if you're brand new to AI, Tier 2 if you want to build workflows, or Tier 3 for company-wide AI strategy.",
+      text: "Based on what you shared in the handshake call, we'll agree on the right tier for you: Tier 1 if you're brand new to AI, or Tier 2 if you want to build workflows.",
       url: "https://ernestofgaia.xyz/eogbook/how-it-works/step-2",
     },
     {

@@ -4,7 +4,7 @@ import PageLayout from "../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Three AI coaching tiers from Ernest Of Gaia: Tier 1 Foundations ($75/session), Tier 2 The Workshop ($110/session), Tier 3 Masterclass ($165/session). All coaching is personalized and 1-on-1.",
+    "AI coaching tiers from Ernest Of Gaia: Tier 1 Foundations ($75/session), Tier 2 The Workshop ($110/session). All coaching is personalized and 1-on-1.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/eogbook/services",
   },
@@ -15,7 +15,7 @@ const servicesJsonLd = {
   "@type": "ItemList",
   name: "Ernest Of Gaia AI Coaching Service Tiers",
   description:
-    "Three ways to work together: Foundations, Workshop, and Masterclass coaching tiers.",
+    "Ways to work together: Foundations and Workshop coaching tiers.",
   itemListElement: [
     {
       "@type": "ListItem",
@@ -51,23 +51,6 @@ const servicesJsonLd = {
         },
       },
     },
-    {
-      "@type": "ListItem",
-      position: 3,
-      item: {
-        "@type": "Service",
-        name: "Tier 3: Masterclass — AI Architect",
-        description:
-          "Full AI operations strategy. 90-minute sessions covering multi-step automation, agentic workflows, Claude API orientation, team training, and ROI frameworks.",
-        provider: { "@type": "Person", name: "Ernest Of Gaia" },
-        offers: {
-          "@type": "Offer",
-          price: "165",
-          priceCurrency: "USD",
-          duration: "PT90M",
-        },
-      },
-    },
   ],
 };
 
@@ -82,7 +65,7 @@ export default function Services() {
       jsonLd={servicesJsonLd}
     >
       <h1>Services</h1>
-      <h2>Three Ways to Work Together</h2>
+      <h2>Two Ways to Work Together</h2>
 
       <p>
         Whether you&apos;re just curious about AI or ready to build workflows,
@@ -130,19 +113,6 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Tier 3 */}
-        <div className="eogbook-tier-card">
-          <div className="eogbook-tier-name">
-            Tier 3: Masterclass
-            <span className="eogbook-label" style={{ display: "inline", marginLeft: "0.5rem", fontSize: "0.7rem" }}>By Inquiry</span>
-          </div>
-          <div className="eogbook-tier-price">$165 / session</div>
-          <div className="eogbook-tier-meta">90 min · In-person or online</div>
-          <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)", marginBottom: 0 }}>
-            Full AI operations strategy. Automation, agentic workflows, team
-            training, ROI frameworks. Available after foundational work in Tier 1 or 2.
-          </p>
-        </div>
       </div>
 
       <div className="eogbook-drilldown" aria-label="Explore individual tiers">
@@ -151,9 +121,6 @@ export default function Services() {
         </a>
         <a href="/eogbook/services/tier-2" className="eogbook-drill-link">
           Explore Tier 2 Workshop details
-        </a>
-        <a href="/eogbook/services/tier-3" className="eogbook-drill-link">
-          Explore Tier 3 Masterclass details
         </a>
         <a href="/eogbook/services/plans" className="eogbook-drill-link">
           See coaching plans and commitment options
