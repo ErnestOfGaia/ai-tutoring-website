@@ -25,7 +25,11 @@
   margin: 0;
   padding: 0;
 }
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+  color: var(--white);
+  background: var(--dark);
+}
 
 /* ─── Top bar ──────────────────────────────────────────────── */
 .top-bar {
@@ -303,6 +307,7 @@ html, body { height: 100%; }
   outline: none;
   transition: border-color 0.2s;
 }
+.chat-input::placeholder { color: rgba(255, 255, 255, 0.40); }
 .chat-input:focus { border-color: var(--teal); }
 .send-btn {
   background: var(--teal);
