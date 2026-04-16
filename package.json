@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "mastra dev",
     "build": "mastra build",
-    "start": "mastra start"
+    "start": "mastra start",
+    "ingest": "npx tsx src/scripts/ingest-brain.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,8 @@
     "@mastra/loggers": "^1.1.0",
     "@mastra/memory": "^1.13.0",
     "@mastra/observability": "^1.7.1",
+    "@mastra/rag": "^2.2.0",
+    "voyageai": "^0.2.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
