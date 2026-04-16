@@ -8,7 +8,7 @@
     "dev": "mastra dev",
     "build": "mastra build",
     "start": "mastra start",
-    "ingest": "npx tsx src/scripts/ingest-brain.ts"
+    "ingest": "node --env-file .env src/scripts/ingest-brain.mjs"
   },
   "keywords": [],
   "author": "",
@@ -26,12 +26,12 @@
     "@mastra/memory": "^1.13.0",
     "@mastra/observability": "^1.7.1",
     "@mastra/rag": "^2.2.0",
-    "voyageai": "^0.2.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
     "mastra": "^1.3.19",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
 }

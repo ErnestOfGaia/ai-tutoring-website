@@ -7,30 +7,38 @@
 
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
-import { DatabaseSync } from 'node:sqlite';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { VoyageAIClient } from 'voyageai';
 
 // ── Config ────────────────────────────────────────────────────────────────────
-const DB_PATH = path.resolve('brain.db');
+const DB_PATH = path.resolve('brain.json');
 const MODEL   = 'voyage-3-lite';
 const TOP_K   = 5;
 
-// ── Clients (module-level singletons) ────────────────────────────────────────
+// ── Voyage AI (direct REST — no SDK needed) ───────────────────────────────────
 const voyageKey = process.env.VOYAGE_API_KEY;
 if (!voyageKey) throw new Error('VOYAGE_API_KEY is not set in environment.');
-const voyage = new VoyageAIClient({ apiKey: voyageKey });
 
-let _db: DatabaseSync | null = null;
-function getDb(): DatabaseSync {
+// ── JSON store ────────────────────────────────────────────────────────────────
+interface ChunkRecord {
+  id:        string;
+  content:   string;
+  source:    string;
+  agentRole: string;
+  embedding: number[];
+}
+
+let _chunks: ChunkRecord[] | null = null;
+function getChunks(): ChunkRecord[] {
   if (!existsSync(DB_PATH)) {
     throw new Error(
-      'brain.db not found. Run `npm run ingest` to build the knowledge base first.'
+      'brain.json not found. Run `npm run ingest` to build the knowledge base first.'
     );
   }
-  if (!_db) _db = new DatabaseSync(DB_PATH);
-  return _db;
+  if (!_chunks) {
+    _chunks = JSON.parse(readFileSync(DB_PATH, 'utf-8')) as ChunkRecord[];
+  }
+  return _chunks;
 }
 
 // ── Cosine similarity ────────────────────────────────────────────────────────
@@ -68,25 +76,22 @@ export const searchKnowledgeTool = createTool({
     ),
   }),
   execute: async (input) => {
-    const db = getDb();
-
     // Embed query
-    const embedRes = await voyage.embed({ input: [input.query], model: MODEL });
-    const queryVec = embedRes.data?.[0]?.embedding ?? [];
+    const embedRes = await fetch('https://api.voyageai.com/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${voyageKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ input: [input.query], model: MODEL }),
+    });
+    if (!embedRes.ok) throw new Error(`Voyage API error: ${embedRes.status}`);
+    const embedJson = await embedRes.json() as { data: Array<{ embedding: number[] }> };
+    const queryVec  = embedJson.data[0]?.embedding ?? [];
 
-    // Load all chunks
-    type Row = { content: string; source: string; embedding: string };
-    const rows = db
-      .prepare('SELECT content, source, embedding FROM brain_chunks')
-      .all() as Row[];
-
-    // Score by cosine similarity and return top-K
-    const scored = rows
-      .map(row => ({
-        content: row.content,
-        source:  row.source,
-        score:   cosine(queryVec, JSON.parse(row.embedding) as number[]),
-      }))
+    // Score every chunk by cosine similarity and return top-K
+    const scored = getChunks()
+      .map(c => ({ content: c.content, source: c.source, score: cosine(queryVec, c.embedding) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, TOP_K);
 
