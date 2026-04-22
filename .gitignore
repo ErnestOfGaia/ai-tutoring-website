@@ -7,7 +7,10 @@ dist
 .env
 *.db
 *.db-*
+*.duckdb
+*.duckdb.*
 brain.json
+src/mastra/public/
 .netlify
 .vercel
 agentic-brain-cache/
