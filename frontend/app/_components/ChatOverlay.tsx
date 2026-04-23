@@ -51,10 +51,19 @@ export default function ChatOverlay() {
     setLoading(true);
 
     try {
+      // Build history from prior turns (skip index 0 — hardcoded greeting, not from Mastra)
+      const history = [
+        ...messages.slice(1).map((m) => ({
+          role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant",
+          content: m.content,
+        })),
+        { role: "user" as const, content: text },
+      ];
+
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message: text, history }),
       });
 
       if (!res.ok) {

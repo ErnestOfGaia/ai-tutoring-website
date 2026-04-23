@@ -24,9 +24,10 @@ const RESPONSES: Record<Intent, string> = {
 export function classifyIntent(message: string): Intent {
   const lower = message.toLowerCase();
   if (/resume|portfolio|work history|background|experience|\bcv\b|\bbio\b/.test(lower))             return "resume";
-  if (/coach|learn|ai|tool|help|skill|train|offer|serv|what does|what do|who is/.test(lower))      return "coaching";
-  if (/job|hire|partner|collaborat|opportunit|collab|consult|contract|recruit|work with|project|rate/.test(lower))  return "jobs";
-  if (/schedul|book|appoint|meet|time|session|when|availab/.test(lower))                                           return "scheduling";
+  if (/consult|collaborat|\bpartner\b|recruit|contract|\bhire\b|automat.*project|project.*automat/.test(lower))  return "jobs";   // unambiguous B2B — before coaching
+  if (/coach|learn|\bai\b|tool|help|skill|train|offer|serv|what does|what do you|what is|who is|automat|website|hello|cost|pric|how much|fee|tier|competitor|compar|versus|\bvs\b|cheaper|cheapest|alternativ/.test(lower))      return "coaching";
+  if (/job|opportunit|collab|work with|project|rate/.test(lower))                                   return "jobs";   // remaining jobs keywords
+  if (/schedul|book|appoint|meet|time|session|when|availab|evening|morning|afternoon|online|virtual|remote|lock|confirm|finalize|detail/.test(lower))                                           return "scheduling";
   return "fallback";
 }
 
