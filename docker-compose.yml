@@ -2,7 +2,7 @@ services:
 
   mastra:
     image: ghcr.io/ernestofgaia/ai-tutoring-website-mastra:latest
-    container_name: ernestofgaia-mastra
+    container_name: ernestofgaia_mastra
     restart: unless-stopped
     environment:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
@@ -18,7 +18,7 @@ services:
 
   frontend:
     image: ghcr.io/ernestofgaia/ai-tutoring-website:latest
-    container_name: ernestofgaia-frontend
+    container_name: ernestofgaia_frontend
     restart: unless-stopped
     environment:
       - NODE_ENV=production

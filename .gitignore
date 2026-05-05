@@ -10,6 +10,7 @@ dist
 *.duckdb
 *.duckdb.*
 brain.json
+data/
 src/mastra/public/
 .netlify
 .vercel
