@@ -22,8 +22,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const REPO_URL    = 'https://github.com/ErnestOfGaia/agentic-brain';
-const CACHE_DIR   = path.resolve('agentic-brain-cache');
-const DB_PATH     = path.resolve('brain.json');
+const CACHE_DIR   = path.resolve('data/agentic-brain-cache');
+const DB_PATH     = path.resolve('data/brain.json');
 const MODEL       = 'voyage-3-lite';
 const BATCH       = 10;      // chunks per Voyage request (free-tier safe)
 const MIN_CHARS   = 50;

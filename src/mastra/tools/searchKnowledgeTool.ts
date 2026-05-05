@@ -17,8 +17,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // ── Config ────────────────────────────────────────────────────────────────────
-// Mastra compiles tools to .mastra/output/tools/*.mjs — 3 levels up = project root
-const DB_PATH   = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../brain.json');
+// Use process.cwd() so the path works both locally and in Docker (/app/data/brain.json)
+const DB_PATH   = path.resolve(process.cwd(), 'data/brain.json');
 const MODEL     = 'voyage-3-lite';
 const TOP_K     = 5;
 const DEBUG_RAG = process.env.DEBUG_RAG === 'true';

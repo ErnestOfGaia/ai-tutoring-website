@@ -1,0 +1,44 @@
+services:
+
+  mastra:
+    image: ghcr.io/ernestofgaia/ai-tutoring-website-mastra:latest
+    container_name: ernestofgaia-mastra
+    restart: unless-stopped
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - VOYAGE_API_KEY=${VOYAGE_API_KEY}
+      - NODE_ENV=production
+    volumes:
+      # Persists brain.json, mastra.db, mastra.duckdb, agentic-brain-cache/
+      # Isolated to /app/data so compiled code in /app/.mastra/output/ is not shadowed
+      - mastra-data:/app/data
+    networks:
+      - internal
+      - nginx-proxy
+
+  frontend:
+    image: ghcr.io/ernestofgaia/ai-tutoring-website:latest
+    container_name: ernestofgaia-frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      # Service name 'mastra' resolves on the internal network
+      - MASTRA_URL=http://mastra:4111
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    networks:
+      - internal
+      - nginx-proxy
+    depends_on:
+      - mastra
+
+networks:
+  # Shared with Nginx Proxy Manager — NPM routes ernestofgaia.xyz → ernestofgaia-frontend:3000
+  nginx-proxy:
+    external: true
+  # Internal service-to-service network (frontend → mastra only)
+  internal:
+    driver: bridge
+
+volumes:
+  mastra-data:
+    name: ernestofgaia-mastra-data

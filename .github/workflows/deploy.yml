@@ -31,10 +31,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push
+      - name: Build and push frontend
         uses: docker/build-push-action@v6
         with:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
           tags: ghcr.io/${{ env.OWNER }}/ai-tutoring-website:latest
+
+      - name: Build and push Mastra backend
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile.mastra
+          push: true
+          tags: ghcr.io/${{ env.OWNER }}/ai-tutoring-website-mastra:latest
