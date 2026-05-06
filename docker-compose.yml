@@ -13,7 +13,6 @@ services:
       # Isolated to /app/data so compiled code in /app/.mastra/output/ is not shadowed
       - mastra-data:/app/data
     networks:
-      - internal
       - nginx-proxy
 
   frontend:
@@ -22,12 +21,10 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - HOSTNAME=0.0.0.0
-      # Service name 'mastra' resolves on the internal network
+      # Both services are on nginx-proxy network — use service name as hostname
       - MASTRA_URL=http://mastra:4111
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
     networks:
-      - internal
       - nginx-proxy
     depends_on:
       - mastra
@@ -36,9 +33,6 @@ networks:
   # Shared with Nginx Proxy Manager — NPM routes ernestofgaia.xyz → ernestofgaia-frontend:3000
   nginx-proxy:
     external: true
-  # Internal service-to-service network (frontend → mastra only)
-  internal:
-    driver: bridge
 
 volumes:
   mastra-data:
