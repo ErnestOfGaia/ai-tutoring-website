@@ -12,9 +12,7 @@
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { existsSync, readFileSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 // ── Config ────────────────────────────────────────────────────────────────────
 // Use process.cwd() so the path works both locally and in Docker (/app/data/brain.json)
@@ -85,24 +83,20 @@ export const searchKnowledgeTool = createTool({
   }),
   execute: async (input) => {
     try {
-    // Embed query via curl — avoids Node 24/Windows native-fetch TLS segfault
     const body = JSON.stringify({ input: [input.query], model: MODEL });
-    const raw = execFileSync('curl', [
-      '-s',
-      '-w', '\n__HTTP_STATUS__%{http_code}',
-      '-X', 'POST',
-      'https://api.voyageai.com/v1/embeddings',
-      '-H', 'Content-Type: application/json',
-      '-H', `Authorization: Bearer ${voyageKey}`,
-      '--data', '@-',
-    ], { input: body }).toString();
-
-    const statusMatch = raw.match(/\n__HTTP_STATUS__(\d+)$/);
-    const status      = statusMatch ? parseInt(statusMatch[1]) : 0;
-    const jsonStr     = raw.replace(/\n__HTTP_STATUS__\d+$/, '').trim();
-    if (status < 200 || status >= 300) throw new Error(`Voyage API error ${status}: ${jsonStr}`);
-
-    const embedJson = JSON.parse(jsonStr) as { data: Array<{ embedding: number[] }> };
+    const voyageRes = await fetch('https://api.voyageai.com/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${voyageKey}`,
+      },
+      body,
+    });
+    if (!voyageRes.ok) {
+      const text = await voyageRes.text();
+      throw new Error(`Voyage API error ${voyageRes.status}: ${text}`);
+    }
+    const embedJson = await voyageRes.json() as { data: Array<{ embedding: number[] }> };
     const queryVec  = embedJson.data[0]?.embedding ?? [];
 
     // Score every chunk by cosine similarity and return top-K
