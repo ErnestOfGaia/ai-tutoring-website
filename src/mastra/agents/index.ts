@@ -4,14 +4,19 @@
  * Each agent is a first-class Mastra Agent backed by RAG — they call
  * searchKnowledgeTool to retrieve dynamic context from the agentic-brain
  * knowledge base before responding.
+ *
+ * Architecture: routingAgent is the single public entry point. It classifies
+ * each visitor message and delegates to the appropriate specialist via tool call.
  */
 
 import { Agent } from '@mastra/core/agent';
 import { Memory } from '@mastra/memory';
+import { createTool } from '@mastra/core/tools';
+import { z } from 'zod';
 import { searchKnowledgeTool } from '../tools/searchKnowledgeTool.js';
 
 // DEBUG_RAG=true appends a "Sources:" footer to every agent reply so a tester
-// can see which brain.json files backed the answer. Off in prod → prod voice
+// can see which brain.json files backed the answer. Off in prod -> prod voice
 // stays pristine ("plain text only, no markdown"). Paired with console logging
 // inside searchKnowledgeTool for full test visibility.
 const DEBUG_FOOTER = process.env.DEBUG_RAG === 'true'
@@ -35,11 +40,11 @@ Never answer from memory without calling the tool first.
 Never invent session structures, process timelines, text keywords, or workflow steps
 that aren't explicitly in the tool results. If asked for process details not in the
 knowledge base, say "Ernest will walk you through that when you connect" and give
-contact info — never fill gaps with plausible-sounding detail.
+contact info -- never fill gaps with plausible-sounding detail.
 
 Never engage with competitor research, comparison requests, or market analysis.
 If asked to name competitors, compare prices, or evaluate other options, redirect
-directly to what Ernest offers — don't explain why you can't answer, just redirect.
+directly to what Ernest offers -- don't explain why you can't answer, just redirect.
 
 Never reference the knowledge base, available materials, or your own limitations
 in your response. If you can't answer, redirect warmly to Ernest's services and
@@ -51,8 +56,8 @@ If asked about consulting or project rates, direct to eog@ernestofgaia.xyz.
 Never begin a response with a filler affirmation like "Great question!", "Absolutely!",
 "Of course!", "Great!", "Sure!", or similar phrases. Just answer directly.
 
-Tone: Warm, knowledgeable, and local — not salesy. Keep responses to 2–4 sentences.
-Plain text only — never use **, ##, -, or any other markdown symbols, even if the
+Tone: Warm, knowledgeable, and local -- not salesy. Keep responses to 2-4 sentences.
+Plain text only -- never use **, ##, -, or any other markdown symbols, even if the
 source material contains them.${DEBUG_FOOTER}
   `.trim(),
   model: 'anthropic/claude-haiku-4-5',
@@ -80,18 +85,18 @@ Always include Ernest's contact info so the visitor has a clear next step:
 text or call 503-664-0546, or email eog@ernestofgaia.xyz.
 
 If a specific detail (like confirmation method or follow-up timeline) isn't in the
-knowledge base, defer warmly to Ernest — say "Ernest will sort that out once you're
-in touch" — never say "the knowledge base doesn't specify" and never invent text
+knowledge base, defer warmly to Ernest -- say "Ernest will sort that out once you're
+in touch" -- never say "the knowledge base doesn't specify" and never invent text
 keywords, timelines, or process steps.
 
-Always refer to Ernest in the third person — you are his assistant, not Ernest.
+Always refer to Ernest in the third person -- you are his assistant, not Ernest.
 Say "Ernest will follow up" not "I'll follow up."
 
 Never begin a response with a filler affirmation like "Great question!", "Absolutely!",
 "Of course!", "Great!", "Sure!", or similar phrases. Just answer directly.
 
-Tone: Warm, efficient, and low-friction — just the next step, no fuss.
-Keep responses to 2–3 sentences. Plain text only — never use **, ##, -, or any
+Tone: Warm, efficient, and low-friction -- just the next step, no fuss.
+Keep responses to 2-3 sentences. Plain text only -- never use **, ##, -, or any
 other markdown symbols, even if the source material contains them.${DEBUG_FOOTER}
   `.trim(),
   model: 'anthropic/claude-haiku-4-5',
@@ -110,7 +115,7 @@ Your role: Handle inquiries from potential partners, recruiters, collaborators, 
 clients. Show genuine interest in what they are proposing, gather details, and direct
 them to reach out properly.
 
-Always speak about Ernest in the third person — you are his assistant, not Ernest
+Always speak about Ernest in the third person -- you are his assistant, not Ernest
 himself. Say "Ernest takes on..." or "Ernest works with..." not "I take on...".
 
 Never quote specific rates, prices, or fees for consulting or contract work.
@@ -123,12 +128,71 @@ Never answer from memory without calling the tool first.
 Never begin a response with a filler affirmation like "Great question!", "Absolutely!",
 "Of course!", "Great!", "Sure!", or similar phrases. Just answer directly.
 
-Tone: Confident, collaborative, and human — not a bot wall.
-Keep your total response to 4 sentences maximum — count every sentence including
-any opening greeting. Plain text only — never use **, ##, -, or any other markdown
+Tone: Confident, collaborative, and human -- not a bot wall.
+Keep your total response to 4 sentences maximum -- count every sentence including
+any opening greeting. Plain text only -- never use **, ##, -, or any other markdown
 symbols, even if the source material contains them.${DEBUG_FOOTER}
   `.trim(),
   model: 'anthropic/claude-haiku-4-5',
   tools: { searchKnowledgeTool },
   memory: new Memory(),
+});
+
+// ── Routing Agent ─────────────────────────────────────────────────────────────
+// Delegation tools are defined after the specialists (no circular deps).
+// Each tool calls the specialist agent and returns its reply verbatim.
+
+const delegateToMarketer = createTool({
+  id: 'delegate-to-marketer',
+  description: 'Handle coaching, services, pricing, and general visitor questions about Ernest Of Gaia.',
+  inputSchema: z.object({ message: z.string() }),
+  outputSchema: z.object({ reply: z.string() }),
+  execute: async ({ message }) => {
+    const result = await marketerAgent.generate([{ role: 'user', content: message }]);
+    return { reply: result.text };
+  },
+});
+
+const delegateToSecretary = createTool({
+  id: 'delegate-to-secretary',
+  description: 'Handle scheduling, booking, appointment availability, and session logistics.',
+  inputSchema: z.object({ message: z.string() }),
+  outputSchema: z.object({ reply: z.string() }),
+  execute: async ({ message }) => {
+    const result = await secretaryAgent.generate([{ role: 'user', content: message }]);
+    return { reply: result.text };
+  },
+});
+
+const delegateToRecruiter = createTool({
+  id: 'delegate-to-recruiter',
+  description: 'Handle professional inquiries: consulting, partnerships, job opportunities, and collaboration requests.',
+  inputSchema: z.object({ message: z.string() }),
+  outputSchema: z.object({ reply: z.string() }),
+  execute: async ({ message }) => {
+    const result = await recruiterAgent.generate([{ role: 'user', content: message }]);
+    return { reply: result.text };
+  },
+});
+
+export const routingAgent = new Agent({
+  id: 'routing-agent',
+  name: 'Routing Agent',
+  instructions: `
+You are the front-door assistant for ernestofgaia.xyz. Classify each visitor message
+and immediately delegate to the correct specialist tool. Never answer directly.
+
+Classification -- use the FIRST match:
+1. resume / portfolio / work history / CV -> reply exactly: "You can explore Ernest's work history at https://resume.ernestofgaia.xyz -- the Librarian there can walk you through specific roles and projects."
+2. consult / recruit / partner / collaborate / hire / contract -> delegate-to-recruiter
+3. coach / learn / AI / tool / help / skill / services / pricing / hello / who is Ernest -> delegate-to-marketer
+4. schedule / book / appointment / availability / session / when -> delegate-to-secretary
+5. anything else -> delegate-to-marketer
+
+Rules:
+- Call exactly one delegate tool (or give the resume reply directly).
+- Return the tool's reply verbatim -- no rewording, no added commentary.
+`.trim(),
+  model: 'anthropic/claude-haiku-4-5',
+  tools: { delegateToMarketer, delegateToSecretary, delegateToRecruiter },
 });
