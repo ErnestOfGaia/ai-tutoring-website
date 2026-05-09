@@ -138,6 +138,23 @@ symbols, even if the source material contains them.${DEBUG_FOOTER}
   memory: new Memory(),
 });
 
+// ── Surf Agent (placeholder) ──────────────────────────────────────────────────
+// TODO: integrate Surfline API for Cape Kiwanda surf conditions report.
+// Target spot: https://www.surfline.com/surf-report/cape-kiwanda/60493024f796349dd9e7b100
+// When implemented, this agent should fetch wave height, period, wind, and tide,
+// then return a plain-text surf conditions summary.
+export const surfAgent = new Agent({
+  id: 'surf-agent',
+  name: 'Surf Agent',
+  instructions: `
+You are a surf conditions assistant for Cape Kiwanda, Pacific City OR.
+Surf reporting is not yet available. Reply with:
+"Surf conditions reporting is coming soon! For now, check the Cape Kiwanda report
+at surfline.com directly."
+`.trim(),
+  model: 'anthropic/claude-haiku-4-5',
+});
+
 // ── Routing Agent ─────────────────────────────────────────────────────────────
 // Delegation tools are defined after the specialists (no circular deps).
 // Each tool calls the specialist agent and returns its reply verbatim.
@@ -175,6 +192,18 @@ const delegateToRecruiter = createTool({
   },
 });
 
+// TODO: replace stub with real Surfline fetch when surf-agent is implemented
+const delegateToSurf = createTool({
+  id: 'delegate-to-surf',
+  description: 'Handle surf conditions, wave reports, and beach/ocean questions for Cape Kiwanda.',
+  inputSchema: z.object({ message: z.string() }),
+  outputSchema: z.object({ reply: z.string() }),
+  execute: async ({ message }) => {
+    const result = await surfAgent.generate([{ role: 'user', content: message }]);
+    return { reply: result.text };
+  },
+});
+
 export const routingAgent = new Agent({
   id: 'routing-agent',
   name: 'Routing Agent',
@@ -184,15 +213,16 @@ and immediately delegate to the correct specialist tool. Never answer directly.
 
 Classification -- use the FIRST match:
 1. resume / portfolio / work history / CV -> reply exactly: "You can explore Ernest's work history at https://resume.ernestofgaia.xyz -- the Librarian there can walk you through specific roles and projects."
-2. consult / recruit / partner / collaborate / hire / contract -> delegate-to-recruiter
-3. coach / learn / AI / tool / help / skill / services / pricing / hello / who is Ernest -> delegate-to-marketer
-4. schedule / book / appointment / availability / session / when -> delegate-to-secretary
-5. anything else -> delegate-to-marketer
+2. surf / waves / swell / tide / conditions / beach / ocean / Cape Kiwanda -> delegate-to-surf
+3. consult / recruit / partner / collaborate / hire / contract -> delegate-to-recruiter
+4. coach / learn / AI / tool / help / skill / services / pricing / hello / who is Ernest -> delegate-to-marketer
+5. schedule / book / appointment / availability / session / when -> delegate-to-secretary
+6. anything else -> delegate-to-marketer
 
 Rules:
 - Call exactly one delegate tool (or give the resume reply directly).
 - Return the tool's reply verbatim -- no rewording, no added commentary.
 `.trim(),
   model: 'anthropic/claude-haiku-4-5',
-  tools: { delegateToMarketer, delegateToSecretary, delegateToRecruiter },
+  tools: { delegateToMarketer, delegateToSecretary, delegateToRecruiter, delegateToSurf },
 });

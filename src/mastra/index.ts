@@ -5,10 +5,10 @@ import { LibSQLStore } from '@mastra/libsql';
 import { DuckDBStore } from "@mastra/duckdb";
 import { MastraCompositeStore } from '@mastra/core/storage';
 import { Observability, DefaultExporter, CloudExporter, SensitiveDataFilter } from '@mastra/observability';
-import { marketerAgent, secretaryAgent, recruiterAgent, routingAgent } from './agents/index.js';
+import { marketerAgent, secretaryAgent, recruiterAgent, routingAgent, surfAgent } from './agents/index.js';
 
 export const mastra = new Mastra({
-  agents: { routingAgent, marketerAgent, secretaryAgent, recruiterAgent },
+  agents: { routingAgent, marketerAgent, secretaryAgent, recruiterAgent, surfAgent },
   storage: new MastraCompositeStore({
     id: 'composite-storage',
     default: new LibSQLStore({
