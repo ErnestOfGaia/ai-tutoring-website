@@ -164,8 +164,9 @@ const delegateToMarketer = createTool({
   description: 'Handle coaching, services, pricing, and general visitor questions about Ernest Of Gaia.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ message }) => {
-    const result = await marketerAgent.generate([{ role: 'user', content: message }]);
+  execute: async ({ context }) => {
+    console.error('[mastra] delegate-to-marketer fired');
+    const result = await marketerAgent.generate([{ role: 'user', content: context.message }]);
     return { reply: result.text };
   },
 });
@@ -175,8 +176,9 @@ const delegateToSecretary = createTool({
   description: 'Handle scheduling, booking, appointment availability, and session logistics.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ message }) => {
-    const result = await secretaryAgent.generate([{ role: 'user', content: message }]);
+  execute: async ({ context }) => {
+    console.error('[mastra] delegate-to-secretary fired');
+    const result = await secretaryAgent.generate([{ role: 'user', content: context.message }]);
     return { reply: result.text };
   },
 });
@@ -186,8 +188,9 @@ const delegateToRecruiter = createTool({
   description: 'Handle professional inquiries: consulting, partnerships, job opportunities, and collaboration requests.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ message }) => {
-    const result = await recruiterAgent.generate([{ role: 'user', content: message }]);
+  execute: async ({ context }) => {
+    console.error('[mastra] delegate-to-recruiter fired');
+    const result = await recruiterAgent.generate([{ role: 'user', content: context.message }]);
     return { reply: result.text };
   },
 });
@@ -198,8 +201,9 @@ const delegateToSurf = createTool({
   description: 'Handle surf conditions, wave reports, and beach/ocean questions for Cape Kiwanda.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ message }) => {
-    const result = await surfAgent.generate([{ role: 'user', content: message }]);
+  execute: async ({ context }) => {
+    console.error('[mastra] delegate-to-surf fired');
+    const result = await surfAgent.generate([{ role: 'user', content: context.message }]);
     return { reply: result.text };
   },
 });
@@ -226,3 +230,5 @@ Rules:
   model: 'anthropic/claude-haiku-4-5',
   tools: { delegateToMarketer, delegateToSecretary, delegateToRecruiter, delegateToSurf },
 });
+
+console.error('[mastra] agents module loaded');

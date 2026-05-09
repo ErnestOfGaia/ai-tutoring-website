@@ -7,6 +7,10 @@ import { MastraCompositeStore } from '@mastra/core/storage';
 import { Observability, DefaultExporter, CloudExporter, SensitiveDataFilter } from '@mastra/observability';
 import { marketerAgent, secretaryAgent, recruiterAgent, routingAgent, surfAgent } from './agents/index.js';
 
+console.error('[mastra] before duckdb');
+const observabilityStore = await new DuckDBStore().getStore('observability');
+console.error('[mastra] after duckdb');
+
 export const mastra = new Mastra({
   agents: { routingAgent, marketerAgent, secretaryAgent, recruiterAgent, surfAgent },
   storage: new MastraCompositeStore({
@@ -16,7 +20,7 @@ export const mastra = new Mastra({
       url: "file:./data/mastra.db",
     }),
     domains: {
-      observability: await new DuckDBStore().getStore('observability'),
+      observability: observabilityStore,
     }
   }),
   logger: new PinoLogger({
@@ -38,3 +42,5 @@ export const mastra = new Mastra({
     },
   }),
 });
+
+console.error('[mastra] after Mastra ctor');
