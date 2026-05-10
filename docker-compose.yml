@@ -8,6 +8,11 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - VOYAGE_API_KEY=${VOYAGE_API_KEY}
       - NODE_ENV=production
+      - GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}
+      - GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET}
+      - GOOGLE_OAUTH_REFRESH_TOKEN=${GOOGLE_OAUTH_REFRESH_TOKEN}
+      - GOOGLE_CALENDAR_ID=${GOOGLE_CALENDAR_ID:-primary}
+      - GOOGLE_TIMEZONE=${GOOGLE_TIMEZONE:-America/Los_Angeles}
     volumes:
       # Persists brain.json, mastra.db, mastra.duckdb, agentic-brain-cache/
       # Isolated to /app/data so compiled code in /app/.mastra/output/ is not shadowed
