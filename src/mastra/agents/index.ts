@@ -14,6 +14,13 @@ import { Memory } from '@mastra/memory';
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { searchKnowledgeTool } from '../tools/searchKnowledgeTool.js';
+import { calendarListAvailabilityTool } from '../tools/calendarListAvailabilityTool.js';
+import { calendarBookEventTool } from '../tools/calendarBookEventTool.js';
+import { gmailSearchThreadsTool } from '../tools/gmailSearchThreadsTool.js';
+import { gmailDraftReplyTool } from '../tools/gmailDraftReplyTool.js';
+import { gmailApplyLabelTool } from '../tools/gmailApplyLabelTool.js';
+import { driveFindFileTool } from '../tools/driveFindFileTool.js';
+import { driveReadDocTool } from '../tools/driveReadDocTool.js';
 
 // DEBUG_RAG=true appends a "Sources:" footer to every agent reply so a tester
 // can see which brain.json files backed the answer. Off in prod -> prod voice
@@ -74,12 +81,28 @@ You are the scheduling assistant for Ernest Of Gaia's AI coaching business.
 Ernest works with clients from Pacific City to the Portland metro area, both online
 and in person.
 
-Your role: Help visitors understand the booking process, collect their availability
-and preferred session type, and direct them to contact Ernest to confirm.
+Your role: Help visitors understand the booking process, check Ernest's real
+calendar availability, book discovery calls, look up email context, draft replies
+for Ernest's review, and find shared documents.
 
-ALWAYS call searchKnowledgeTool as your first action on every user message, with a
-query derived from the user's message. Base your reply on the retrieved context.
-Never answer from memory without calling the tool first.
+You have access to Ernest's eog@ernestofgaia.xyz Google Workspace through these tools:
+- searchKnowledgeTool: facts about Ernest, his services, brand. Call first for any
+  question about what Ernest offers.
+- calendar-list-availability: real open slots on Ernest's calendar. Use this when
+  a visitor asks about availability, open times, or when Ernest can meet.
+- calendar-book-event: book a discovery call. TWO-STEP: first call with confirm:false
+  to propose the event, summarize it back to the visitor in plain text, and wait
+  for their explicit "yes". Only then call again with confirm:true. Default
+  duration is 30 minutes; use 60 if the visitor asks for longer.
+- gmail-search-threads: search Ernest's inbox using Gmail syntax (from:, subject:,
+  newer_than:14d). Use for "did Ernest get my email?" or to find prior context.
+- gmail-draft-reply: create a draft reply. NEVER sends — Ernest reviews every
+  draft in Gmail before it goes out. Tell the visitor "Ernest will review and
+  send it himself."
+- gmail-apply-label: tag a thread for triage (e.g. "discovery-call-pending").
+- drive-find-file: locate a shared doc by name (e.g. "intake form", "coaching
+  contract"). Return the webViewLink VERBATIM — never reconstruct or shorten URLs.
+- drive-read-doc: read a doc's contents by id when asked to summarize.
 
 Always include Ernest's contact info so the visitor has a clear next step:
 text or call 503-664-0546, or email eog@ernestofgaia.xyz.
@@ -100,7 +123,16 @@ Keep responses to 2-3 sentences. Plain text only -- never use **, ##, -, or any
 other markdown symbols, even if the source material contains them.${DEBUG_FOOTER}
   `.trim(),
   model: 'anthropic/claude-haiku-4-5',
-  tools: { searchKnowledgeTool },
+  tools: {
+    searchKnowledgeTool,
+    calendarListAvailabilityTool,
+    calendarBookEventTool,
+    gmailSearchThreadsTool,
+    gmailDraftReplyTool,
+    gmailApplyLabelTool,
+    driveFindFileTool,
+    driveReadDocTool,
+  },
   memory: new Memory(),
 });
 
@@ -219,8 +251,8 @@ Classification -- use the FIRST match:
 1. resume / portfolio / work history / CV -> reply exactly: "You can explore Ernest's work history at https://resume.ernestofgaia.xyz -- the Librarian there can walk you through specific roles and projects."
 2. surf / waves / swell / tide / conditions / beach / ocean / Cape Kiwanda -> delegate-to-surf
 3. consult / recruit / partner / collaborate / hire / contract -> delegate-to-recruiter
-4. coach / learn / AI / tool / help / skill / services / pricing / hello / who is Ernest -> delegate-to-marketer
-5. schedule / book / appointment / availability / session / when -> delegate-to-secretary
+4. schedule / book / booking / appointment / availability / open slots / session / when can / next week / discovery call / did Ernest get my email / follow up / intake form / contract template / coaching agreement -> delegate-to-secretary
+5. coach / learn / AI / tool / help / skill / services / pricing / hello / who is Ernest -> delegate-to-marketer
 6. anything else -> delegate-to-marketer
 
 Rules:
