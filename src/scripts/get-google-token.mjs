@@ -27,7 +27,12 @@ if (!CLIENT_ID || !CLIENT_SECRET) {
   process.exit(1);
 }
 
+// MUST stay in sync with GOOGLE_SCOPES in src/mastra/lib/googleAuth.ts.
+// calendar.readonly is required for freebusy.query (calendar.events alone
+// returns "Insufficient Permission" 403). calendar.events is kept for the
+// event-write path (booking discovery calls).
 const SCOPES = [
+  'https://www.googleapis.com/auth/calendar.readonly',
   'https://www.googleapis.com/auth/calendar.events',
   'https://www.googleapis.com/auth/gmail.readonly',
   'https://www.googleapis.com/auth/gmail.compose',
