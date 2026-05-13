@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     const res = await fetch(`${MASTRA_URL}/api/agents/routing-agent/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify({ messages, maxSteps: 5 }),
     });
 
     if (!res.ok) {

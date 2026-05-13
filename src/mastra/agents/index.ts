@@ -191,6 +191,14 @@ at surfline.com directly."
 // Delegation tools are defined after the specialists (no circular deps).
 // Each tool calls the specialist agent and returns its reply verbatim.
 
+// Specialist agents may need several tool-call rounds (e.g. secretary calls
+// calendar-list-availability then drafts a reply), so each delegate.generate()
+// must allow multi-step execution. Likewise the routing agent's own loop
+// (set via maxSteps in the HTTP body from the frontend route) needs > 1 to
+// actually invoke these delegate tools rather than returning the tool_use
+// block uncalled.
+const SPECIALIST_MAX_STEPS = 5;
+
 const delegateToMarketer = createTool({
   id: 'delegate-to-marketer',
   description: 'Handle coaching, services, pricing, and general visitor questions about Ernest Of Gaia.',
@@ -198,7 +206,10 @@ const delegateToMarketer = createTool({
   outputSchema: z.object({ reply: z.string() }),
   execute: async ({ context }) => {
     console.error('[mastra] delegate-to-marketer fired');
-    const result = await marketerAgent.generate([{ role: 'user', content: context.message }]);
+    const result = await marketerAgent.generate(
+      [{ role: 'user', content: context.message }],
+      { maxSteps: SPECIALIST_MAX_STEPS },
+    );
     return { reply: result.text };
   },
 });
@@ -210,7 +221,10 @@ const delegateToSecretary = createTool({
   outputSchema: z.object({ reply: z.string() }),
   execute: async ({ context }) => {
     console.error('[mastra] delegate-to-secretary fired');
-    const result = await secretaryAgent.generate([{ role: 'user', content: context.message }]);
+    const result = await secretaryAgent.generate(
+      [{ role: 'user', content: context.message }],
+      { maxSteps: SPECIALIST_MAX_STEPS },
+    );
     return { reply: result.text };
   },
 });
@@ -222,7 +236,10 @@ const delegateToRecruiter = createTool({
   outputSchema: z.object({ reply: z.string() }),
   execute: async ({ context }) => {
     console.error('[mastra] delegate-to-recruiter fired');
-    const result = await recruiterAgent.generate([{ role: 'user', content: context.message }]);
+    const result = await recruiterAgent.generate(
+      [{ role: 'user', content: context.message }],
+      { maxSteps: SPECIALIST_MAX_STEPS },
+    );
     return { reply: result.text };
   },
 });
@@ -235,7 +252,10 @@ const delegateToSurf = createTool({
   outputSchema: z.object({ reply: z.string() }),
   execute: async ({ context }) => {
     console.error('[mastra] delegate-to-surf fired');
-    const result = await surfAgent.generate([{ role: 'user', content: context.message }]);
+    const result = await surfAgent.generate(
+      [{ role: 'user', content: context.message }],
+      { maxSteps: SPECIALIST_MAX_STEPS },
+    );
     return { reply: result.text };
   },
 });
