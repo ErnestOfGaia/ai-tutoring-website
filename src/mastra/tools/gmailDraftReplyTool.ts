@@ -42,26 +42,34 @@ export const gmailDraftReplyTool = createTool({
     gmailUrl: z.string(),
   }),
   execute: async ({ context }) => {
-    const { to, subject, body, threadId } = context;
-    const gmail = await gmailClient();
+    console.error('[gmailDraftReply] fired, context:', JSON.stringify({ ...context, body: '<redacted>' }));
+    try {
+      const { to, subject, body, threadId } = context;
+      const gmail = await gmailClient();
 
-    const raw = Buffer.from(buildRfc822(to, IMPERSONATE, subject, body))
-      .toString('base64')
-      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      const raw = Buffer.from(buildRfc822(to, IMPERSONATE, subject, body))
+        .toString('base64')
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
-    const res = await gmail.users.drafts.create({
-      userId: 'me',
-      requestBody: {
-        message: {
-          raw,
-          ...(threadId ? { threadId } : {}),
+      const res = await gmail.users.drafts.create({
+        userId: 'me',
+        requestBody: {
+          message: {
+            raw,
+            ...(threadId ? { threadId } : {}),
+          },
         },
-      },
-    });
+      });
 
-    return {
-      draftId:  res.data.id!,
-      gmailUrl: `https://mail.google.com/mail/u/0/#drafts`,
-    };
+      console.error('[gmailDraftReply] draft created id:', res.data.id);
+      return {
+        draftId:  res.data.id!,
+        gmailUrl: `https://mail.google.com/mail/u/0/#drafts`,
+      };
+    } catch (err: any) {
+      console.error('[gmailDraftReply] ERROR:', err?.message || err);
+      console.error('[gmailDraftReply] stack:', err?.stack);
+      throw err;
+    }
   },
 });

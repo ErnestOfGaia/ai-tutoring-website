@@ -34,35 +34,43 @@ export const gmailSearchThreadsTool = createTool({
     })),
   }),
   execute: async ({ context }) => {
-    const { query, maxResults } = context;
-    const gmail = await gmailClient();
+    console.error('[gmailSearchThreads] fired, context:', JSON.stringify(context));
+    try {
+      const { query, maxResults } = context;
+      const gmail = await gmailClient();
 
-    const list = await gmail.users.threads.list({
-      userId: 'me',
-      q: query,
-      maxResults,
-    });
+      const list = await gmail.users.threads.list({
+        userId: 'me',
+        q: query,
+        maxResults,
+      });
 
-    const threads = await Promise.all(
-      (list.data.threads || []).map(async t => {
-        const detail = await gmail.users.threads.get({
-          userId: 'me',
-          id: t.id!,
-          format: 'metadata',
-          metadataHeaders: ['Subject', 'From', 'Date'],
-        });
-        const firstMsg = detail.data.messages?.[0];
-        const headers  = firstMsg?.payload?.headers || [];
-        return {
-          threadId: t.id!,
-          subject:  header(headers, 'Subject'),
-          from:     header(headers, 'From'),
-          date:     header(headers, 'Date'),
-          snippet:  detail.data.messages?.[detail.data.messages.length - 1]?.snippet || '',
-        };
-      })
-    );
+      const threads = await Promise.all(
+        (list.data.threads || []).map(async t => {
+          const detail = await gmail.users.threads.get({
+            userId: 'me',
+            id: t.id!,
+            format: 'metadata',
+            metadataHeaders: ['Subject', 'From', 'Date'],
+          });
+          const firstMsg = detail.data.messages?.[0];
+          const headers  = firstMsg?.payload?.headers || [];
+          return {
+            threadId: t.id!,
+            subject:  header(headers, 'Subject'),
+            from:     header(headers, 'From'),
+            date:     header(headers, 'Date'),
+            snippet:  detail.data.messages?.[detail.data.messages.length - 1]?.snippet || '',
+          };
+        })
+      );
 
-    return { threads };
+      console.error('[gmailSearchThreads] success, threads:', threads.length);
+      return { threads };
+    } catch (err: any) {
+      console.error('[gmailSearchThreads] ERROR:', err?.message || err);
+      console.error('[gmailSearchThreads] stack:', err?.stack);
+      throw err;
+    }
   },
 });

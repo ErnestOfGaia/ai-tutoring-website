@@ -45,34 +45,43 @@ export const calendarBookEventTool = createTool({
     htmlLink: z.string().optional(),
   }),
   execute: async ({ context }) => {
-    const { start, end, visitorName, visitorEmail, summary, description, confirm } = context;
-    const proposed = { start, end, summary, visitorName, visitorEmail };
+    console.error('[calendarBookEvent] fired, context:', JSON.stringify(context));
+    try {
+      const { start, end, visitorName, visitorEmail, summary, description, confirm } = context;
+      const proposed = { start, end, summary, visitorName, visitorEmail };
 
-    if (!confirm) {
-      return { status: 'proposed' as const, proposed };
+      if (!confirm) {
+        console.error('[calendarBookEvent] proposed only (confirm=false)');
+        return { status: 'proposed' as const, proposed };
+      }
+
+      const cal = await calendarClient();
+      const res = await cal.events.insert({
+        calendarId: CALENDAR_ID,
+        sendUpdates: 'all',
+        requestBody: {
+          summary,
+          description: description || `Discovery call booked via ernestofgaia.xyz secretaryAgent.`,
+          start: { dateTime: start, timeZone: TIMEZONE },
+          end:   { dateTime: end,   timeZone: TIMEZONE },
+          attendees: [
+            { email: IMPERSONATE, responseStatus: 'accepted' },
+            { email: visitorEmail, displayName: visitorName },
+          ],
+        },
+      });
+
+      console.error('[calendarBookEvent] created event id:', res.data.id);
+      return {
+        status:   'created' as const,
+        proposed,
+        eventId:  res.data.id || undefined,
+        htmlLink: res.data.htmlLink || undefined,
+      };
+    } catch (err: any) {
+      console.error('[calendarBookEvent] ERROR:', err?.message || err);
+      console.error('[calendarBookEvent] stack:', err?.stack);
+      throw err;
     }
-
-    const cal = await calendarClient();
-    const res = await cal.events.insert({
-      calendarId: CALENDAR_ID,
-      sendUpdates: 'all',
-      requestBody: {
-        summary,
-        description: description || `Discovery call booked via ernestofgaia.xyz secretaryAgent.`,
-        start: { dateTime: start, timeZone: TIMEZONE },
-        end:   { dateTime: end,   timeZone: TIMEZONE },
-        attendees: [
-          { email: IMPERSONATE, responseStatus: 'accepted' },
-          { email: visitorEmail, displayName: visitorName },
-        ],
-      },
-    });
-
-    return {
-      status:   'created' as const,
-      proposed,
-      eventId:  res.data.id || undefined,
-      htmlLink: res.data.htmlLink || undefined,
-    };
   },
 });

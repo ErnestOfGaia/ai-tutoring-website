@@ -27,38 +27,46 @@ export const driveReadDocTool = createTool({
     truncated: z.boolean(),
   }),
   execute: async ({ context }) => {
-    const { fileId } = context;
-    const drive = await driveClient();
+    console.error('[driveReadDoc] fired, context:', JSON.stringify(context));
+    try {
+      const { fileId } = context;
+      const drive = await driveClient();
 
-    const meta = await drive.files.get({
-      fileId,
-      fields: 'id, name, mimeType, webViewLink',
-    });
-
-    const mimeType = meta.data.mimeType || '';
-    let content = '';
-
-    if (mimeType === 'application/vnd.google-apps.document') {
-      const exp = await drive.files.export({
+      const meta = await drive.files.get({
         fileId,
-        mimeType: 'text/plain',
-      }, { responseType: 'text' });
-      content = String(exp.data || '');
-    } else if (mimeType.startsWith('text/') || mimeType === 'application/json') {
-      const dl = await drive.files.get({ fileId, alt: 'media' }, { responseType: 'text' });
-      content = String(dl.data || '');
-    } else {
-      content = `[Binary or unsupported file type ${mimeType}. View at ${meta.data.webViewLink || ''}]`;
+        fields: 'id, name, mimeType, webViewLink',
+      });
+
+      const mimeType = meta.data.mimeType || '';
+      let content = '';
+
+      if (mimeType === 'application/vnd.google-apps.document') {
+        const exp = await drive.files.export({
+          fileId,
+          mimeType: 'text/plain',
+        }, { responseType: 'text' });
+        content = String(exp.data || '');
+      } else if (mimeType.startsWith('text/') || mimeType === 'application/json') {
+        const dl = await drive.files.get({ fileId, alt: 'media' }, { responseType: 'text' });
+        content = String(dl.data || '');
+      } else {
+        content = `[Binary or unsupported file type ${mimeType}. View at ${meta.data.webViewLink || ''}]`;
+      }
+
+      const truncated = content.length > MAX_CHARS;
+      if (truncated) content = content.slice(0, MAX_CHARS);
+
+      console.error('[driveReadDoc] success, name:', meta.data.name, 'chars:', content.length, 'truncated:', truncated);
+      return {
+        name:     meta.data.name || '',
+        mimeType,
+        content,
+        truncated,
+      };
+    } catch (err: any) {
+      console.error('[driveReadDoc] ERROR:', err?.message || err);
+      console.error('[driveReadDoc] stack:', err?.stack);
+      throw err;
     }
-
-    const truncated = content.length > MAX_CHARS;
-    if (truncated) content = content.slice(0, MAX_CHARS);
-
-    return {
-      name:     meta.data.name || '',
-      mimeType,
-      content,
-      truncated,
-    };
   },
 });

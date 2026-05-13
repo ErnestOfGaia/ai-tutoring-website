@@ -57,7 +57,9 @@ function buildOAuth2Client() {
 
 export async function getGoogleAuth() {
   if (_authClient) return _authClient;
+  console.error('[googleAuth] building OAuth2 client...');
   _authClient = buildOAuth2Client();
+  console.error('[googleAuth] OAuth2 client built OK');
   return _authClient;
 }
 

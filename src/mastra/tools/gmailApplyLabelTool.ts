@@ -40,16 +40,24 @@ export const gmailApplyLabelTool = createTool({
     applied:  z.boolean(),
   }),
   execute: async ({ context }) => {
-    const { threadId, labelName } = context;
-    const gmail = await gmailClient();
+    console.error('[gmailApplyLabel] fired, context:', JSON.stringify(context));
+    try {
+      const { threadId, labelName } = context;
+      const gmail = await gmailClient();
 
-    const labelId = await ensureLabelId(gmail, labelName);
-    await gmail.users.threads.modify({
-      userId: 'me',
-      id: threadId,
-      requestBody: { addLabelIds: [labelId] },
-    });
+      const labelId = await ensureLabelId(gmail, labelName);
+      await gmail.users.threads.modify({
+        userId: 'me',
+        id: threadId,
+        requestBody: { addLabelIds: [labelId] },
+      });
 
-    return { threadId, labelId, applied: true };
+      console.error('[gmailApplyLabel] applied label', labelId, 'to thread', threadId);
+      return { threadId, labelId, applied: true };
+    } catch (err: any) {
+      console.error('[gmailApplyLabel] ERROR:', err?.message || err);
+      console.error('[gmailApplyLabel] stack:', err?.stack);
+      throw err;
+    }
   },
 });

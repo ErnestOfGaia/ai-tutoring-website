@@ -28,26 +28,33 @@ export const driveFindFileTool = createTool({
     })),
   }),
   execute: async ({ context }) => {
-    const { name, mimeType } = context;
-    const drive = await driveClient();
+    console.error('[driveFindFile] fired, context:', JSON.stringify(context));
+    try {
+      const { name, mimeType } = context;
+      const drive = await driveClient();
 
-    const escaped = name.replace(/'/g, "\\'");
-    const qParts = [`name contains '${escaped}'`, 'trashed = false'];
-    if (mimeType) qParts.push(`mimeType = '${mimeType}'`);
+      const escaped = name.replace(/'/g, "\\'");
+      const qParts = [`name contains '${escaped}'`, 'trashed = false'];
+      if (mimeType) qParts.push(`mimeType = '${mimeType}'`);
 
-    const res = await drive.files.list({
-      q: qParts.join(' and '),
-      fields: 'files(id, name, mimeType, webViewLink)',
-      pageSize: 10,
-    });
+      const res = await drive.files.list({
+        q: qParts.join(' and '),
+        fields: 'files(id, name, mimeType, webViewLink)',
+        pageSize: 10,
+      });
 
-    return {
-      files: (res.data.files || []).map(f => ({
+      const files = (res.data.files || []).map(f => ({
         id:          f.id!,
         name:        f.name!,
         mimeType:    f.mimeType || '',
         webViewLink: f.webViewLink || '',
-      })),
-    };
+      }));
+      console.error('[driveFindFile] success, files:', files.length);
+      return { files };
+    } catch (err: any) {
+      console.error('[driveFindFile] ERROR:', err?.message || err);
+      console.error('[driveFindFile] stack:', err?.stack);
+      throw err;
+    }
   },
 });

@@ -33,6 +33,8 @@ export const calendarListAvailabilityTool = createTool({
     })),
   }),
   execute: async ({ context }) => {
+    console.error('[calendarListAvailability] fired, context:', JSON.stringify(context));
+    try {
     const { days, durationMinutes } = context;
     const cal = await calendarClient();
 
@@ -93,6 +95,12 @@ export const calendarListAvailabilityTool = createTool({
       }
     }
 
+    console.error('[calendarListAvailability] success, slots:', slots.length);
     return { timezone: TIMEZONE, slots: slots.slice(0, 12) };
+    } catch (err: any) {
+      console.error('[calendarListAvailability] ERROR:', err?.message || err);
+      console.error('[calendarListAvailability] stack:', err?.stack);
+      throw err;
+    }
   },
 });
