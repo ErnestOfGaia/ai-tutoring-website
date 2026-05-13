@@ -220,12 +220,23 @@ const delegateToSecretary = createTool({
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
   execute: async ({ context }) => {
-    console.error('[mastra] delegate-to-secretary fired');
-    const result = await secretaryAgent.generate(
-      [{ role: 'user', content: context.message }],
-      { maxSteps: SPECIALIST_MAX_STEPS },
-    );
-    return { reply: result.text };
+    console.error('[mastra] delegate-to-secretary fired, msg:', context.message.slice(0, 120));
+    try {
+      const result: any = await secretaryAgent.generate(
+        [{ role: 'user', content: context.message }],
+        { maxSteps: SPECIALIST_MAX_STEPS },
+      );
+      console.error(
+        '[mastra] secretary returned — finishReason:', result?.finishReason,
+        'toolCalls:', JSON.stringify(result?.toolCalls ?? []).slice(0, 500),
+        'text:', (result?.text ?? '').slice(0, 200),
+      );
+      return { reply: result.text };
+    } catch (err: any) {
+      console.error('[mastra] secretary ERROR:', err?.message || err);
+      console.error('[mastra] secretary stack:', err?.stack);
+      throw err;
+    }
   },
 });
 
