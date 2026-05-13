@@ -26,10 +26,10 @@ export const driveReadDocTool = createTool({
     content:  z.string(),
     truncated: z.boolean(),
   }),
-  execute: async ({ context }) => {
-    console.error('[driveReadDoc] fired, context:', JSON.stringify(context));
+  execute: async (input) => {
+    console.error('[driveReadDoc] fired, input:', JSON.stringify(input));
     try {
-      const { fileId } = context;
+      const { fileId } = input;
       const drive = await driveClient();
 
       const meta = await drive.files.get({

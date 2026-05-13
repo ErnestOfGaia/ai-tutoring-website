@@ -39,10 +39,10 @@ export const gmailApplyLabelTool = createTool({
     labelId:  z.string(),
     applied:  z.boolean(),
   }),
-  execute: async ({ context }) => {
-    console.error('[gmailApplyLabel] fired, context:', JSON.stringify(context));
+  execute: async (input) => {
+    console.error('[gmailApplyLabel] fired, input:', JSON.stringify(input));
     try {
-      const { threadId, labelName } = context;
+      const { threadId, labelName } = input;
       const gmail = await gmailClient();
 
       const labelId = await ensureLabelId(gmail, labelName);

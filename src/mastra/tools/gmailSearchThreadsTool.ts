@@ -33,10 +33,10 @@ export const gmailSearchThreadsTool = createTool({
       snippet:  z.string(),
     })),
   }),
-  execute: async ({ context }) => {
-    console.error('[gmailSearchThreads] fired, context:', JSON.stringify(context));
+  execute: async (input) => {
+    console.error('[gmailSearchThreads] fired, input:', JSON.stringify(input));
     try {
-      const { query, maxResults } = context;
+      const { query, maxResults } = input;
       const gmail = await gmailClient();
 
       const list = await gmail.users.threads.list({

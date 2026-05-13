@@ -199,15 +199,25 @@ at surfline.com directly."
 // block uncalled.
 const SPECIALIST_MAX_STEPS = 5;
 
+// IMPORTANT: in @mastra/core v1.21, tool.execute signature is
+//   (inputData: TSchemaIn, context: ToolExecutionContext) => ...
+// (two positional args; inputData IS the validated input). A previous commit
+// "corrected" us to `({ context })` which destructures a `context` property
+// from inputData — that property doesn't exist, so it was always undefined,
+// and `context.message` threw "Cannot read properties of undefined (reading
+// 'message')". Mastra catches that throw and packs it as a tool-result string,
+// which is why the LLM kept apologizing without any visible exception. See
+// node_modules/@mastra/core/dist/tools/types.d.ts line 311 for the canonical
+// signature, and searchKnowledgeTool.ts for the working pattern.
 const delegateToMarketer = createTool({
   id: 'delegate-to-marketer',
   description: 'Handle coaching, services, pricing, and general visitor questions about Ernest Of Gaia.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ context }) => {
+  execute: async (input) => {
     console.error('[mastra] delegate-to-marketer fired');
     const result = await marketerAgent.generate(
-      [{ role: 'user', content: context.message }],
+      [{ role: 'user', content: input.message }],
       { maxSteps: SPECIALIST_MAX_STEPS },
     );
     return { reply: result.text };
@@ -219,11 +229,11 @@ const delegateToSecretary = createTool({
   description: 'Handle scheduling, booking, appointment availability, and session logistics.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ context }) => {
-    console.error('[mastra] delegate-to-secretary fired, msg:', context.message.slice(0, 120));
+  execute: async (input) => {
+    console.error('[mastra] delegate-to-secretary fired, msg:', input.message.slice(0, 120));
     try {
       const result: any = await secretaryAgent.generate(
-        [{ role: 'user', content: context.message }],
+        [{ role: 'user', content: input.message }],
         { maxSteps: SPECIALIST_MAX_STEPS },
       );
       console.error(
@@ -245,10 +255,10 @@ const delegateToRecruiter = createTool({
   description: 'Handle professional inquiries: consulting, partnerships, job opportunities, and collaboration requests.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ context }) => {
+  execute: async (input) => {
     console.error('[mastra] delegate-to-recruiter fired');
     const result = await recruiterAgent.generate(
-      [{ role: 'user', content: context.message }],
+      [{ role: 'user', content: input.message }],
       { maxSteps: SPECIALIST_MAX_STEPS },
     );
     return { reply: result.text };
@@ -261,10 +271,10 @@ const delegateToSurf = createTool({
   description: 'Handle surf conditions, wave reports, and beach/ocean questions for Cape Kiwanda.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async ({ context }) => {
+  execute: async (input) => {
     console.error('[mastra] delegate-to-surf fired');
     const result = await surfAgent.generate(
-      [{ role: 'user', content: context.message }],
+      [{ role: 'user', content: input.message }],
       { maxSteps: SPECIALIST_MAX_STEPS },
     );
     return { reply: result.text };

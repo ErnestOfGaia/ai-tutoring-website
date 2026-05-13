@@ -44,10 +44,10 @@ export const calendarBookEventTool = createTool({
     eventId:  z.string().optional(),
     htmlLink: z.string().optional(),
   }),
-  execute: async ({ context }) => {
-    console.error('[calendarBookEvent] fired, context:', JSON.stringify(context));
+  execute: async (input) => {
+    console.error('[calendarBookEvent] fired, input:', JSON.stringify(input));
     try {
-      const { start, end, visitorName, visitorEmail, summary, description, confirm } = context;
+      const { start, end, visitorName, visitorEmail, summary, description, confirm } = input;
       const proposed = { start, end, summary, visitorName, visitorEmail };
 
       if (!confirm) {

@@ -41,10 +41,10 @@ export const gmailDraftReplyTool = createTool({
     draftId:  z.string(),
     gmailUrl: z.string(),
   }),
-  execute: async ({ context }) => {
-    console.error('[gmailDraftReply] fired, context:', JSON.stringify({ ...context, body: '<redacted>' }));
+  execute: async (input) => {
+    console.error('[gmailDraftReply] fired, input:', JSON.stringify({ ...input, body: '<redacted>' }));
     try {
-      const { to, subject, body, threadId } = context;
+      const { to, subject, body, threadId } = input;
       const gmail = await gmailClient();
 
       const raw = Buffer.from(buildRfc822(to, IMPERSONATE, subject, body))

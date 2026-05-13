@@ -32,10 +32,10 @@ export const calendarListAvailabilityTool = createTool({
       end:   z.string(),
     })),
   }),
-  execute: async ({ context }) => {
-    console.error('[calendarListAvailability] fired, context:', JSON.stringify(context));
+  execute: async (input) => {
+    console.error('[calendarListAvailability] fired, input:', JSON.stringify(input));
     try {
-    const { days, durationMinutes } = context;
+    const { days, durationMinutes } = input;
     const cal = await calendarClient();
 
     const now = new Date();

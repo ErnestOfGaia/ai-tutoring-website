@@ -27,10 +27,10 @@ export const driveFindFileTool = createTool({
       webViewLink: z.string(),
     })),
   }),
-  execute: async ({ context }) => {
-    console.error('[driveFindFile] fired, context:', JSON.stringify(context));
+  execute: async (input) => {
+    console.error('[driveFindFile] fired, input:', JSON.stringify(input));
     try {
-      const { name, mimeType } = context;
+      const { name, mimeType } = input;
       const drive = await driveClient();
 
       const escaped = name.replace(/'/g, "\\'");
