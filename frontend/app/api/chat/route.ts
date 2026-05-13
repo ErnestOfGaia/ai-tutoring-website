@@ -25,6 +25,8 @@ export async function POST(req: Request) {
       ? [...history, { role: "user", content: message }]
       : [{ role: "user", content: message }];
 
+    console.error("[chat/route] incoming message:", message.slice(0, 200));
+
     const res = await fetch(`${MASTRA_URL}/api/agents/routing-agent/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -32,10 +34,27 @@ export async function POST(req: Request) {
     });
 
     if (!res.ok) {
+      const errBody = await res.text().catch(() => "<no body>");
+      console.error(`[chat/route] Mastra non-OK ${res.status}:`, errBody.slice(0, 1000));
       throw new Error(`Mastra responded ${res.status}`);
     }
 
-    const data = (await res.json()) as { text?: string };
+    const data = (await res.json()) as {
+      text?: string;
+      toolCalls?: unknown[];
+      toolResults?: unknown[];
+      finishReason?: string;
+    };
+
+    console.error(
+      "[chat/route] mastra response — finishReason:",
+      data.finishReason,
+      "toolCalls:",
+      JSON.stringify(data.toolCalls ?? []),
+      "text:",
+      (data.text ?? "").slice(0, 300),
+    );
+
     const reply = (data.text ?? "").trim() || FALLBACK_REPLY;
 
     return Response.json({ reply });
