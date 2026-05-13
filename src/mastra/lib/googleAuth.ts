@@ -23,6 +23,10 @@
 import { google } from 'googleapis';
 
 export const GOOGLE_SCOPES = [
+  // calendar.events alone does NOT grant freebusy.query — Google rejects with
+  // "Insufficient Permission" 403. calendar.readonly covers freebusy + read of
+  // events; we keep calendar.events for the write path (book discovery call).
+  'https://www.googleapis.com/auth/calendar.readonly',
   'https://www.googleapis.com/auth/calendar.events',
   'https://www.googleapis.com/auth/gmail.readonly',
   'https://www.googleapis.com/auth/gmail.compose',
