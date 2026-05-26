@@ -32,6 +32,13 @@ export const calendarListAvailabilityTool = createTool({
   }),
   outputSchema: z.object({
     timezone: z.string(),
+    // Canonical framing so the LLM doesn't infer the window from whatever
+    // subset of slots happens to appear in `slots` — previously the agent
+    // would say "noon to 6pm" because the slot list was sliced to 12 entries
+    // (== half a day's window). Always present this exact string to visitors.
+    availableWindow: z.string(),
+    daysWithAvailability: z.array(z.string()),
+    totalSlots: z.number(),
     slots: z.array(z.object({
       start: z.string(),
       end:   z.string(),
@@ -100,8 +107,37 @@ export const calendarListAvailabilityTool = createTool({
       }
     }
 
-    console.error('[calendarListAvailability] success, slots:', slots.length);
-    return { timezone: TIMEZONE, slots: slots.slice(0, 12) };
+    // Distinct days that have at least one slot — gives the LLM "Tue May 26,
+    // Wed May 27" rather than 32 individual ISO timestamps.
+    const daysWithAvailability = Array.from(
+      new Set(
+        slots.map(s =>
+          new Date(s.start).toLocaleDateString('en-US', {
+            timeZone: TIMEZONE,
+            weekday: 'short',
+            month:   'short',
+            day:     'numeric',
+          }),
+        ),
+      ),
+    );
+
+    const startLabel = WORK_START === 12 ? '12 PM' : `${WORK_START % 12 || 12} ${WORK_START < 12 ? 'AM' : 'PM'}`;
+    const endLabel   = WORK_END   === 12 ? '12 PM' : `${WORK_END   % 12 || 12} ${WORK_END   < 12 ? 'AM' : 'PM'}`;
+    const availableWindow =
+      `Mondays, Tuesdays and Wednesdays, ${startLabel} to ${endLabel} ${TIMEZONE} time.`;
+
+    console.error('[calendarListAvailability] success, total slots:', slots.length, 'days:', daysWithAvailability.length);
+    return {
+      timezone: TIMEZONE,
+      availableWindow,
+      daysWithAvailability,
+      totalSlots: slots.length,
+      // Return the first 24 slots — enough for the LLM to give a meaningful
+      // sample without flooding the prompt. Visitor doesn't see this array
+      // directly; the agent summarizes it.
+      slots: slots.slice(0, 24),
+    };
     } catch (err: any) {
       console.error('[calendarListAvailability] ERROR:', err?.message || err);
       console.error('[calendarListAvailability] stack:', err?.stack);
