@@ -7,6 +7,34 @@ type Message = {
   content: string;
 };
 
+// Quick-reply chips: when the last agent message ends with a recognized
+// prompt pattern, render structured pill buttons. Click sends the chip's
+// `send` text as if the visitor had typed it. Frontend-only — backend sees
+// a normal text message either way. This eliminates the recap-confirm loop
+// class of bugs (a clicked "yes" survives no LLM paraphrasing) and lowers
+// mobile friction (no keyboard typing required for the common case).
+type ChipSet = { id: string; label: string; send: string }[];
+
+const CHIP_PATTERNS: { match: RegExp; chips: ChipSet }[] = [
+  // Secretary booking recap. The prompt explicitly ends recap with this
+  // phrase, so the regex anchors to end-of-message.
+  {
+    match: /shall I book it\?\s*$/i,
+    chips: [
+      { id: "yes",    label: "✓ Yes, book it", send: "yes, book it" },
+      { id: "change", label: "Change time",    send: "actually, let's change the time" },
+      { id: "no",     label: "Not yet",        send: "not yet, hold on" },
+    ],
+  },
+];
+
+function detectChips(message: string): ChipSet | null {
+  for (const { match, chips } of CHIP_PATTERNS) {
+    if (match.test(message.trim())) return chips;
+  }
+  return null;
+}
+
 export default function ChatOverlay() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -41,9 +69,8 @@ export default function ChatOverlay() {
     return () => window.removeEventListener("open-chat", handleOpen);
   }, []);
 
-  const sendMessage = async () => {
-    const text = input.trim();
-    if (!text || loading) return;
+  const sendText = async (text: string) => {
+    if (!text.trim() || loading) return;
 
     const userMessage: Message = { role: "user", content: text };
     setMessages((prev) => [...prev, userMessage]);
@@ -89,6 +116,16 @@ export default function ChatOverlay() {
     }
   };
 
+  const sendMessage = () => sendText(input.trim());
+  const sendChip   = (text: string) => sendText(text);
+
+  // Chips render only against the latest agent message, and only when not
+  // currently loading (otherwise the recap is stale by the time the user
+  // clicks).
+  const lastAgentMessage = [...messages].reverse().find((m) => m.role === "agent");
+  const activeChips =
+    !loading && lastAgentMessage ? detectChips(lastAgentMessage.content) : null;
+
   return (
     <>
       <div
@@ -127,7 +164,23 @@ export default function ChatOverlay() {
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="chat-input-row mt-4">
+          {activeChips && (
+            <div className="chat-chips" role="group" aria-label="Quick reply options">
+              {activeChips.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  className="chat-chip"
+                  onClick={() => sendChip(c.send)}
+                  disabled={loading}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="chat-input-row">
             <input
               type="text"
               placeholder="Ask me anything..."

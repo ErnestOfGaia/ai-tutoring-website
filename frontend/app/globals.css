@@ -238,14 +238,22 @@ html, body {
   right: -100%;
   width: 400px;
   max-width: 100vw;
+  /* 100dvh = dynamic viewport height. Unlike 100vh, this SHRINKS when a
+     mobile keyboard opens, so the input row stays above the keyboard instead
+     of being pushed off-screen. Safari ≥ 15.4, Chrome ≥ 108, all current
+     mobile browsers support it. Fallback 100vh for any ancient browser. */
   height: 100vh;
+  height: 100dvh;
   background: rgba(28, 40, 48, 0.95);
   backdrop-filter: blur(16px);
   z-index: 1000;
   border-left: 1px solid rgba(125, 180, 199, 0.3);
   display: flex;
   flex-direction: column;
+  /* env(safe-area-inset-bottom) keeps the input above the iPhone home
+     indicator and any other dynamic OS bars when the keyboard is closed. */
   padding: 1.5rem;
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
   /* "Wave-like" cubic bezier curve: speeds in, gently settles */
   transition: right 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -290,10 +298,45 @@ html, body {
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Quick-reply chips — sit between the message list and the input row,
+   render when the secretary asks "Shall I book it?" or similar. Click
+   submits the chip's text as a normal chat message. */
+.chat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.25rem;
+}
+.chat-chip {
+  background: rgba(29, 158, 117, 0.18);
+  border: 1px solid var(--teal);
+  border-radius: 999px;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+.chat-chip:hover:not(:disabled) {
+  background: rgba(29, 158, 117, 0.35);
+}
+.chat-chip:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.chat-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .chat-input-row {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  /* Sits at the bottom of the flex column; chips appear above when active. */
+  margin-top: 0.5rem;
 }
 .chat-input {
   flex: 1;
