@@ -218,27 +218,72 @@ const delegateToMarketer = createTool({
   description: 'Handle coaching, services, pricing, and general visitor questions about Ernest Of Gaia.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async (input) => {
+  execute: async (input, context) => {
     console.error('[mastra] delegate-to-marketer fired');
+    const conversation = extractConversation(context, input.message);
     const result = await marketerAgent.generate(
-      [{ role: 'user', content: input.message }],
-      { maxSteps: SPECIALIST_MAX_STEPS },
+      conversation,
+      {
+        maxSteps: SPECIALIST_MAX_STEPS,
+        ...(context?.agent?.threadId   && { threadId:   context.agent.threadId }),
+        ...(context?.agent?.resourceId && { resourceId: context.agent.resourceId }),
+      },
     );
     return { reply: result.text };
   },
 });
+
+// extractConversation pulls the user/assistant turns from the routing agent's
+// AgentToolExecutionContext.messages so we can forward the actual conversation
+// to the specialist. Without this, the specialist sees ONLY the single stripped
+// `message` arg the routing-agent LLM fabricated — affirmations like "yes book it"
+// get summarized away into "Book appointment for X" and the specialist loses the
+// recap-confirm continuity, looping forever. Filters out tool-call payloads,
+// system messages, and assistant turns that are tool-use blocks (non-string).
+function extractConversation(ctx: any, fallbackMessage: string): { role: 'user' | 'assistant'; content: string }[] {
+  const raw: any[] = ctx?.agent?.messages || [];
+  const turns: { role: 'user' | 'assistant'; content: string }[] = [];
+  for (const m of raw) {
+    if (!m || typeof m !== 'object') continue;
+    if (m.role !== 'user' && m.role !== 'assistant') continue;
+    // content may be a string OR an array of content blocks (tool_use, tool_result, text)
+    let text = '';
+    if (typeof m.content === 'string') {
+      text = m.content;
+    } else if (Array.isArray(m.content)) {
+      text = m.content
+        .filter((b: any) => b?.type === 'text' && typeof b.text === 'string')
+        .map((b: any) => b.text)
+        .join('\n')
+        .trim();
+    }
+    if (text) turns.push({ role: m.role, content: text });
+  }
+  // Belt-and-suspenders: if extraction yielded nothing usable, fall back to
+  // the single arg the LLM passed in.
+  if (turns.length === 0) {
+    turns.push({ role: 'user', content: fallbackMessage });
+  }
+  return turns;
+}
 
 const delegateToSecretary = createTool({
   id: 'delegate-to-secretary',
   description: 'Handle scheduling, booking, appointment availability, and session logistics.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async (input) => {
+  execute: async (input, context) => {
     console.error('[mastra] delegate-to-secretary fired, msg:', input.message.slice(0, 120));
     try {
+      const conversation = extractConversation(context, input.message);
+      console.error('[mastra] forwarding', conversation.length, 'turns to secretary');
       const result: any = await secretaryAgent.generate(
-        [{ role: 'user', content: input.message }],
-        { maxSteps: SPECIALIST_MAX_STEPS },
+        conversation,
+        {
+          maxSteps: SPECIALIST_MAX_STEPS,
+          ...(context?.agent?.threadId   && { threadId:   context.agent.threadId }),
+          ...(context?.agent?.resourceId && { resourceId: context.agent.resourceId }),
+        },
       );
       console.error(
         '[mastra] secretary returned — finishReason:', result?.finishReason,
@@ -259,11 +304,16 @@ const delegateToRecruiter = createTool({
   description: 'Handle professional inquiries: consulting, partnerships, job opportunities, and collaboration requests.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async (input) => {
+  execute: async (input, context) => {
     console.error('[mastra] delegate-to-recruiter fired');
+    const conversation = extractConversation(context, input.message);
     const result = await recruiterAgent.generate(
-      [{ role: 'user', content: input.message }],
-      { maxSteps: SPECIALIST_MAX_STEPS },
+      conversation,
+      {
+        maxSteps: SPECIALIST_MAX_STEPS,
+        ...(context?.agent?.threadId   && { threadId:   context.agent.threadId }),
+        ...(context?.agent?.resourceId && { resourceId: context.agent.resourceId }),
+      },
     );
     return { reply: result.text };
   },
@@ -275,10 +325,11 @@ const delegateToSurf = createTool({
   description: 'Handle surf conditions, wave reports, and beach/ocean questions for Cape Kiwanda.',
   inputSchema: z.object({ message: z.string() }),
   outputSchema: z.object({ reply: z.string() }),
-  execute: async (input) => {
+  execute: async (input, context) => {
     console.error('[mastra] delegate-to-surf fired');
+    const conversation = extractConversation(context, input.message);
     const result = await surfAgent.generate(
-      [{ role: 'user', content: input.message }],
+      conversation,
       { maxSteps: SPECIALIST_MAX_STEPS },
     );
     return { reply: result.text };
@@ -296,9 +347,19 @@ Classification -- use the FIRST match:
 1. resume / portfolio / work history / CV -> reply exactly: "You can explore Ernest's work history at https://resume.ernestofgaia.xyz -- the Librarian there can walk you through specific roles and projects."
 2. surf / waves / swell / tide / conditions / beach / ocean / Cape Kiwanda -> delegate-to-surf
 3. consult / recruit / partner / collaborate / hire / contract -> delegate-to-recruiter
-4. schedule / book / booking / appointment / availability / open slots / session / when can / next week / discovery call / did Ernest get my email / follow up / intake form / contract template / coaching agreement -> delegate-to-secretary
-5. coach / learn / AI / tool / help / skill / services / pricing / hello / who is Ernest -> delegate-to-marketer
-6. anything else -> delegate-to-marketer
+4. schedule / book / booking / appointment / availability / open slots / session / when can / next week / discovery call / yes book it / confirm / go ahead -> delegate-to-secretary
+5. short affirmation OR negation ("yes", "no", "yeah", "sure", "nope", "go ahead", "cancel that") AND the previous assistant turn was from the secretary (a booking recap, an availability list, or a question about scheduling) -> delegate-to-secretary
+6. coach / learn / AI / tool / help / skill / services / pricing / hello / who is Ernest -> delegate-to-marketer
+7. anything else -> delegate-to-marketer
+
+CRITICAL — message argument passing:
+When you call a delegate tool, pass the visitor's CURRENT message into the
+"message" arg EXACTLY AS THEY WROTE IT. Do not paraphrase. Do not extract intent.
+Do not "helpfully" reconstruct earlier booking details. If the visitor wrote
+"yes book it", pass "yes book it" — not "Book appointment for Test User...".
+The specialist already sees the full conversation history through its own
+context and does not need you to summarize. Paraphrasing breaks confirmation
+flows because the specialist loses the literal "yes" needed to commit.
 
 Rules:
 - Call exactly one delegate tool (or give the resume reply directly).
