@@ -65,6 +65,19 @@ export const calendarBookEventTool = createTool({
             { email: IMPERSONATE, responseStatus: 'accepted' },
             { email: visitorEmail, displayName: visitorName },
           ],
+          // Reminders are per-user in Google Calendar — these fire only for the
+          // event organizer (eog@). The visitor gets whatever default reminders
+          // their own Google account has set. Max 5 reminders per event, max
+          // 40320 minutes (4 weeks) before — 14 days is the longest we can do.
+          reminders: {
+            useDefault: false,
+            overrides: [
+              { method: 'email', minutes: 14 * 24 * 60 }, // 2 weeks = 20160
+              { method: 'email', minutes:  7 * 24 * 60 }, // 1 week  = 10080
+              { method: 'email', minutes:      24 * 60 }, // 1 day   =  1440
+              { method: 'email', minutes:           60 }, // 1 hour
+            ],
+          },
         },
       });
 
