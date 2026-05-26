@@ -2,16 +2,21 @@
  * calendarListAvailabilityTool — list open slots on Ernest's calendar over a window.
  *
  * Read-only. Uses calendar.freebusy.query against GOOGLE_CALENDAR_ID and intersects
- * busy ranges with configured working hours (Mon–Fri, 9–5 in GOOGLE_TIMEZONE).
+ * busy ranges with Ernest's auto-bookable windows: Mon/Tue/Wed, 12 PM – 8 PM in
+ * GOOGLE_TIMEZONE. Off-window requests should be routed to direct contact
+ * (text 503-664-0546 or email eog@ernestofgaia.xyz) — the secretary does not
+ * auto-book outside these days/hours.
  */
 
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { calendarClient, CALENDAR_ID, TIMEZONE } from '../lib/googleAuth.js';
 
-const WORK_DAYS  = [1, 2, 3, 4, 5]; // Mon–Fri, JS getUTCDay() values after TZ shift
-const WORK_START = 9;  // 09:00 local
-const WORK_END   = 17; // 17:00 local
+// Auto-book windows: Mon/Tue/Wed, noon–8 PM Pacific. Anything else, secretary
+// redirects the visitor to contact Ernest directly.
+const WORK_DAYS  = [1, 2, 3];   // Mon, Tue, Wed (JS Date.getDay() values)
+const WORK_START = 12; // 12:00 local
+const WORK_END   = 20; // 20:00 local
 
 export const calendarListAvailabilityTool = createTool({
   id: 'calendar-list-availability',

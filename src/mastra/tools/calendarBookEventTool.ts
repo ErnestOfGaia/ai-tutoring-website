@@ -1,59 +1,56 @@
 /**
- * calendarBookEventTool — propose or create a calendar event.
+ * calendarBookEventTool — create a calendar event for a discovery call.
  *
- * Confirmation gate: if `confirm` is false the tool returns the proposed event
- * without writing to Google. Only when `confirm: true` does it create the event
- * and send Google's calendar invite to the visitor.
+ * Single-step. When the agent calls this tool, the event is created immediately
+ * and a Google Calendar invite goes to the visitor. The "are you sure?" gate
+ * lives in the secretary agent's prompt — the agent MUST recap the booking
+ * details and get an explicit visitor "yes" BEFORE calling this tool. The
+ * previous two-step propose/confirm flow was removed because LLMs reliably
+ * fail to flip a `confirm` flag on the second call; they treat the first
+ * (propose) call as completion and never re-invoke the tool.
  *
- * The agent is instructed to (1) propose, (2) wait for the visitor's "yes",
- * (3) call again with confirm:true. The schema-level requirement is the
- * structural backstop — the LLM cannot accidentally book without it.
+ * Side effect: on successful booking, a Gmail draft TO eog@ernestofgaia.xyz
+ * is created summarizing the new booking — heads-up for Ernest in his inbox.
  */
 
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
-import { calendarClient, CALENDAR_ID, TIMEZONE, IMPERSONATE } from '../lib/googleAuth.js';
+import { calendarClient, gmailClient, CALENDAR_ID, TIMEZONE, IMPERSONATE } from '../lib/googleAuth.js';
 
 export const calendarBookEventTool = createTool({
   id: 'calendar-book-event',
   description:
-    'Book a discovery call on Ernest\'s calendar. Two-step protocol: first call ' +
-    'with confirm:false to show the visitor the proposed event details and get ' +
-    'their explicit approval. Only call again with confirm:true after the ' +
-    'visitor replies affirmatively. The visitor will receive a Google Calendar ' +
-    'invite by email when confirmed.',
+    'Book a discovery call on Ernest\'s calendar. Single-step: when called, ' +
+    'the event is created immediately and a Google Calendar invite is sent to ' +
+    'the visitor. CRITICAL: do not call this tool until you have recapped the ' +
+    'visitor name, email, date and time back to the visitor in plain text and ' +
+    'they have replied with an explicit affirmative (yes / confirm / book it). ' +
+    'Default duration 30 minutes; use 60 only if the visitor explicitly asks.',
   inputSchema: z.object({
-    start:        z.string().describe('ISO 8601 start time, e.g. 2026-05-15T17:00:00Z'),
+    start:        z.string().describe('ISO 8601 start time, e.g. 2026-05-26T13:00:00-07:00'),
     end:          z.string().describe('ISO 8601 end time'),
     visitorName:  z.string(),
     visitorEmail: z.string().email(),
     summary:      z.string().default('Discovery call with Ernest Of Gaia'),
-    description: z.string().optional(),
-    confirm: z.boolean().default(false)
-      .describe('false = propose only; true = actually create the event.'),
+    description:  z.string().optional(),
   }),
   outputSchema: z.object({
-    status: z.enum(['proposed', 'created']),
-    proposed: z.object({
+    status:   z.literal('created'),
+    eventId:  z.string().optional(),
+    htmlLink: z.string().optional(),
+    booked: z.object({
       start:        z.string(),
       end:          z.string(),
       summary:      z.string(),
       visitorName:  z.string(),
       visitorEmail: z.string(),
     }),
-    eventId:  z.string().optional(),
-    htmlLink: z.string().optional(),
+    eogDraftId: z.string().optional(),
   }),
   execute: async (input) => {
     console.error('[calendarBookEvent] fired, input:', JSON.stringify(input));
     try {
-      const { start, end, visitorName, visitorEmail, summary, description, confirm } = input;
-      const proposed = { start, end, summary, visitorName, visitorEmail };
-
-      if (!confirm) {
-        console.error('[calendarBookEvent] proposed only (confirm=false)');
-        return { status: 'proposed' as const, proposed };
-      }
+      const { start, end, visitorName, visitorEmail, summary, description } = input;
 
       const cal = await calendarClient();
       const res = await cal.events.insert({
@@ -71,12 +68,51 @@ export const calendarBookEventTool = createTool({
         },
       });
 
-      console.error('[calendarBookEvent] created event id:', res.data.id);
+      const eventId  = res.data.id || undefined;
+      const htmlLink = res.data.htmlLink || undefined;
+      console.error('[calendarBookEvent] created event id:', eventId);
+
+      // Side effect: draft a heads-up email TO Ernest summarizing the booking.
+      // Wrapped in its own try so a draft failure does not roll back the
+      // already-confirmed calendar event — that would lie to the visitor.
+      let eogDraftId: string | undefined;
+      try {
+        const gmail = await gmailClient();
+        const subject = `New discovery call booked: ${visitorName} — ${start}`;
+        const body =
+          `Hey Ernest,\n\n` +
+          `A new discovery call was just booked through the secretary agent.\n\n` +
+          `Visitor: ${visitorName} <${visitorEmail}>\n` +
+          `When: ${start} (${TIMEZONE})\n` +
+          `Through: ${end}\n` +
+          `Calendar link: ${htmlLink || '(none returned)'}\n` +
+          `Event ID: ${eventId || '(none returned)'}\n\n` +
+          `— secretaryAgent`;
+
+        const rfc822 =
+          `To: ${IMPERSONATE}\r\n` +
+          `Subject: ${subject}\r\n` +
+          `Content-Type: text/plain; charset=UTF-8\r\n` +
+          `\r\n` +
+          body;
+        const raw = Buffer.from(rfc822).toString('base64url');
+
+        const draft = await gmail.users.drafts.create({
+          userId: 'me',
+          requestBody: { message: { raw } },
+        });
+        eogDraftId = draft.data.id || undefined;
+        console.error('[calendarBookEvent] eog draft created id:', eogDraftId);
+      } catch (draftErr: any) {
+        console.error('[calendarBookEvent] eog draft FAILED (event still booked):', draftErr?.message || draftErr);
+      }
+
       return {
         status:   'created' as const,
-        proposed,
-        eventId:  res.data.id || undefined,
-        htmlLink: res.data.htmlLink || undefined,
+        eventId,
+        htmlLink,
+        booked:   { start, end, summary, visitorName, visitorEmail },
+        eogDraftId,
       };
     } catch (err: any) {
       console.error('[calendarBookEvent] ERROR:', err?.message || err);
