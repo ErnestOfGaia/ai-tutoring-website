@@ -1,0 +1,137 @@
+import type { Metadata } from "next";
+import PageLayout from "../_components/PageLayout";
+
+export const metadata: Metadata = {
+  title: "Services",
+  description:
+    "AI coaching tiers from Ernest Of Gaia: Tier 1 Foundations ($75/session), Tier 2 The Workshop ($110/session). All coaching is personalized and 1-on-1.",
+  alternates: {
+    canonical: "https://ernestofgaia.xyz/begin-learning/services",
+  },
+};
+
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Ernest Of Gaia AI Coaching Service Tiers",
+  description:
+    "Ways to work together: Foundations and Workshop coaching tiers.",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      item: {
+        "@type": "Service",
+        name: "Tier 1: Foundations — AI Starter",
+        description:
+          "Get comfortable with AI. 60-minute sessions covering ChatGPT, Claude, prompting basics, Claude Projects setup, and AI safety. Best for beginners.",
+        provider: { "@type": "Person", name: "Ernest Of Gaia" },
+        offers: {
+          "@type": "Offer",
+          price: "75",
+          priceCurrency: "USD",
+          duration: "PT60M",
+        },
+      },
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      item: {
+        "@type": "Service",
+        name: "Tier 2: The Workshop — AI Builder",
+        description:
+          "Build real workflows. 75-minute sessions covering custom prompts, multi-tool workflows, Claude Projects, content pipelines, and Google Workspace integrations.",
+        provider: { "@type": "Person", name: "Ernest Of Gaia" },
+        offers: {
+          "@type": "Offer",
+          price: "110",
+          priceCurrency: "USD",
+          duration: "PT75M",
+        },
+      },
+    },
+  ],
+};
+
+export default function Services() {
+  return (
+    <PageLayout
+      prev="/begin-learning/what-i-do"
+      prevLabel="← What I Do"
+      next="/begin-learning/how-it-works"
+      nextLabel="How It Works →"
+      breadcrumbs={[{ label: "Services", href: "/begin-learning/services" }]}
+      jsonLd={servicesJsonLd}
+    >
+      <h1>Services</h1>
+      <h2>Two Ways to Work Together</h2>
+
+      <p>
+        Whether you&apos;re just curious about AI or ready to build workflows,
+        there&apos;s a tier that fits. All coaching is personalized,
+        one-on-one, and focused on what <em>you</em> need.
+      </p>
+
+      <div className="eogbook-tier-grid">
+        {/* Tier 0 */}
+        <div className="eogbook-tier-card">
+          <div className="eogbook-tier-name">Tier 0: Free Handshake</div>
+          <div className="eogbook-tier-price">Free</div>
+          <div className="eogbook-tier-meta">30 min · Online · No commitment</div>
+          <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)", marginBottom: 0 }}>
+            Talk through how you work, what AI can do for you, and whether
+            coaching is the right fit.
+          </p>
+        </div>
+
+        {/* Tier 1 */}
+        <div className="eogbook-tier-card">
+          <div className="eogbook-tier-name">
+            Tier 1: Foundations
+            <span className="eogbook-label" style={{ display: "inline", marginLeft: "0.5rem", fontSize: "0.7rem" }}>AI Starter</span>
+          </div>
+          <div className="eogbook-tier-price">$75 / session</div>
+          <div className="eogbook-tier-meta">60 min · In-person or online</div>
+          <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)", marginBottom: 0 }}>
+            Build your first AI habits. Prompting basics, Claude.ai setup,
+            AI safety, and one concrete homework exercise per session.
+          </p>
+        </div>
+
+        {/* Tier 2 */}
+        <div className="eogbook-tier-card eogbook-tier-card--popular">
+          <div className="eogbook-tier-name">
+            Tier 2: The Workshop
+            <span className="eogbook-badge">Most Popular</span>
+          </div>
+          <div className="eogbook-tier-price">$110 / session</div>
+          <div className="eogbook-tier-meta">75 min · In-person or online</div>
+          <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)", marginBottom: 0 }}>
+            Build real workflows. Custom prompts, content pipelines, Claude
+            Projects, integrations with Google Workspace or Notion.
+          </p>
+        </div>
+
+      </div>
+
+      <div className="eogbook-drilldown" aria-label="Explore individual tiers">
+        <a href="/begin-learning/services/tier-1" className="eogbook-drill-link">
+          Explore Tier 1 Foundations details
+        </a>
+        <a href="/begin-learning/services/tier-2" className="eogbook-drill-link">
+          Explore Tier 2 Workshop details
+        </a>
+        <a href="/begin-learning/services/plans" className="eogbook-drill-link">
+          See coaching plans and commitment options
+        </a>
+      </div>
+
+      <div className="eogbook-cta-row">
+        <a href="tel:+15036640546" className="cta-btn">
+          Schedule a free call
+        </a>
+      </div>
+    </PageLayout>
+  );
+}

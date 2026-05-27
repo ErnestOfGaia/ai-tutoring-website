@@ -31,30 +31,98 @@ html, body {
   background: var(--dark);
 }
 
-/* ─── Top bar ──────────────────────────────────────────────── */
+/* ─── Top bar ──────────────────────────────────────────────────
+   Persistent header rendered from app/layout.tsx via <TopBar />.
+   Hides raw contact details behind a prominent "Text Me" pill plus
+   circular icon buttons (email / LinkedIn / YouTube). Brand colors
+   are sourced from the tokens at the top of this file. */
 .top-bar {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(28, 40, 48, 0.90);
+  background: rgba(28, 40, 48, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(125, 180, 199, 0.18);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
-  padding: 0.65rem 1.5rem;
-  flex-wrap: wrap;
+  padding: 0.6rem 1.5rem;
+}
+.top-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.top-bar-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(125, 180, 199, 0.35);
 }
 
-.top-bar a {
-  color: rgba(255, 255, 255, 0.88);
+/* "Text Me" — primary pill, brand teal background, hugs an SMS icon */
+.text-me-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--teal);
+  color: var(--white);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, transform 0.1s;
+}
+.text-me-btn:hover  { background: #256560; }
+.text-me-btn:active { transform: scale(0.97); }
+
+/* Circular icon buttons — email / LinkedIn / YouTube */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(125, 180, 199, 0.12);
+  color: var(--sky);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+.icon-btn:hover  { background: var(--teal); color: var(--white); }
+.icon-btn:active { transform: scale(0.94); }
+
+/* EOGbook secondary nav — chat opener + home link.
+   Pinned below the global TopBar (top: 56px). */
+.eogbook-subnav {
+  position: fixed;
+  top: 56px; right: 1rem;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+/* Home back-link styled to match the adjacent "Ask Questions" pill
+   (.top-nav-cta) so the two read as a balanced pair. Outlined teal —
+   secondary action — fills solid teal on hover. */
+.eogbook-subnav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--white);
   text-decoration: none;
   font-size: 0.85rem;
-  white-space: nowrap;
-  transition: color 0.2s;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--teal);
+  border-radius: 6px;
+  background: rgba(46, 122, 116, 0.18);
+  transition: background 0.2s, color 0.2s, transform 0.1s;
 }
-.top-bar a:hover { color: var(--teal); }
+.eogbook-subnav a:hover  { background: var(--teal); }
+.eogbook-subnav a:active { transform: scale(0.97); }
 
 /* ─── Hero section ─────────────────────────────────────────── */
 .hero {
@@ -100,32 +168,37 @@ html, body {
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.15;
-  margin-bottom: 1rem;
+  margin-bottom: 0.65rem;
 }
 
 .hero-body {
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 1rem;
+  margin-bottom: 0.55rem;
 }
 
 .tagline {
   font-size: 1rem;
   font-style: italic;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.7rem;
 }
 
+/* Location label — informational, not actionable. Visually distinct from
+   the service-card buttons below it: no border, no fill, just a small
+   icon + muted sky-toned text. */
 .location-pill {
-  display: inline-block;
-  background: rgba(29, 158, 117, 0.20);
-  border: 1px solid var(--teal);
-  border-radius: 999px;
-  padding: 0.3rem 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.25rem;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 1.4rem;
+  font-style: italic;
+  color: var(--sky);
+  opacity: 0.85;
+  margin-bottom: 0.85rem;
+  cursor: default;
 }
 
 /* ─── Service cards ────────────────────────────────────────── */
@@ -141,11 +214,22 @@ html, body {
   background: rgba(29, 158, 117, 0.15);
   border: 1px solid rgba(29, 158, 117, 0.55);
   border-radius: 8px;
-  padding: 0.45rem 0.95rem;
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.88);
+  /* Sized to match the primary .cta-btn below so the hero rows feel
+     consistent. The teal-outline variant signals secondary action. */
+  padding: 0.75rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
   letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
 }
+.service-card:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+}
+.service-card:active { transform: scale(0.97); }
 
 /* ─── CTA button ───────────────────────────────────────────── */
 .cta-btn {
@@ -182,12 +266,13 @@ html, body {
 
 /* ─── Mobile (≤ 640px) ─────────────────────────────────────── */
 @media (max-width: 640px) {
-  .top-bar {
-    gap: 0.6rem;
-    padding: 0.55rem 0.9rem;
-    justify-content: flex-start;
-  }
-  .top-bar a { font-size: 0.76rem; }
+  .top-bar         { padding: 0.5rem 0.75rem; }
+  .top-bar-inner   { gap: 0.55rem; }
+  .text-me-btn     { padding: 0.45rem 0.85rem; font-size: 0.85rem; }
+  .text-me-btn svg { width: 16px; height: 16px; }
+  .icon-btn        { width: 36px; height: 36px; }
+  .icon-btn svg    { width: 16px; height: 16px; }
+  .eogbook-subnav  { top: 52px; right: 0.6rem; gap: 0.55rem; }
 
   .hero {
     padding-top: 88px;
@@ -203,7 +288,7 @@ html, body {
   .hero-body     { font-size: 0.93rem; }
 
   .services      { gap: 0.45rem; }
-  .service-card  { font-size: 0.78rem; padding: 0.4rem 0.75rem; }
+  .service-card  { font-size: 0.95rem; padding: 0.65rem 1.25rem; }
 
   .cta-btn       { width: 100%; }
 }
@@ -369,8 +454,20 @@ html, body {
 .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 @media (max-width: 640px) {
-  .chat-input   { font-size: 0.85rem; }
-  .send-btn     { padding: 0.55rem 0.85rem; }
+  /* Extra breathing room on small phones — narrow widths (≤360px Galaxy
+     Fold/SE) were pushing the input + Send button flush to the edges.
+     Bumping side/bottom padding + a min-width:0 on the input keeps the
+     field from being squeezed by the Send button at any device width. */
+  .chat-overlay {
+    padding: 1rem 1.25rem;
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom) + 0.5rem);
+  }
+  .chat-input-row {
+    gap: 0.4rem;
+    padding: 0 0.25rem 0.25rem;
+  }
+  .chat-input   { font-size: 0.85rem; min-width: 0; }
+  .send-btn     { padding: 0.55rem 0.85rem; flex-shrink: 0; }
 }
 
 /* ═══════════════════════════════════════════════════════════

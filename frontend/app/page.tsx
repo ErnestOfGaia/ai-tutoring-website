@@ -4,25 +4,7 @@ import ChatButton from "./_components/ChatButton";
 export default function Home() {
   return (
     <>
-      {/* ── Top bar ── */}
-      <header className="top-bar">
-        <a href="tel:+15036640546">503-664-0546</a>
-        <a href="mailto:eog@ErnestOfGaia.xyz">eog@ErnestOfGaia.xyz</a>
-        <a
-          href="https://linkedin.com/in/ernestofgaia"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          LinkedIn
-        </a>
-        <a
-          href="https://x.com/ErnestOfGaia"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          @ErnestOfGaia
-        </a>
-      </header>
+      {/* TopBar moved to app/layout.tsx — now persistent across all routes */}
 
       {/* ── Hero ── */}
       <main className="hero">
@@ -33,25 +15,38 @@ export default function Home() {
             <h1>Ernest Of Gaia</h1>
 
             <p className="hero-body">
-              Master the art of prompt engineering and lifecycle automation
-              through personalized, 1-on-1 holistic coaching.
+              A Human-Centered Approach to AI.
+              <br />
+              Learn AI that actually fits the way you work, think, and live.
             </p>
 
-            <p className="tagline">AI, Explained Like a Human</p>
+            <p className="tagline">AI for your Home, Hobby, or Business</p>
 
-            <div className="location-pill">Pacific City → Portland, Oregon</div>
+            <div className="location-pill">
+              <span aria-hidden="true">📍</span>
+              <span>Pacific City → Portland, Oregon</span>
+            </div>
 
             <div className="services">
-              <Link href="/eogbook/what-i-do" className="service-card" style={{ textDecoration: 'none', color: 'inherit' }}>Custom Workflows</Link>
-              <Link href="/eogbook/services/tier-1" className="service-card" style={{ textDecoration: 'none', color: 'inherit' }}>Foundations (Tier 1)</Link>
-              <Link href="/eogbook/services/tier-2" className="service-card" style={{ textDecoration: 'none', color: 'inherit' }}>The Workshop (Tier 2)</Link>
+              <Link href="/begin-learning/services" className="service-card">Services</Link>
+              <Link href="/begin-learning/what-i-do" className="service-card">About</Link>
+              <Link href="/begin-learning/giveback" className="service-card">Give Back</Link>
             </div>
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Link href="/eogbook" className="cta-btn" style={{ textDecoration: 'none' }}>
-                Open Book
+              <Link href="/begin-learning" className="cta-btn" style={{ textDecoration: 'none' }}>
+                Learn More
               </Link>
-              <ChatButton className="cta-btn" />
+              <ChatButton className="cta-btn">Ask Questions</ChatButton>
+              {/* Auto-sends a booking-intent message so the router lands
+                  the visitor directly on the secretary agent — no recap of
+                  intent needed. */}
+              <ChatButton
+                className="cta-btn"
+                initialMessage="Hi! I'd like to book an appointment."
+              >
+                Book Appointment
+              </ChatButton>
             </div>
           </div>
         </div>

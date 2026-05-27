@@ -17,7 +17,11 @@ export const mastra = new Mastra({
     id: 'composite-storage',
     default: new LibSQLStore({
       id: "mastra-storage",
-      url: "file:./data/mastra.db",
+      // Prod (Docker) uses the default relative path against the /app workdir.
+      // Local dev: set MASTRA_DB_URL=file:<absolute-path> in .env — `mastra dev`
+      // bundles into `.mastra/output/` and runs with that as cwd, so a relative
+      // path resolves to a wiped-on-rebuild directory and fails with CANTOPEN.
+      url: process.env.MASTRA_DB_URL ?? "file:./data/mastra.db",
     }),
     domains: {
       observability: observabilityStore,

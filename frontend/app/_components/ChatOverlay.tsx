@@ -46,6 +46,10 @@ export default function ChatOverlay() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  // Ref kept in sync with the current `sendText` closure so the open-chat
+  // event handler (registered once on mount) always calls the freshest
+  // version — capturing it directly would read stale `messages` state.
+  const sendTextRef = useRef<(t: string) => Promise<void>>(async () => {});
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -54,7 +58,19 @@ export default function ChatOverlay() {
   }, [messages, isOpen]);
 
   useEffect(() => {
-    const handleOpen = () => setIsOpen(true);
+    // Open-chat event optionally carries `detail.initialMessage` — when
+    // present, auto-send it after the overlay opens. Used by the
+    // "Book Appointment" button to land the visitor on the secretary agent
+    // without forcing them to type their intent.
+    const handleOpen = (e: Event) => {
+      setIsOpen(true);
+      const initial = (e as CustomEvent<{ initialMessage?: string }>).detail
+        ?.initialMessage;
+      if (initial) {
+        // Defer one tick so the overlay's open transition kicks off first.
+        setTimeout(() => { void sendTextRef.current(initial); }, 50);
+      }
+    };
     window.addEventListener("open-chat", handleOpen);
 
     // Initial check for ?chat=open
@@ -115,6 +131,10 @@ export default function ChatOverlay() {
       setLoading(false);
     }
   };
+
+  // Re-bind the ref every render so handleOpen sees the latest closure
+  // (which captures the current `messages` / `loading` state).
+  sendTextRef.current = sendText;
 
   const sendMessage = () => sendText(input.trim());
   const sendChip   = (text: string) => sendText(text);

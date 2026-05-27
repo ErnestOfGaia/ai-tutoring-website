@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // ── EOGbook home directory
     {
-      url: `${BASE_URL}/eogbook`,
+      url: `${BASE_URL}/begin-learning`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 1.0,
@@ -23,43 +23,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // ── EOGbook main pages
     {
-      url: `${BASE_URL}/eogbook/who-is-ernest`,
+      url: `${BASE_URL}/begin-learning/who-is-ernest`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/eogbook/what-i-do`,
+      url: `${BASE_URL}/begin-learning/what-i-do`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/eogbook/services`,
+      url: `${BASE_URL}/begin-learning/services`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/eogbook/how-it-works`,
+      url: `${BASE_URL}/begin-learning/how-it-works`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/eogbook/giveback`,
+      url: `${BASE_URL}/begin-learning/giveback`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/eogbook/trust`,
+      url: `${BASE_URL}/begin-learning/trust`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/eogbook/get-started`,
+      url: `${BASE_URL}/begin-learning/get-started`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.9,
@@ -67,79 +67,79 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // ── EOGbook drill-down pages
     {
-      url: `${BASE_URL}/eogbook/who-is-ernest/approach`,
+      url: `${BASE_URL}/begin-learning/who-is-ernest/approach`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/what-i-do/ai-skills`,
+      url: `${BASE_URL}/begin-learning/what-i-do/ai-skills`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/what-i-do/lifelong-learning`,
+      url: `${BASE_URL}/begin-learning/what-i-do/lifelong-learning`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/services/tier-1`,
+      url: `${BASE_URL}/begin-learning/services/tier-1`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/eogbook/services/tier-2`,
+      url: `${BASE_URL}/begin-learning/services/tier-2`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/eogbook/services/tier-3`,
+      url: `${BASE_URL}/begin-learning/services/tier-3`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/eogbook/services/plans`,
+      url: `${BASE_URL}/begin-learning/services/plans`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/how-it-works/step-1`,
+      url: `${BASE_URL}/begin-learning/how-it-works/step-1`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/how-it-works/step-2`,
+      url: `${BASE_URL}/begin-learning/how-it-works/step-2`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/how-it-works/step-3`,
+      url: `${BASE_URL}/begin-learning/how-it-works/step-3`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/how-it-works/step-4-5`,
+      url: `${BASE_URL}/begin-learning/how-it-works/step-4-5`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/giveback/how-it-works`,
+      url: `${BASE_URL}/begin-learning/giveback/how-it-works`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/eogbook/giveback/eligible-orgs`,
+      url: `${BASE_URL}/begin-learning/giveback/eligible-orgs`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,

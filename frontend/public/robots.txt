@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
-Allow: /eogbook/
-Allow: /eogbook/*
+Allow: /begin-learning/
+Allow: /begin-learning/*
 Disallow: /admin
 Disallow: /api/internal
 

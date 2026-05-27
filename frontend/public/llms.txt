@@ -9,7 +9,7 @@ Portland Metro, Oregon.
 - LinkedIn: https://linkedin.com/in/ernestofgaia
 - X: https://x.com/ErnestOfGaia
 - Website: https://ernestofgaia.xyz
-- Machine-readable data: https://ernestofgaia.xyz/api/eogbook
+- Machine-readable data: https://ernestofgaia.xyz/api/begin-learning
 
 ## Services
 - Tier 1: Foundations — AI Starter ($75/session, 60 min, for beginners)
@@ -24,16 +24,16 @@ holistic 1-on-1 coaching. Plain English, no jargon, no hype.
 Tagline: "AI That Actually Works for Your Real Life"
 
 ## Coaching Information Architecture (EOGbook)
-Full service details at: https://ernestofgaia.xyz/eogbook
+Full service details at: https://ernestofgaia.xyz/begin-learning
 
 Pages:
-- Who Is Ernest: https://ernestofgaia.xyz/eogbook/who-is-ernest
-- What I Do: https://ernestofgaia.xyz/eogbook/what-i-do
-- Services: https://ernestofgaia.xyz/eogbook/services
-- How It Works: https://ernestofgaia.xyz/eogbook/how-it-works
-- Nonprofit Giveback: https://ernestofgaia.xyz/eogbook/giveback
-- Trust & FAQs: https://ernestofgaia.xyz/eogbook/trust
-- Get Started: https://ernestofgaia.xyz/eogbook/get-started
+- Who Is Ernest: https://ernestofgaia.xyz/begin-learning/who-is-ernest
+- What I Do: https://ernestofgaia.xyz/begin-learning/what-i-do
+- Services: https://ernestofgaia.xyz/begin-learning/services
+- How It Works: https://ernestofgaia.xyz/begin-learning/how-it-works
+- Nonprofit Giveback: https://ernestofgaia.xyz/begin-learning/giveback
+- Trust & FAQs: https://ernestofgaia.xyz/begin-learning/trust
+- Get Started: https://ernestofgaia.xyz/begin-learning/get-started
 
 ## Nonprofit Giveback Program
 Every 12 hours of paid coaching earns one free AI coaching session for a
