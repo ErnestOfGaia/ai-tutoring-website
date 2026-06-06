@@ -1,0 +1,42 @@
+ frontend/app/_components/ChatButton.tsx            |  22 [32m++[m[31m-[m
+ frontend/app/_components/ChatOverlay.tsx           |  22 [32m++[m[31m-[m
+ frontend/app/_components/TopBar.tsx                |  93 [32m++++++++++++[m
+ .../app/api/{eogbook => begin-learning}/route.ts   |  50 [32m+++[m[31m----[m
+ .../_components/FaqAccordion.tsx                   |   0
+ .../_components/NavigationButtons.tsx              |   8 [32m+[m[31m-[m
+ .../_components/PageLayout.tsx                     |   2 [32m+[m[31m-[m
+ .../get-started/page.tsx                           |   6 [32m+[m[31m-[m
+ .../giveback/eligible-orgs/page.tsx                |  10 [32m+[m[31m-[m
+ .../giveback/how-it-works/page.tsx                 |  12 [32m+[m[31m-[m
+ .../{eogbook => begin-learning}/giveback/page.tsx  |  12 [32m+[m[31m-[m
+ .../how-it-works/page.tsx                          |  26 [32m++[m[31m--[m
+ .../how-it-works/step-1/page.tsx                   |  10 [32m+[m[31m-[m
+ .../how-it-works/step-2/page.tsx                   |  12 [32m+[m[31m-[m
+ .../how-it-works/step-3/page.tsx                   |  10 [32m+[m[31m-[m
+ .../how-it-works/step-4-5/page.tsx                 |  10 [32m+[m[31m-[m
+ .../app/{eogbook => begin-learning}/layout.tsx     |  24 [32m+[m[31m--[m
+ frontend/app/{eogbook => begin-learning}/page.tsx  |  18 [32m+[m[31m--[m
+ .../{eogbook => begin-learning}/services/page.tsx  |  14 [32m+[m[31m-[m
+ .../services/plans/page.tsx                        |  12 [32m+[m[31m-[m
+ .../services/tier-1/page.tsx                       |  12 [32m+[m[31m-[m
+ .../services/tier-2/page.tsx                       |  12 [32m+[m[31m-[m
+ .../app/{eogbook => begin-learning}/trust/page.tsx |   8 [32m+[m[31m-[m
+ .../what-i-do/ai-skills/page.tsx                   |  12 [32m+[m[31m-[m
+ .../what-i-do/lifelong-learning/page.tsx           |  12 [32m+[m[31m-[m
+ .../{eogbook => begin-learning}/what-i-do/page.tsx |  12 [32m+[m[31m-[m
+ .../who-is-ernest/approach/page.tsx                |  10 [32m+[m[31m-[m
+ .../who-is-ernest/page.tsx                         |  10 [32m+[m[31m-[m
+ frontend/app/favicon.ico                           | Bin [31m25931[m -> [32m0[m bytes
+ frontend/app/globals.css                           | 163 [32m++++++++++++++++[m[31m-----[m
+ frontend/app/icon.png                              | Bin [31m0[m -> [32m175176[m bytes
+ frontend/app/layout.tsx                            |   2 [32m+[m
+ frontend/app/page.tsx                              |  53 [32m+++[m[31m----[m
+ frontend/app/sitemap.ts                            |  42 [32m+++[m[31m---[m
+ frontend/lib/agents/marketerAgent.ts               |  11 [32m+[m[31m-[m
+ frontend/lib/agents/recruiterAgent.ts              |   8 [32m+[m[31m-[m
+ frontend/lib/agents/secretaryAgent.ts              |   6 [32m+[m[31m-[m
+ frontend/next.config.ts                            |  24 [32m+++[m
+ frontend/public/llms.txt                           |  18 [32m+[m[31m--[m
+ frontend/public/robots.txt                         |   4 [32m+[m[31m-[m
+ src/mastra/index.ts                                |   6 [32m+[m[31m-[m
+ 41 files changed, 516 insertions(+), 282 deletions(-)

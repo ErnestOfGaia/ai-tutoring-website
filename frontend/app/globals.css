@@ -801,6 +801,48 @@ html, body {
   color: rgba(255, 255, 255, 0.85);
 }
 
+/* "What I Believe About Learning" — three short manifesto blocks on the
+   Trust page. Stands in for client testimonials until Ernest has them.
+   Subtle left-rule + dim teal background so the section reads as voice,
+   not bullet list. */
+.eogbook-beliefs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 0.5rem 0 1.25rem;
+}
+.eogbook-belief {
+  padding: 0.85rem 1.1rem;
+  background: rgba(29, 158, 117, 0.07);
+  border-left: 3px solid var(--teal);
+  border-radius: 4px;
+}
+.eogbook-belief h3 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 0.4rem;
+  line-height: 1.35;
+}
+.eogbook-belief p {
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+/* Closing punchline under the three belief blocks. Centered, larger,
+   warm-teal — reads as a one-line summary of the section's arc, not a
+   signature. */
+.eogbook-belief-attribution {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--teal);
+  text-align: center;
+  margin: 0.35rem 0 0;
+  letter-spacing: 0.01em;
+}
+
 /* ─── FAQ accordion ──────────────────────────────────────────── */
 .eogbook-faq {
   display: flex;
@@ -843,6 +885,18 @@ html, body {
   display: none;
 }
 .eogbook-faq-a--open { display: block; }
+/* Multi-paragraph answers — global * { margin: 0 } reset zeroed out
+   <p> spacing, so add it back just inside FAQ answers. */
+.eogbook-faq-a p + p { margin-top: 0.6rem; }
+/* Inline links inside FAQ answers (markdown-style parsed by the
+   accordion). Teal underline that brightens on hover. */
+.eogbook-faq-a a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+.eogbook-faq-a a:hover { color: var(--sky); }
 
 /* ─── CTA section ────────────────────────────────────────────── */
 .eogbook-cta-row {

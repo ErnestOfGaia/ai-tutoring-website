@@ -35,7 +35,7 @@ export default function PageLayout({
 
       {breadcrumbs && breadcrumbs.length > 0 && (
         <nav className="eogbook-breadcrumb" aria-label="Breadcrumb">
-          <a href="/begin-learning">Home</a>
+          <a href="/begin-learning">Begin Learning</a>
           {breadcrumbs.map((crumb, i) => (
             <span key={i}>
               <span className="breadcrumb-sep"> › </span>
