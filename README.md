@@ -10,9 +10,8 @@ Main coaching site. Home of the **Router**, **Marketer**, **Secretary**, and **R
 
 ## Architecture at a Glance
 
-- **Router** = regex classifier in [`frontend/app/api/chat/route.ts`](frontend/app/api/chat/route.ts). **NOT an LLM, NOT a Mastra agent.** Forwards to sub-agent via `${MASTRA_URL}/api/agents/{id}/generate`.
-- **Marketer / Secretary / Recruiter** = real Mastra agents defined in [`src/mastra/agents/index.ts`](src/mastra/agents/index.ts). Model: `anthropic/claude-haiku-4-5`. Each uses `searchKnowledgeTool` for RAG + `Memory()`.
-- **`src/mastra/agents/routingAgent.ts`** = **dead stub**. Not registered in `src/mastra/index.ts`. Do not edit without removing or reviving intentionally.
+- **Routing** = the **routing-agent**, a live Mastra **LLM** agent (`anthropic/claude-haiku-4-5`) defined in [`src/mastra/agents/index.ts`](src/mastra/agents/index.ts). It classifies each visitor message via its instructions and delegates to a specialist through a `delegate-to-*` tool. [`frontend/app/api/chat/route.ts`](frontend/app/api/chat/route.ts) is a **thin proxy** — it does no classification; it forwards the message list to `${MASTRA_URL}/api/agents/routing-agent/generate`.
+- **Marketer / Secretary / Recruiter** (+ a `surf` placeholder) = real Mastra agents defined in [`src/mastra/agents/index.ts`](src/mastra/agents/index.ts) and registered in [`src/mastra/index.ts`](src/mastra/index.ts). Model: `anthropic/claude-haiku-4-5`. Each uses `searchKnowledgeTool` for RAG + `Memory()`; the secretary also holds the calendar availability + booking tools.
 - **RAG:** Voyage AI `voyage-3-lite` embeddings, cosine similarity over `brain.json` (top-5). See [`src/mastra/tools/searchKnowledgeTool.ts`](src/mastra/tools/searchKnowledgeTool.ts).
 - **Ingest:** `npm run ingest` clones the `agentic-brain` GitHub repo, chunks markdown, embeds, writes `brain.json`.
 
@@ -29,9 +28,8 @@ Main coaching site. Home of the **Router**, **Marketer**, **Secretary**, and **R
 
 ## Known Gaps (see Master DNA §4 for full list)
 
-- Router has no "resume" intent yet → should direct work-history questions to `resume.ernestofgaia.xyz` (new tab).
-- Not yet on VPS. Currently local-only.
-- `routingAgent.ts` stub should be deleted or revived — leaving it as-is risks a false assumption.
+- Deployed to the Hostinger VPS (Docker → GHCR → `docker compose pull`), behind Nginx Proxy Manager.
+- Current findings + hardening backlog live in the vault: `REVIEW - ernestofgaia.xyz Code & UX Review (2026-07-06)` and `Backlog - ernestofgaia.xyz` (in `AI Coaching or Tutoring Business/`).
 
 ## Startup
 
