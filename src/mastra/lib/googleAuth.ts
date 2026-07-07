@@ -16,23 +16,27 @@
  * revoked. If you ever revoke access, re-run get-google-token.mjs and swap
  * GOOGLE_OAUTH_REFRESH_TOKEN on the VPS, then restart the Mastra container.
  *
- * Scopes are intentionally minimal — gmail.send and drive-write scopes are
- * NOT included, making those actions unreachable at the API level.
+ * Scopes are minimal — calendar.readonly + calendar.events + gmail.compose only
+ * (pruned 2026-07-06, review finding #20). Gmail read/modify/labels, Drive, and
+ * gmail.send are NOT included, making inbox/Drive read and mail-send unreachable
+ * at the API level. Add scopes only behind an authenticated (non-public) agent.
  */
 
 import { google } from 'googleapis';
 
 export const GOOGLE_SCOPES = [
-  // calendar.events alone does NOT grant freebusy.query — Google rejects with
-  // "Insufficient Permission" 403. calendar.readonly covers freebusy + read of
-  // events; we keep calendar.events for the write path (book discovery call).
+  // Pruned 2026-07-06 to only what live tools use (review finding #20). MUST stay
+  // in sync with SCOPES in src/scripts/get-google-token.mjs.
+  //   - calendar.readonly: required for freebusy.query (calendar.events alone
+  //     returns "Insufficient Permission" 403).
+  //   - calendar.events:   the event-write path (book discovery call).
+  //   - gmail.compose:     the eog@ heads-up draft on booking (drafts only, NOT gmail.send).
+  // Dropped gmail.readonly/labels/modify + drive.readonly — their tools are dormant
+  // (wired to no agent). When the back-office needs Gmail/Drive, re-mint with the
+  // added scopes behind a SEPARATE authenticated agent, never public chat.
   'https://www.googleapis.com/auth/calendar.readonly',
   'https://www.googleapis.com/auth/calendar.events',
-  'https://www.googleapis.com/auth/gmail.readonly',
   'https://www.googleapis.com/auth/gmail.compose',
-  'https://www.googleapis.com/auth/gmail.labels',
-  'https://www.googleapis.com/auth/gmail.modify',
-  'https://www.googleapis.com/auth/drive.readonly',
 ];
 
 export const CALENDAR_ID  = process.env.GOOGLE_CALENDAR_ID || 'primary';

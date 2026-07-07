@@ -28,17 +28,17 @@ if (!CLIENT_ID || !CLIENT_SECRET) {
 }
 
 // MUST stay in sync with GOOGLE_SCOPES in src/mastra/lib/googleAuth.ts.
+// Pruned 2026-07-06 (review finding #20) to only what live tools use:
 // calendar.readonly is required for freebusy.query (calendar.events alone
-// returns "Insufficient Permission" 403). calendar.events is kept for the
-// event-write path (booking discovery calls).
+// returns "Insufficient Permission" 403); calendar.events is the booking
+// write path; gmail.compose is the eog@ heads-up draft (drafts only).
+// gmail.readonly/labels/modify + drive.readonly were dropped — their tools are
+// dormant. Re-add here (and in googleAuth.ts) only when a back-office feature
+// needs them, behind a separate authenticated agent.
 const SCOPES = [
   'https://www.googleapis.com/auth/calendar.readonly',
   'https://www.googleapis.com/auth/calendar.events',
-  'https://www.googleapis.com/auth/gmail.readonly',
   'https://www.googleapis.com/auth/gmail.compose',
-  'https://www.googleapis.com/auth/gmail.labels',
-  'https://www.googleapis.com/auth/gmail.modify',
-  'https://www.googleapis.com/auth/drive.readonly',
 ];
 
 const oauth2 = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
