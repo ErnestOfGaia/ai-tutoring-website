@@ -6,6 +6,7 @@ import { DuckDBStore } from "@mastra/duckdb";
 import { MastraCompositeStore } from '@mastra/core/storage';
 import { Observability, DefaultExporter, CloudExporter, SensitiveDataFilter } from '@mastra/observability';
 import { marketerAgent, secretaryAgent, recruiterAgent, routingAgent, surfAgent } from './agents/index.js';
+import { ochiBookingRoute } from './routes/ochiBookingRoute.js';
 
 console.error('[mastra] before duckdb');
 const observabilityStore = await new DuckDBStore().getStore('observability');
@@ -13,6 +14,11 @@ console.error('[mastra] after duckdb');
 
 export const mastra = new Mastra({
   agents: { routingAgent, marketerAgent, secretaryAgent, recruiterAgent, surfAgent },
+  // Custom HTTP routes alongside the built-in agent API. /ochi-booking is the
+  // deterministic lead intake for the OCHI funnel (see routes/ochiBookingRoute).
+  server: {
+    apiRoutes: [ochiBookingRoute],
+  },
   storage: new MastraCompositeStore({
     id: 'composite-storage',
     default: new LibSQLStore({

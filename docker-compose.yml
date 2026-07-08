@@ -13,6 +13,8 @@ services:
       - GOOGLE_OAUTH_REFRESH_TOKEN=${GOOGLE_OAUTH_REFRESH_TOKEN}
       - GOOGLE_CALENDAR_ID=${GOOGLE_CALENDAR_ID:-primary}
       - GOOGLE_TIMEZONE=${GOOGLE_TIMEZONE:-America/Los_Angeles}
+      # Shared secret guarding the deterministic OCHI lead-intake route.
+      - OCHI_BOOKING_SECRET=${OCHI_BOOKING_SECRET}
     volumes:
       # Persists brain.json, mastra.db, mastra.duckdb, agentic-brain-cache/
       # Isolated to /app/data so compiled code in /app/.mastra/output/ is not shadowed
@@ -29,6 +31,9 @@ services:
       # Both services are on nginx-proxy network — use service name as hostname
       - MASTRA_URL=http://mastra:4111
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      # Same secret as the mastra service — validated at the public edge
+      # (frontend/app/api/ochi-booking) before forwarding to Mastra.
+      - OCHI_BOOKING_SECRET=${OCHI_BOOKING_SECRET}
     networks:
       - nginx-proxy
     depends_on:
