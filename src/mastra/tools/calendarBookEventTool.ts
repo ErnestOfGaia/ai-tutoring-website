@@ -16,6 +16,7 @@
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { calendarClient, gmailClient, CALENDAR_ID, TIMEZONE, IMPERSONATE } from '../lib/googleAuth.js';
+import { isBookable, windowLabel } from '../lib/bookingWindow.js';
 
 export const calendarBookEventTool = createTool({
   id: 'calendar-book-event',
@@ -35,7 +36,10 @@ export const calendarBookEventTool = createTool({
     description:  z.string().optional(),
   }),
   outputSchema: z.object({
-    status:   z.literal('created'),
+    status:   z.enum(['created', 'rejected']),
+    // Present when status is 'rejected' — a plain-text explanation the agent
+    // relays to the visitor (e.g. off-window time).
+    reason:   z.string().optional(),
     eventId:  z.string().optional(),
     htmlLink: z.string().optional(),
     booked: z.object({
@@ -44,13 +48,34 @@ export const calendarBookEventTool = createTool({
       summary:      z.string(),
       visitorName:  z.string(),
       visitorEmail: z.string(),
-    }),
+    }).optional(),
     eogDraftId: z.string().optional(),
   }),
   execute: async (input) => {
     console.error('[calendarBookEvent] fired, input:', JSON.stringify(input));
     try {
-      const { start, end, visitorName, visitorEmail, summary, description } = input;
+      const { start, end, visitorEmail } = input;
+
+      // ── Server-side guard — do NOT trust the prompt ────────────────────────
+      // The booking window is enforced HERE in code, not just in the agent's
+      // instructions: reject anything outside Ernest's auto-book window before
+      // any calendar write. See src/mastra/lib/bookingWindow.
+      if (!isBookable(new Date(start), new Date(end))) {
+        console.error('[calendarBookEvent] REJECTED (off-window/invalid):', JSON.stringify({ start, end }));
+        return {
+          status: 'rejected' as const,
+          reason:
+            `That time is outside Ernest's booking window (${windowLabel()}). ` +
+            `Offer to have Ernest follow up directly — text 503-664-0546 or email eog@ernestofgaia.xyz.`,
+        };
+      }
+
+      // Strip CR/LF and cap length on free-text before it reaches the calendar
+      // event and the RFC822 heads-up draft (prevents header injection + bloat).
+      const clean = (s: string | undefined, max: number) => (s ?? '').replace(/[\r\n]+/g, ' ').trim().slice(0, max);
+      const visitorName = clean(input.visitorName, 120);
+      const summary     = clean(input.summary, 200) || 'Discovery call with Ernest Of Gaia';
+      const description = input.description ? clean(input.description, 500) : undefined;
 
       const cal = await calendarClient();
       const res = await cal.events.insert({
