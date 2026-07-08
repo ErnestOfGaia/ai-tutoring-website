@@ -49,7 +49,7 @@ const howToJsonLd = {
       "@type": "HowToStep",
       position: 5,
       name: "See Real Results",
-      text: "By your 3rd or 4th session, you'll be comfortable using AI tools without help. By 6 months, workflows are running and AI is part of your daily toolkit.",
+      text: "Faster than you'd expect for confidence; slower than you'd hope for fluency. Early sessions build comfort and better questions. Over a couple of months of regular practice, tested workflows take hold. Within a season, AI becomes part of your daily toolkit — if you use what we cover between sessions.",
       url: "https://ernestofgaia.xyz/begin-learning/how-it-works/step-4-5",
     },
   ],
@@ -86,9 +86,9 @@ export default function HowItWorks() {
           <div className="eogbook-step-body">
             <div className="eogbook-step-title">Choose Your Tier</div>
             <div className="eogbook-step-desc">
-              Based on your goals and skill level, we&apos;ll agree on the right
-              tier — Foundations, Workshop, or Masterclass. Most people start
-              with 1–2 single sessions before committing to a plan.
+              Based on your goals and skill level, we&apos;ll agree on the
+              right tier — Foundations or Builder. Most people start with 1–2
+              single sessions before committing to a plan.
             </div>
           </div>
         </div>
@@ -122,9 +122,10 @@ export default function HowItWorks() {
           <div className="eogbook-step-body">
             <div className="eogbook-step-title">See Real Results</div>
             <div className="eogbook-step-desc">
-              By session 3–4: comfortable, asking better questions, solving real
-              problems. By 6 sessions: workflows running. By 12: AI is part of
-              your daily toolkit.
+              Faster than you&apos;d expect for confidence; slower than
+              you&apos;d hope for fluency. Comfort and better questions come
+              early. Tested workflows take hold over a couple of months.
+              Within a season, AI is part of your daily toolkit.
             </div>
           </div>
         </div>
@@ -158,8 +159,16 @@ export default function HowItWorks() {
       </div>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Schedule your free call
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

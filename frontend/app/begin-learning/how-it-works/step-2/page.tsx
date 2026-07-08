@@ -4,7 +4,7 @@ import PageLayout from "../../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Step 2: Choose Your Tier",
   description:
-    "After the free handshake call, choose the right AI coaching tier: Tier 1 Foundations for beginners, Tier 2 Workshop for workflow builders.",
+    "After the free handshake call, choose the right AI coaching tier: Tier 1 Foundations for beginners, Tier 2 Builder for workflow builders.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning/how-it-works/step-2",
   },
@@ -41,11 +41,11 @@ export default function Step2() {
         <strong>$75/session · 60 minutes.</strong>
       </p>
 
-      <h3>Tier 2 Workshop — If You Want to Build Workflows</h3>
+      <h3>Tier 2 Builder — If You Want to Build Workflows</h3>
       <p>
-        You&apos;ve used AI a bit and want to go deeper — custom prompts,
-        automations, real integrations with your work. This is the most popular
-        tier. <strong>$110/session · 75 minutes.</strong>
+        You&apos;ve used AI a bit and want to go deeper — custom prompts and
+        real workflows, tested before you rely on them.{" "}
+        <strong>$110/session · 75 minutes.</strong>
       </p>
 
       <h3>Not Sure? That&apos;s Normal</h3>
@@ -56,10 +56,10 @@ export default function Step2() {
       </p>
 
       <div className="eogbook-cta-row">
-        <a href="/begin-learning/services" className="back-btn">
+        <a href="/begin-learning/services" className="cta-btn">
           Compare all tiers
         </a>
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Schedule your free call
         </a>
       </div>

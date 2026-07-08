@@ -64,8 +64,16 @@ export default function Step3() {
       </ul>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Book your first session
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Ernest Of Gaia — AI Coaching",
   description:
-    "Personalized 1-on-1 AI coaching for prompt engineering and lifecycle automation. Serving Pacific City to Portland, Oregon.",
+    "A human-centered approach to AI. Personalized 1-on-1 coaching for your home, hobby, or business — plain English, no jargon, no hype. Serving Pacific City to Portland, Oregon & the I-5 Corridor.",
 };
 
 const jsonLd = {
@@ -25,8 +25,8 @@ const jsonLd = {
       telephone: "+15036640546",
       email: "eog@ErnestOfGaia.xyz",
       description:
-        "Personalized AI coaching for prompt engineering and lifecycle automation",
-      areaServed: "Pacific City to Portland Metro, Oregon",
+        "A human-centered approach to AI. Personalized 1-on-1 coaching for your home, hobby, or business — plain English, no jargon, no hype.",
+      areaServed: "Pacific City to Portland Metro, Oregon & the I-5 Corridor",
     },
     {
       "@type": "Person",
@@ -34,7 +34,7 @@ const jsonLd = {
       url: "https://ernestofgaia.xyz",
       sameAs: [
         "https://linkedin.com/in/ernestofgaia",
-        "https://x.com/ErnestOfGaia",
+        "https://www.youtube.com/@ErnestOfGaia",
       ],
     },
   ],

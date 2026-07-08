@@ -34,19 +34,26 @@ export default function Step1() {
         right for you. No pressure. No commitment.
       </p>
 
-      <h3>What We&apos;ll Cover</h3>
+      <h3>What You&apos;ll Walk Away With</h3>
       <ul>
-        <li>How you currently work and what slows you down</li>
-        <li>What AI can actually do for you (and what it can&apos;t)</li>
-        <li>Whether coaching is the right fit for your goals</li>
-        <li>What happens next if you want to move forward</li>
-        <li>Which tier makes sense to start with</li>
+        <li>
+          Straight answers to your AI questions, in plain English — including
+          what AI can&apos;t do for your situation
+        </li>
+        <li>
+          An honest fit assessment — if coaching isn&apos;t right for you,
+          I&apos;ll say so
+        </li>
+        <li>
+          One clear next step: a first session and which tier to start with,
+          a course to try, or something you can do on your own this week
+        </li>
       </ul>
 
       <h3>How to Start</h3>
       <p>
-        Text <a href="tel:+15036640546">503-664-0546</a> with &ldquo;AI
-        coaching&rdquo; and I&apos;ll follow up within 24 hours to schedule a
+        Text <a href="sms:+15036640546">503-664-0546</a> with &ldquo;AI
+        coaching&rdquo; and I&apos;ll follow up within 48 hours to schedule a
         time that works for you.
       </p>
 
@@ -59,8 +66,16 @@ export default function Step1() {
       </p>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Schedule your free call now
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

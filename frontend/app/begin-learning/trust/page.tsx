@@ -146,8 +146,16 @@ export default function TrustFaqs() {
       <FaqAccordion items={faqItems} />
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Still have questions? Let&apos;s talk
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

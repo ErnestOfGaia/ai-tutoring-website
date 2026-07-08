@@ -3,15 +3,17 @@ import type { NextRequest } from "next/server";
 const eogbookData = {
   siteUrl: "https://ernestofgaia.xyz",
   eogbookRoot: "/begin-learning",
-  lastUpdated: "2026-04-15",
+  lastUpdated: "2026-07-06",
   description:
-    "Ernest Of Gaia — AI coaching for non-technical people in Oregon. 1-on-1 personalized coaching across three service tiers.",
+    "Ernest Of Gaia — a human-centered approach to AI. Personalized 1-on-1 coaching for your home, hobby, or business, plus Last Mile website development for Oregon small businesses.",
   contact: {
     telephone: "+1-503-664-0546",
+    textPreferred: true,
     email: "eog@ernestofgaia.xyz",
     linkedin: "https://linkedin.com/in/ernestofgaia",
-    twitter: "https://x.com/ErnestOfGaia",
-    areaServed: "Pacific City to Portland, Oregon",
+    youtube: "https://www.youtube.com/@ErnestOfGaia",
+    areaServed: "Pacific City to Portland, Oregon & the I-5 Corridor",
+    responseTime: "Within 48 hours of first message",
   },
   services: [
     {
@@ -37,45 +39,54 @@ const eogbookData = {
     },
     {
       id: "tier-2",
-      name: "Tier 2: The Workshop — AI Builder",
+      name: "Tier 2: The Builder",
       price: 110,
       priceCurrency: "USD",
       duration: "75 minutes",
       format: "In-person or online",
-      popular: true,
       description:
-        "Build real workflows. Custom prompts, content pipelines, multi-tool integrations.",
+        "Build real workflows with AI tools, tested before you rely on them. Custom prompts, content pipelines, a prompt library that grows with you.",
       url: "/begin-learning/services/tier-2",
+    },
+    {
+      id: "last-mile",
+      name: "Last Mile Website Development",
+      price: null,
+      pricing: "Flat quote after a free site audit",
+      format: "Remote or on-site (Oregon)",
+      description:
+        "Finishing service for websites that are 80-90% done: broken forms, placeholder copy, missing SEO tags, mobile bugs, stalled launches. Free audit, flat quote, no lock-in.",
+      url: "/begin-learning/services/last-mile",
     },
   ],
   plans: [
     {
       name: "Pay as you go",
       duration: "Flexible",
-      sessions: "1–2",
+      cadence: "You set it",
       savings: null,
-      bonus: null,
+      giveback: "Earned every 12 hours of paid coaching",
     },
     {
-      name: "Launch Plan",
+      name: "Habit",
       duration: "3 months",
-      sessions: 12,
+      cadence: "Typically weekly — set together at the free call",
       savings: null,
-      bonus: "1 free nonprofit session",
+      giveback: "1 free nonprofit session",
     },
     {
-      name: "Growth Plan",
+      name: "Rhythm",
       duration: "6 months",
-      sessions: 24,
+      cadence: "Typically weekly — set together at the free call",
       savings: "5% off",
-      bonus: "2 free nonprofit sessions",
+      giveback: "2 free nonprofit sessions",
     },
     {
-      name: "Transformation Plan",
+      name: "Craft",
       duration: "9 months",
-      sessions: 36,
+      cadence: "Typically weekly — set together at the free call",
       savings: "10% off",
-      bonus: "3 free nonprofit sessions",
+      giveback: "3 free nonprofit sessions",
     },
   ],
   journey: [
@@ -111,7 +122,7 @@ const eogbookData = {
       step: 5,
       title: "See Real Results",
       description:
-        "By session 3–4: comfortable and solving real problems. By 12 sessions: AI in your daily toolkit.",
+        "Faster than you'd expect for confidence; slower than you'd hope for fluency. Comfort comes early; tested workflows over a couple of months; within a season, AI is part of the daily toolkit.",
       url: "/begin-learning/how-it-works/step-4-5",
     },
   ],
@@ -143,7 +154,7 @@ const eogbookData = {
     {
       question: "How long until I see results?",
       answer:
-        "Most people notice a shift by their 3rd session. By 6 sessions, workflows are running. By 12, AI is part of their daily toolkit.",
+        "Faster than you'd expect for confidence; slower than you'd hope for fluency. The first few sessions shift something; workflows come together over a couple of months of regular practice; within a season, AI is usually part of the daily toolkit — if you use what we cover between sessions.",
       url: "/begin-learning/trust",
     },
     {
@@ -155,13 +166,13 @@ const eogbookData = {
     {
       question: "How does the nonprofit giveback actually work?",
       answer:
-        "After 12 hours of paid coaching, you nominate a nonprofit. I contact them, schedule a free coaching session, and you can attend if you want.",
+        "After 12 hours of paid coaching, you pick the nonprofit — I reach out and set up the session, in person or online, and you can sit in. No nonprofit in mind? Your hours can roll into Ernest's volunteer work with Team Rubicon, where he's been a Grey Shirt for a decade.",
       url: "/begin-learning/giveback",
     },
     {
       question: "Will AI take my job?",
       answer:
-        "That's a fair question we discuss directly. AI is a tool — the goal is to help you stay ahead of that change.",
+        "It doesn't have to. Most of it depends on what you do next. The real question is a risk-management one, and the way through is a cycle: study, learn, try, evaluate. No fear-selling here — come curious, not anxious.",
       url: "/begin-learning/trust",
     },
   ],
@@ -170,6 +181,7 @@ const eogbookData = {
     { title: "Who Is Ernest", url: "/begin-learning/who-is-ernest", priority: 0.9 },
     { title: "What I Do", url: "/begin-learning/what-i-do", priority: 0.9 },
     { title: "Services", url: "/begin-learning/services", priority: 0.9 },
+    { title: "Last Mile Website Development", url: "/begin-learning/services/last-mile", priority: 0.8 },
     { title: "How It Works", url: "/begin-learning/how-it-works", priority: 0.9 },
     { title: "Nonprofit Giveback", url: "/begin-learning/giveback", priority: 0.8 },
     { title: "Trust & FAQs", url: "/begin-learning/trust", priority: 0.8 },

@@ -15,7 +15,7 @@ const serviceJsonLd = {
   "@type": "Service",
   name: "AI Coaching — Ernest Of Gaia",
   description:
-    "Personalized 1-on-1 AI coaching. Plain English AI training and lifelong learning generalist framework for non-technical people in Oregon.",
+    "Personalized 1-on-1 AI coaching. Plain English AI training and a lifelong learning framework — appropriate AI tools for your home, hobby, or business.",
   provider: {
     "@type": "Person",
     name: "Ernest Of Gaia",
@@ -42,7 +42,7 @@ const serviceJsonLd = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Tier 2: The Workshop",
+          name: "Tier 2: The Builder",
           description: "AI Builder coaching for workflow creation",
         },
       },
@@ -71,24 +71,33 @@ export default function WhatIDo() {
       <h3>Plain English AI Training</h3>
       <p>
         You&apos;ve probably heard about ChatGPT or Claude. Maybe you&apos;ve
-        tried them. But getting them to actually <em>work</em> for you — your
+        tried them. But getting them to actually work for you — your
         business, your workflow, your real problems — that&apos;s a different
         story. I translate the noise into practical skills you use tomorrow.
       </p>
       <p>
-        What it <strong>is</strong>: 1-on-1 sessions on your actual device,
-        working on your real challenges, building skills that stick.
-        <br />
-        What it <strong>isn&apos;t</strong>: lectures, slideshows, generic
-        courses, or anything that doesn&apos;t fit your actual life.
+        What it is: 1-on-1 sessions on your actual device, working on your
+        real challenges, building skills that stick.
+      </p>
+      <p>
+        What it isn&apos;t: lectures, slideshows, generic courses, or anything
+        that doesn&apos;t fit your actual life.
       </p>
 
-      <h3>Lifelong Learning Generalist Framework</h3>
+      <h3>Lifelong Learning</h3>
       <p>
-        AI tools change fast. The goal isn&apos;t to master one tool — it&apos;s
-        to build the instincts to learn any new tool quickly. Every session
-        builds toward that deeper skill: knowing how to figure things out, ask
-        the right questions, and adapt as technology evolves.
+        AI tools change fast, but chasing every new one is how you end up
+        dependent on whichever platform is loudest this quarter. Most of them
+        are different versions of the same features anyway. The real skill
+        isn&apos;t learning tools quickly — it&apos;s learning one well.
+      </p>
+      <p>
+        Depth teaches you what the tool is actually doing, what to trust it
+        with, and what stays true when the interface changes. Once you have
+        that, picking up a new tool becomes a small step, not a from-scratch
+        scramble. Every session builds toward that understanding: knowing how
+        to figure things out, ask the right questions, and stay grounded as
+        technology evolves.
       </p>
 
       <h3>Real Problems, Real Solutions</h3>
@@ -120,8 +129,16 @@ export default function WhatIDo() {
       </div>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           See if this fits your goals
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

@@ -4,7 +4,7 @@ import PageLayout from "../../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Coaching Plans",
   description:
-    "Ernest Of Gaia coaching plans: pay as you go, Launch Plan (3 months), Growth Plan (6 months), Transformation Plan (9 months). Save 5–10% with longer commitments.",
+    "Ernest Of Gaia coaching plans: pay as you go, or pick a pace — Habit (3 months), Rhythm (6 months, 5% off), Craft (9 months, 10% off). Consistent practice is what makes AI skills stick.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning/services/plans",
   },
@@ -23,11 +23,13 @@ export default function Plans() {
       ]}
     >
       <h1>Coaching Plans</h1>
-      <h2>Choose Your Commitment Level</h2>
+      <h2>Pick a Pace, Not a Package</h2>
 
       <p>
-        Once you decide on a tier, you can book sessions as you go, or lock in
-        a plan and save:
+        Once you decide on a tier, you can book sessions one at a time —
+        that&apos;s a fine way to start, and plenty of people stay there.
+        Plans exist for one reason: consistent practice is what makes skills
+        stick, and a longer rhythm earns a discount.
       </p>
 
       <div className="eogbook-table-wrap">
@@ -35,68 +37,58 @@ export default function Plans() {
           <thead>
             <tr>
               <th scope="col">Plan</th>
-              <th scope="col">Duration</th>
-              <th scope="col">Sessions</th>
+              <th scope="col">Length</th>
+              <th scope="col">Cadence</th>
               <th scope="col">Savings</th>
-              <th scope="col">Bonus</th>
+              <th scope="col">Giveback</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>Pay as you go</strong></td>
               <td>Flexible</td>
-              <td>1–2</td>
-              <td>None</td>
-              <td>None</td>
+              <td>You set it</td>
+              <td>—</td>
+              <td>Earned every 12 hours</td>
             </tr>
             <tr>
-              <td><strong>Launch Plan</strong></td>
+              <td><strong>Habit</strong></td>
               <td>3 months</td>
-              <td>12 sessions</td>
-              <td>None</td>
-              <td>1 free nonprofit session</td>
+              <td>Typically weekly</td>
+              <td>—</td>
+              <td>1 nonprofit session</td>
             </tr>
             <tr>
-              <td><strong>Growth Plan</strong></td>
+              <td><strong>Rhythm</strong></td>
               <td>6 months</td>
-              <td>24 sessions</td>
+              <td>Typically weekly</td>
               <td>5% off</td>
-              <td>2 free nonprofit sessions</td>
+              <td>2 nonprofit sessions</td>
             </tr>
             <tr>
-              <td><strong>Transformation Plan</strong></td>
+              <td><strong>Craft</strong></td>
               <td>9 months</td>
-              <td>36 sessions</td>
+              <td>Typically weekly</td>
               <td>10% off</td>
-              <td>3 free nonprofit sessions</td>
+              <td>3 nonprofit sessions</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <h3>Monthly Cost Estimates</h3>
-      <ul>
-        <li>
-          <strong>Tier 1 Foundations:</strong>{" "}
-          approximately $300–$405 per month
-        </li>
-        <li>
-          <strong>Tier 2 Workshop:</strong>{" "}
-          approximately $415–$577 per month
-        </li>
-      </ul>
-
       <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.65)" }}>
-        All plans are 1 session per week. The nonprofit giveback bonus applies
-        after completing the plan&apos;s full session count. You can start with
-        pay-as-you-go sessions and move to a plan at any time.
+        Cadence is set together at the free call — weekly is typical, but the
+        right rhythm is the one you&apos;ll actually keep. Giveback sessions
+        work the same for everyone: one free nonprofit session for every 12
+        hours of paid coaching — plans just get you there on a schedule. Start
+        pay-as-you-go and move to a plan whenever you like.
       </p>
 
       <div className="eogbook-cta-row">
-        <a href="/begin-learning/giveback" className="back-btn">
+        <a href="/begin-learning/giveback" className="cta-btn">
           Learn about the giveback program
         </a>
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Schedule a free call
         </a>
       </div>

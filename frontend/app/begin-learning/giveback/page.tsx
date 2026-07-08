@@ -4,7 +4,7 @@ import PageLayout from "../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Nonprofit Giveback",
   description:
-    "For every 12 hours of paid coaching with Ernest Of Gaia, one free AI coaching session goes to a local Oregon nonprofit of your choice. Your investment supports your community.",
+    "For every 12 hours of paid coaching with Ernest Of Gaia, one free AI coaching session goes to a nonprofit you choose — or rolls into Ernest's volunteer work with Team Rubicon. Your investment supports your community.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning/giveback",
   },
@@ -15,7 +15,7 @@ const orgJsonLd = {
   "@type": "Program",
   name: "Ernest Of Gaia Nonprofit Giveback Program",
   description:
-    "For every 12 hours of paid coaching, Ernest Of Gaia donates one complimentary AI coaching session to a local Oregon nonprofit of the client's choice.",
+    "For every 12 hours of paid coaching, Ernest Of Gaia donates one complimentary AI coaching session to a nonprofit of the client's choice — or routes the hours to Team Rubicon, where Ernest has volunteered for a decade.",
   organizer: {
     "@type": "Person",
     name: "Ernest Of Gaia",
@@ -44,11 +44,11 @@ export default function Giveback() {
       <h2>Your Coaching, Your Community</h2>
 
       <p>
-        When you invest in coaching, you invest in your community too. For every{" "}
-        <strong>12 hours of paid coaching</strong> — that&apos;s 12 sessions at
-        Tier 1, or 8 sessions at Tier 2 — I donate one
-        complimentary AI coaching session to a local Oregon nonprofit of{" "}
-        <em>your</em> choice.
+        When you invest in coaching, you invest in your community too. For
+        every <strong>12 hours of paid coaching</strong> — that&apos;s 12
+        sessions at Tier 1, or 8 sessions at Tier 2 — I donate one
+        complimentary AI coaching session to a nonprofit <em>you</em>{" "}
+        nominate, in person or online.
       </p>
 
       <h3>How It Works</h3>
@@ -57,39 +57,52 @@ export default function Giveback() {
           <strong>You complete 12 hours of paid coaching</strong> in any tier.
         </li>
         <li>
-          <strong>You nominate a nonprofit</strong> — a school, library,
-          community action agency, food bank, or tribal organization in your
-          county.
+          <strong>You pick the nonprofit</strong> — a local food bank, a
+          school or library, an arts collective, a community garden, a tribal
+          organization, whatever you care about.
         </li>
         <li>
-          <strong>I reach out and schedule</strong> a free session with them —
-          with a staff member or team.
+          <strong>I reach out and schedule</strong> the session, in person or
+          online — with a staff member or team.
         </li>
         <li>
           <strong>They learn practical AI.</strong> Basics, one real workflow,
           and a resource list they can keep.
         </li>
         <li>
-          <strong>Optional:</strong> You can attend as a mentor, which deepens
+          <strong>Optional:</strong> you can sit in as a mentor, which deepens
           your own learning too.
         </li>
       </ol>
 
-      <h3>Who We Support</h3>
+      <h3>No Nonprofit in Mind?</h3>
       <p>
-        Eligible organizations include local 501(c)(3) nonprofits, Oregon
-        schools and school districts, community action agencies, libraries,
-        arts organizations, and tribal and Indigenous-led nonprofits.
+        Your hours can roll into the work I already do with{" "}
+        <a
+          href="https://teamrubiconusa.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <strong>Team Rubicon</strong>
+        </a>
+        , which has a Pacific Northwest chapter. I&apos;ve been a Grey Shirt
+        with them for a decade.
+      </p>
+      <p>
+        Their words, not mine: <em>&ldquo;Service, to us, is a mindset.
+        It&apos;s a resolve — a beacon of light amidst the fog of chaos — to
+        bring equitable relief to vulnerable communities before, during, and
+        after a disaster strikes.&rdquo;</em>
       </p>
 
-      <h3>Real Impact</h3>
+      <h3>Who&apos;s Eligible</h3>
       <p>
-        This program supports small nonprofit staff learning to use AI for
-        efficiency, teachers integrating AI literacy into classrooms, and
-        community organizations stretching limited resources further.
-      </p>
-      <p>
-        <strong>Your coaching hours = Community AI literacy.</strong>
+        Any 501(c)(3) nonprofit you care about. Schools and school districts,
+        libraries, community action agencies, food banks, arts organizations,
+        community gardens, tribal and Indigenous-led nonprofits, and
+        disaster-relief groups like Team Rubicon all qualify. If it&apos;s
+        local to you and doing good, it&apos;s probably eligible — the
+        drilldown page below has the full guidelines.
       </p>
 
       <div className="eogbook-drilldown" aria-label="Explore the giveback program">
@@ -108,8 +121,16 @@ export default function Giveback() {
       </div>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Invest in coaching, invest in your community
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

@@ -4,7 +4,7 @@ import PageLayout from "../../_components/PageLayout";
 export const metadata: Metadata = {
   title: "AI Skills Training",
   description:
-    "What AI skills does Ernest Of Gaia teach? Prompting, Claude Projects, multi-tool workflows, content pipelines, Google Workspace integrations, and AI safety basics.",
+    "What AI skills does Ernest Of Gaia teach? Claude and ChatGPT, learned well: prompting skills, repeatable routines, and an honest introduction to AI agents. Plain English, hands-on.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning/what-i-do/ai-skills",
   },
@@ -27,40 +27,46 @@ export default function AiSkills() {
 
       <p>
         The goal isn&apos;t to memorize AI features — it&apos;s to build
-        instincts that transfer across tools and hold up as tools evolve. Here
-        are the concrete skills sessions cover:
+        cross-functional skills that transfer, and a deep enough understanding
+        of your main tool that the next one is a small step, not a starting
+        over. We work in <strong>Claude and ChatGPT</strong> — learning one or
+        both well beats sampling everything on the market.
       </p>
 
-      <h3>Foundations Skills (Tier 1)</h3>
+      <h3>Skills — working with AI directly</h3>
       <ul>
-        <li>How ChatGPT and Claude actually work — what they are and aren&apos;t</li>
+        <li>How Claude and ChatGPT actually work — what they are and aren&apos;t</li>
         <li>Writing prompts that get consistent, useful results</li>
-        <li>Setting up and organizing Claude.ai and ChatGPT accounts</li>
-        <li>Using Claude Projects to maintain context across sessions</li>
-        <li>Understanding AI safety, hallucinations, and when to verify output</li>
-        <li>
-          <strong>Tools:</strong> Claude.ai, ChatGPT, Google Gemini, Notion AI
-        </li>
+        <li>Setting up and organizing your account so context carries between sessions</li>
+        <li>Knowing when to verify output (answer: always) and how to do it fast</li>
       </ul>
 
-      <h3>Builder Skills (Tier 2)</h3>
+      <h3>Routines — making it repeatable</h3>
       <ul>
-        <li>Custom prompts written for your specific business and brand voice</li>
-        <li>Multi-tool workflows: text, images, documents working together</li>
-        <li>Content pipelines for social media, email, or proposals</li>
-        <li>Google Workspace, Notion, or Airtable integrations with AI</li>
-        <li>Building and maintaining a reusable prompt library</li>
-        <li>
-          <strong>Tools:</strong> Claude.ai Pro, ChatGPT Plus, Perplexity,
-          Notion, Make.com (intro), Google Workspace AI
-        </li>
+        <li>Custom prompts written for your business and your voice</li>
+        <li>Content pipelines you reuse: social media, email, proposals</li>
+        <li>A prompt library that grows with you instead of starting from zero each time</li>
+        <li>Connecting AI to the documents and tools you already use</li>
       </ul>
+
+      <h3>Agents — where it&apos;s heading</h3>
+      <ul>
+        <li>What AI agents are, in plain English — and what they can safely do today</li>
+        <li>Recognizing when a routine is ready to become something that runs with less of you in it</li>
+        <li>Staying in control: review, verification, and knowing what not to delegate</li>
+      </ul>
+
+      <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.7)" }}>
+        Already deep in Google&apos;s ecosystem? Tell me in the first call —
+        we can work in Google&apos;s AI tools where they fit you better. The
+        skills are the same; the buttons are different.
+      </p>
 
       <div className="eogbook-cta-row">
-        <a href="/begin-learning/services" className="back-btn">
+        <a href="/begin-learning/services" className="cta-btn">
           See service tiers and pricing
         </a>
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Schedule a free call
         </a>
       </div>

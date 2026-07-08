@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import PageLayout from "../../_components/PageLayout";
 
 export const metadata: Metadata = {
-  title: "Tier 2: The Workshop — AI Builder",
+  title: "Tier 2: The Builder",
   description:
-    "Tier 2 Workshop: build real AI workflows. $110/session, 75 minutes. Custom prompts, content pipelines, Claude Projects, Google Workspace integrations. Most popular tier.",
+    "Tier 2 Builder: build real workflows with AI tools, tested before you rely on them. $110/session, 75 minutes. Custom prompts, content pipelines, and workflows for your home, hobby, or business.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning/services/tier-2",
   },
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 const tier2JsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Tier 2: The Workshop — AI Builder",
+  name: "Tier 2: The Builder",
   description:
-    "Build real workflows. Make AI core to how you work. 75-minute sessions covering custom prompts, multi-tool workflows, Claude Projects, content pipelines, and integrations with Google Workspace, Notion, or Airtable.",
+    "Build real workflows with AI tools, tested before you rely on them. 75-minute sessions covering custom prompts, content pipelines, prompt libraries, and workflows that support consistent customer service, current books, and organized projects.",
   provider: {
     "@type": "Person",
     name: "Ernest Of Gaia",
@@ -40,56 +40,61 @@ export default function Tier2() {
       nextLabel="Plans →"
       breadcrumbs={[
         { label: "Services", href: "/begin-learning/services" },
-        { label: "Tier 2: The Workshop", href: "/begin-learning/services/tier-2" },
+        { label: "Tier 2: The Builder", href: "/begin-learning/services/tier-2" },
       ]}
       jsonLd={tier2JsonLd}
     >
-      <h1>Tier 2: The Workshop</h1>
-      <h2>AI Builder — Build Real Workflows</h2>
+      <h1>Tier 2: The Builder</h1>
+      <h2>Build Real Workflows with AI Tools</h2>
 
-      <p className="eogbook-label" style={{ fontSize: "1rem", fontWeight: 700, color: "var(--teal)", letterSpacing: "normal", textTransform: "none" }}>
-        <strong>$110 per session · 75 minutes · In-person or online · ⭐ Most Popular</strong>
+      <p className="eogbook-label" style={{ fontSize: "1rem", fontWeight: 700, color: "var(--cream)", letterSpacing: "normal", textTransform: "none" }}>
+        <strong>$110 per session · 75 minutes · In-person or online</strong>
       </p>
 
       <p>
-        Make AI core to how you work. This tier is for people ready to build
-        real workflows, integrate AI into their business, and stop doing things
-        manually that a well-designed system could handle.
+        Test and use AI tools to support how you work. This tier is for people
+        ready to build real workflows the careful way — borrowing a practice
+        from software development called test-driven development: nothing
+        joins your business until it&apos;s been tested and proven. Build it,
+        test it, trust it — then let it into your home, hobby, or business.
+      </p>
+      <p>
+        This isn&apos;t about automating your life away. It&apos;s about
+        finally being able to offer consistent customer support, stay current
+        with regulations and accounting, and get organized enough for real
+        project management and higher-quality service.
       </p>
 
       <h3>What You&apos;ll Build</h3>
       <ul>
-        <li>Custom prompts written specifically for your business and brand voice</li>
-        <li>Multi-tool workflows (text, images, documents working together)</li>
-        <li>Claude Projects customized for your business with persistent memory</li>
-        <li>Content pipelines — social media, email, proposals, whatever you need</li>
-        <li>Integrations with Google Workspace, Notion, or Airtable</li>
-        <li>A growing prompt library you can reuse and refine</li>
+        <li>Custom prompts written for your business and your voice</li>
+        <li>Workflows that are tested before you rely on them</li>
+        <li>Content pipelines — social media, email, proposals</li>
+        <li>A prompt library that grows with you</li>
+        <li>Connections to the documents and tools you already use</li>
       </ul>
 
       <h3>Tools Covered</h3>
-      <p>
-        Claude.ai Pro, ChatGPT Plus, Perplexity, Notion, Make.com (intro
-        automation), Google Workspace AI
-      </p>
+      <p>Claude.ai Pro, ChatGPT Plus, PaperClipAI &amp; others</p>
 
       <h3>Best For</h3>
       <p>
-        Creators, marketers, consultants, small business owners, and anyone
-        ready to make AI a core part of their workflow.
+        People who have the basics down and are ready to build. Small business
+        owners, creators, and anyone whose week has a repetitive stretch that
+        deserves a tested workflow.
       </p>
 
       <h3>After Each Session</h3>
       <p>
-        Detailed recap, updated prompt library, workflow diagram or blueprint,
-        and homework designed for your specific business.
+        A written recap, your updated prompt library, and one concrete
+        exercise to test before next time.
       </p>
 
       <div className="eogbook-cta-row">
-        <a href="/begin-learning/services/plans" className="back-btn">
+        <a href="/begin-learning/services/plans" className="cta-btn">
           See coaching plans
         </a>
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Book a free handshake call
         </a>
       </div>

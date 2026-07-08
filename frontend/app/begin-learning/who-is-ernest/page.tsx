@@ -27,7 +27,7 @@ const personJsonLd = {
   },
   sameAs: [
     "https://linkedin.com/in/ernestofgaia",
-    "https://x.com/ErnestOfGaia",
+    "https://www.youtube.com/@ErnestOfGaia",
   ],
   knowsAbout: [
     "Artificial Intelligence",
@@ -42,7 +42,7 @@ export default function WhoIsErnest() {
   return (
     <PageLayout
       prev="/begin-learning"
-      prevLabel="← Directory"
+      prevLabel="← Back"
       next="/begin-learning/what-i-do"
       nextLabel="What I Do →"
       breadcrumbs={[{ label: "Who Is Ernest", href: "/begin-learning/who-is-ernest" }]}
@@ -136,8 +136,16 @@ export default function WhoIsErnest() {
       </div>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Schedule a free call
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

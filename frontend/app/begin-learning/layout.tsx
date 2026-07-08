@@ -3,11 +3,11 @@ import ChatButton from "../_components/ChatButton";
 
 export const metadata: Metadata = {
   title: {
-    default: "EOGbook — Ernest Of Gaia",
-    template: "%s | EOGbook — Ernest Of Gaia",
+    default: "Begin Learning — Ernest Of Gaia",
+    template: "%s | Ernest Of Gaia",
   },
   description:
-    "Explore AI coaching services from Ernest Of Gaia. Seven pages covering who I am, what I do, service tiers, how coaching works, the nonprofit giveback program, FAQs, and how to get started.",
+    "Explore AI coaching services from Ernest Of Gaia. Who I am, what I do, service tiers, coaching plans, Last Mile website development, the nonprofit giveback program, FAQs, and how to get started.",
 };
 
 export default function EOGbookLayout({

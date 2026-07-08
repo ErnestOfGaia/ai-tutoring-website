@@ -3,9 +3,9 @@ import Link from "next/link";
 import NavigationButtons from "./_components/NavigationButtons";
 
 export const metadata: Metadata = {
-  title: "EOGbook — Ernest Of Gaia AI Coaching",
+  title: "Begin Learning — Ernest Of Gaia AI Coaching",
   description:
-    "AI That Actually Works for Your Real Life. Explore Ernest Of Gaia's AI coaching services: who I am, what I do, service tiers, how it works, nonprofit giveback, FAQs, and getting started.",
+    "AI for your Home, Hobby, or Business. Explore Ernest Of Gaia's AI coaching: who I am, what I do, service tiers, how it works, nonprofit giveback, FAQs, and getting started.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning",
   },
@@ -16,7 +16,7 @@ const localBusinessJsonLd = {
   "@type": "LocalBusiness",
   name: "Ernest Of Gaia",
   description:
-    "AI coaching for non-technical people in Oregon. 1-on-1 personalized coaching across three service tiers: Foundations, Workshop, and Masterclass.",
+    "A human-centered approach to AI. Personalized 1-on-1 coaching for your home, hobby, or business — Foundations and Builder tiers, plus Last Mile website development for Oregon small businesses.",
   url: "https://ernestofgaia.xyz",
   telephone: "+1-503-664-0546",
   email: "eog@ernestofgaia.xyz",
@@ -45,7 +45,7 @@ const localBusinessJsonLd = {
     },
     {
       "@type": "Service",
-      name: "Tier 2: The Workshop",
+      name: "Tier 2: The Builder",
       description:
         "AI Builder coaching for creators and business owners. 75-minute sessions focusing on custom workflows, integrations, and content pipelines.",
       provider: { "@type": "Person", name: "Ernest Of Gaia" },
@@ -75,7 +75,7 @@ const tiles = [
   {
     num: "03",
     title: "Services",
-    desc: "Three tiers, customized to your goals",
+    desc: "Coaching tiers, plans & Last Mile web development",
     href: "/begin-learning/services",
   },
   {
@@ -93,7 +93,7 @@ const tiles = [
   {
     num: "06",
     title: "Trust & FAQs",
-    desc: "Real answers, real trust signals",
+    desc: "What I believe about learning, plus real answers",
     href: "/begin-learning/trust",
   },
   {
@@ -117,7 +117,7 @@ export default function EOGbookHome() {
           Ernest Of Gaia · AI Coaching
         </p>
 
-        <h1>AI That Actually Works for Your Real Life</h1>
+        <h1>AI for your Home, Hobby, or Business</h1>
 
         <h2>Explore the coaching experience</h2>
 
@@ -145,8 +145,16 @@ export default function EOGbookHome() {
         </nav>
 
         <div className="eogbook-cta-row">
-          <a href="tel:+15036640546" className="cta-btn">
+          <a href="sms:+15036640546" className="cta-btn">
             Start with a free call
+          </a>
+          <a
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+            className="cta-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Email instead
           </a>
         </div>
       </div>

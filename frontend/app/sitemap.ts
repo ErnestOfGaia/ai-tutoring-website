@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://ernestofgaia.xyz";
-const LAST_MOD = "2026-04-15";
+const LAST_MOD = "2026-07-06";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -97,16 +97,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/begin-learning/services/tier-3`,
-      lastModified: LAST_MOD,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: `${BASE_URL}/begin-learning/services/plans`,
       lastModified: LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      // Last Mile is an ad-campaign landing page — higher priority than
+      // other drill-downs on purpose.
+      url: `${BASE_URL}/begin-learning/services/last-mile`,
+      lastModified: "2026-07-06",
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
     {
       url: `${BASE_URL}/begin-learning/how-it-works/step-1`,

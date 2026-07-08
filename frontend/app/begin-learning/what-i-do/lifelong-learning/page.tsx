@@ -4,7 +4,7 @@ import PageLayout from "../../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Lifelong Learning Framework",
   description:
-    "Ernest Of Gaia's lifelong learning generalist framework: building adaptable learning instincts, not just mastering one tool. Stay ahead of change in an evolving AI landscape.",
+    "Ernest Of Gaia's lifelong learning framework: cross-functional skills, deep understanding of the tools you use, and strategic practice tied to your real work. Learning how to learn, in plain English.",
   alternates: {
     canonical:
       "https://ernestofgaia.xyz/begin-learning/what-i-do/lifelong-learning",
@@ -27,36 +27,46 @@ export default function LifelongLearning() {
       ]}
     >
       <h1>Lifelong Learning Framework</h1>
-      <h2>Learning How to Learn New Tools</h2>
+      <h2>Learning How to Learn</h2>
 
       <p>
-        The AI landscape changes every few months. The people who adapt fastest
-        aren&apos;t the ones who memorized the most features — they&apos;re the
-        ones who built the right learning instincts. That&apos;s what this
-        framework develops.
+        The AI landscape changes every few months. The people who navigate it
+        well aren&apos;t the ones who memorized the most features —
+        they&apos;re the ones who built durable learning habits. That&apos;s
+        what this framework develops.
       </p>
 
       <h3>What It Means in Practice</h3>
       <p>
-        Every session reinforces the same core questions: <em>What problem am I
-        actually trying to solve? What tool is best for this? How do I verify
-        the output? How do I improve the result?</em> Over time, these become
-        automatic.
+        Every session reinforces the same core questions: What problem am I
+        actually trying to solve? Is this the appropriate tool for it? How do
+        I verify the output? How do I improve the result? Over time, these
+        become automatic.
       </p>
 
-      <h3>Generalist Over Specialist</h3>
+      <h3>Generalist Skills, Deep Understanding</h3>
       <p>
-        You don&apos;t need to be an expert in any single tool. You need to
-        understand the category well enough to pick up new tools quickly. We
-        build broad capability, not deep dependence on one product.
+        The skills we build are cross-functional — asking good questions,
+        breaking problems down, verifying results — and they transfer to
+        whatever you work on next. But breadth in skills doesn&apos;t mean
+        shallow with tools. We learn one tool well, because depth is what
+        teaches you what&apos;s actually happening under the surface — and
+        it&apos;s what keeps you from becoming dependent on whichever platform
+        is loudest this quarter.
       </p>
 
-      <h3>Learning Session to Session</h3>
+      <h3>Strategic Practice</h3>
       <p>
         Each session closes with homework — one specific exercise tied to what
         we worked on. The next session starts with a check-in: what worked,
-        what didn&apos;t, what questions emerged. That loop is the framework in
-        action.
+        what didn&apos;t, what questions emerged.
+      </p>
+      <p>
+        The old saying is &ldquo;practice makes perfect.&rdquo; The real
+        saying is &ldquo;perfect practice makes perfect&rdquo; — how you
+        practice shapes what you get. One deliberate exercise tied to your
+        actual work beats an hour of aimless prompting. That loop is the
+        framework in action.
       </p>
 
       <h3>Honest About What Changes</h3>
@@ -68,10 +78,10 @@ export default function LifelongLearning() {
       </p>
 
       <div className="eogbook-cta-row">
-        <a href="/begin-learning/services" className="back-btn">
+        <a href="/begin-learning/services" className="cta-btn">
           See service tiers
         </a>
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Schedule a free call
         </a>
       </div>

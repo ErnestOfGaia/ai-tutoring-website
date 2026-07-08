@@ -242,6 +242,9 @@ html, body {
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
+  /* !important beats the .eogbook-content a underline rule when the
+     button is an <a> inside eogbook page content. */
+  text-decoration: none !important;
   transition: background 0.2s, transform 0.1s;
 }
 .cta-btn:hover  { background: #256560; }
@@ -721,15 +724,28 @@ html, body {
   margin-bottom: 0.2rem;
 }
 .eogbook-tier-price {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--teal);
+  /* Cream, not teal — teal text on the teal-tinted card background was
+     nearly invisible. Cream is the brand's warm accent and pops on dark. */
+  color: var(--cream);
   margin-bottom: 0.35rem;
 }
 .eogbook-tier-meta {
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.78);
   margin-bottom: 0.5rem;
+}
+/* Small in-card tag (e.g. "AI Starter") — sky tone, readable on the
+   teal-washed card where the teal .eogbook-label was not. */
+.eogbook-tier-tag {
+  display: inline;
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sky);
 }
 .eogbook-badge {
   display: inline-block;

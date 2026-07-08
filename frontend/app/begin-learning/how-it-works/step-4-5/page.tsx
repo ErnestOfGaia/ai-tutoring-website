@@ -4,7 +4,7 @@ import PageLayout from "../../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Steps 4–5: Build Skills & See Results",
   description:
-    "How AI coaching progresses over time: session rhythm, skill building, and what results look like at 3 sessions, 6 sessions, and 6 months with Ernest Of Gaia.",
+    "How AI coaching progresses over time: the check-in, build, wrap session rhythm, strategic practice between sessions, and what progress honestly looks like — confidence early, fluency with practice.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning/how-it-works/step-4-5",
   },
@@ -51,60 +51,57 @@ export default function Step45() {
 
       <h3>Step 5: See Real Results</h3>
       <p>
-        Progress is steady and noticeable. Here&apos;s what most people
-        experience:
+        Faster than you&apos;d expect for confidence; slower than you&apos;d
+        hope for fluency. Progress isn&apos;t a straight line — but it does
+        have a shape:
       </p>
 
       <div className="eogbook-table-wrap">
         <table className="eogbook-table">
           <thead>
             <tr>
-              <th scope="col">Timeline</th>
+              <th scope="col">Stretch</th>
               <th scope="col">What You&apos;ll Notice</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Session 3–4</strong></td>
-              <td>More comfortable, asking better questions, solving real problems without help</td>
+              <td><strong>Early sessions</strong></td>
+              <td>Something shifts — less worry about doing it wrong, better questions, a clearer sense of what AI is good at for you</td>
             </tr>
             <tr>
-              <td><strong>6 sessions</strong></td>
-              <td>Workflows running, tools integrated into daily routine</td>
+              <td><strong>A couple of months</strong></td>
+              <td>Workflows coming together — built, tested, and trusted with real work</td>
             </tr>
             <tr>
-              <td><strong>12 sessions</strong></td>
-              <td>AI is part of your daily toolkit. You&apos;re teaching others.</td>
-            </tr>
-            <tr>
-              <td><strong>6 months (Tier 2)</strong></td>
-              <td>Workflows built, integrations working, prompt library growing</td>
+              <td><strong>Within a season</strong></td>
+              <td>AI is part of your daily toolkit — if you&apos;re using what we cover between sessions</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <h3>What Makes This Different</h3>
+      <h3>What Makes Coaching Different</h3>
       <div className="eogbook-table-wrap">
         <table className="eogbook-table">
           <thead>
             <tr>
-              <th scope="col">Traditional courses</th>
-              <th scope="col">Ernest Of Gaia</th>
+              <th scope="col">Learning alone</th>
+              <th scope="col">Learning coached</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Self-paced, no support</td>
-              <td>1-on-1, personalized to your workflow</td>
+              <td>You figure out what to practice</td>
+              <td>One deliberate exercise per session, tied to your real work</td>
             </tr>
             <tr>
-              <td>You figure it out alone</td>
-              <td>Active — you do it, I guide</td>
+              <td>Stuck means stalled</td>
+              <td>Stuck means we slow down and work through it together</td>
             </tr>
             <tr>
-              <td>No accountability</td>
-              <td>Ongoing relationship, homework, recap docs</td>
+              <td>No one checks in</td>
+              <td>Every session starts with what worked and what didn&apos;t</td>
             </tr>
             <tr>
               <td>Generic examples</td>
@@ -115,8 +112,16 @@ export default function Step45() {
       </div>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Take the first step
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

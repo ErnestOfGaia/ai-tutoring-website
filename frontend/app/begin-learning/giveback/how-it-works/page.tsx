@@ -4,7 +4,7 @@ import PageLayout from "../../_components/PageLayout";
 export const metadata: Metadata = {
   title: "Giveback Program: How It Works",
   description:
-    "The Ernest Of Gaia nonprofit giveback program in detail: 5-step process from completing 12 coaching hours to nominating and delivering a free session to a local Oregon nonprofit.",
+    "The Ernest Of Gaia nonprofit giveback program in detail: 5-step process from completing 12 coaching hours to nominating and delivering a free session to a nonprofit you care about — in person or online — or routing hours to Team Rubicon.",
   alternates: {
     canonical: "https://ernestofgaia.xyz/begin-learning/giveback/how-it-works",
   },
@@ -48,12 +48,13 @@ export default function GivebackHowItWorks() {
         <div className="eogbook-step" role="listitem">
           <div className="eogbook-step-num" aria-label="Step 2">2</div>
           <div className="eogbook-step-body">
-            <div className="eogbook-step-title">Nominate a nonprofit</div>
+            <div className="eogbook-step-title">Pick the nonprofit</div>
             <div className="eogbook-step-desc">
-              Choose any eligible organization — a school, library, food bank,
-              community action agency, tribal organization, or 501(c)(3) in
-              your county or nearby. See the{" "}
-              <a href="/begin-learning/giveback/eligible-orgs">eligible organizations list</a>.
+              Choose any nonprofit you care about — a school, library, food
+              bank, arts collective, community garden, tribal organization, or
+              any 501(c)(3) doing good work in your community. See the{" "}
+              <a href="/begin-learning/giveback/eligible-orgs">eligible organizations list</a>{" "}
+              for the full guidelines.
             </div>
           </div>
         </div>
@@ -64,8 +65,8 @@ export default function GivebackHowItWorks() {
             <div className="eogbook-step-title">I reach out and schedule</div>
             <div className="eogbook-step-desc">
               I contact the organization, explain the program, and schedule a
-              session — either with a staff member, a small team, or whoever
-              they designate.
+              session — in person or online — with a staff member, a small
+              team, or whoever they designate.
             </div>
           </div>
         </div>
@@ -95,16 +96,41 @@ export default function GivebackHowItWorks() {
         </div>
       </div>
 
+      <h3>No Nonprofit in Mind?</h3>
+      <p>
+        Your hours can roll into the work I already do with{" "}
+        <a
+          href="https://teamrubiconusa.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <strong>Team Rubicon</strong>
+        </a>
+        , which has a Pacific Northwest chapter. I&apos;ve been a Grey Shirt
+        with them for a decade. If you&apos;d rather your giveback support
+        disaster-relief work than nominate a specific local org, this is the
+        route.
+      </p>
+
       <h3>The Giveback Calculation</h3>
       <p>
-        You complete 12 hours of paid coaching (in any tier), and I deliver one
-        free session to the organization you nominate. Every coaching plan
-        includes at least one nonprofit session as a bonus.
+        You complete 12 hours of paid coaching (in any tier), and I deliver
+        one free session to the organization you nominate — or apply the
+        hours to Team Rubicon. Every coaching plan includes at least one
+        nonprofit session as a bonus.
       </p>
 
       <div className="eogbook-cta-row">
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Start your coaching journey
+        </a>
+        <a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=eog%40ernestofgaia.xyz`}
+          className="cta-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email instead
         </a>
       </div>
     </PageLayout>

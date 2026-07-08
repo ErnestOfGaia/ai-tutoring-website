@@ -47,7 +47,7 @@ export default function Tier1() {
       <h1>Tier 1: Foundations</h1>
       <h2>AI Starter — Get Comfortable with AI</h2>
 
-      <p className="eogbook-label" style={{ fontSize: "1rem", fontWeight: 700, color: "var(--teal)", letterSpacing: "normal", textTransform: "none" }}>
+      <p className="eogbook-label" style={{ fontSize: "1rem", fontWeight: 700, color: "var(--cream)", letterSpacing: "normal", textTransform: "none" }}>
         <strong>$75 per session · 60 minutes · In-person or online</strong>
       </p>
 
@@ -68,13 +68,20 @@ export default function Tier1() {
       </ul>
 
       <h3>Tools Covered</h3>
-      <p>Claude.ai, ChatGPT, Google Gemini, basic Notion AI</p>
+      <p>Claude.ai, ChatGPT, Google Gemini, PaperClipAI &amp; others</p>
 
       <h3>Best For</h3>
       <p>
         Beginners with little to no AI experience. Solopreneurs. Small retail,
         hospitality, or service business owners. Anyone who&apos;s heard of AI
         but hasn&apos;t made it work yet.
+      </p>
+      <p>
+        Whether you spend your days reading diagrams, hunting down supplies,
+        or managing projects — the back office probably isn&apos;t your trade.
+        It doesn&apos;t have to be. Professionalizing your own back-office
+        infrastructure from your home or office computer is now something you
+        can do yourself.
       </p>
 
       <h3>After Your First Session</h3>
@@ -85,10 +92,10 @@ export default function Tier1() {
       </p>
 
       <div className="eogbook-cta-row">
-        <a href="/begin-learning/services/plans" className="back-btn">
+        <a href="/begin-learning/services/plans" className="cta-btn">
           See coaching plans
         </a>
-        <a href="tel:+15036640546" className="cta-btn">
+        <a href="sms:+15036640546" className="cta-btn">
           Book a free handshake call
         </a>
       </div>
