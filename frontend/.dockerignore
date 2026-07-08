@@ -1,0 +1,26 @@
+# Frontend build context (Dockerfile does `COPY . .`). Keeps secrets and local
+# state out of the image and stops the local node_modules/.next from clobbering
+# the freshly-installed ones. Review #2.
+
+# --- Secrets: NEVER send to the build context (incl. .env.local) ---
+.env
+.env.*
+!.env.example
+
+# --- Deps & build output (reinstalled/rebuilt in-image) ---
+node_modules
+.next/
+dist/
+tsconfig.tsbuildinfo
+
+# --- Local DB / artifacts ---
+*.db
+*.db-shm
+*.db-wal
+*.duckdb
+
+# --- VCS / tooling / docs ---
+.git
+.gitignore
+*.log
+README.md

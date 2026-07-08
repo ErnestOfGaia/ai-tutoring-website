@@ -1,0 +1,32 @@
+# Keeps secrets and local artifacts OUT of the Docker build context (and thus
+# out of any image layer), independent of what a Dockerfile COPYs. Review #2.
+
+# --- Secrets: NEVER send to the build context ---
+.env
+.env.*
+!.env.example
+
+# --- Local DB / RAG artifacts (regenerated at runtime on the volume) ---
+*.db
+*.db-shm
+*.db-wal
+*.duckdb
+*.duckdb.wal
+brain.json
+data/
+
+# --- Dependencies & build output (reinstalled/rebuilt in-image) ---
+node_modules
+.mastra/
+dist/
+
+# --- The frontend builds from its own context/image, not this one ---
+frontend/
+
+# --- VCS, CI, tooling, local agent state ---
+.git
+.gitignore
+.github
+.claude
+.agents
+*.log
