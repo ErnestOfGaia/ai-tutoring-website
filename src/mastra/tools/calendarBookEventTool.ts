@@ -10,7 +10,7 @@
  * (propose) call as completion and never re-invoke the tool.
  *
  * Side effect: on successful booking, a Gmail draft TO eog@ernestofgaia.xyz
- * is created summarizing the new booking — heads-up for Ernest in his inbox.
+ * is created summarizing the new booking — heads-up for Ernest in their inbox.
  */
 
 import { createTool } from '@mastra/core/tools';
