@@ -4,6 +4,9 @@ services:
     image: ghcr.io/ernestofgaia/ai-tutoring-website-mastra:latest
     container_name: ernestofgaia_mastra
     restart: unless-stopped
+    # tini as PID 1 — reaps the backgrounded ingest process entrypoint.sh
+    # spawns on first boot (node alone does not reap adopted orphans)
+    init: true
     environment:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - VOYAGE_API_KEY=${VOYAGE_API_KEY}
