@@ -3,8 +3,10 @@
 FROM node:22-slim AS builder
 WORKDIR /app
 
-# git + curl needed by ingest (git clone/pull) and searchKnowledgeTool (curl to Voyage AI)
-RUN apt-get update && apt-get install -y --no-install-recommends git curl && rm -rf /var/lib/apt/lists/*
+# git + curl needed by ingest (git clone/pull) and searchKnowledgeTool (curl to Voyage AI).
+# ca-certificates is required explicitly: --no-install-recommends skips it, leaving git/curl
+# unable to verify ANY https host ("server certificate verification failed. CAfile: none").
+RUN apt-get update && apt-get install -y --no-install-recommends git curl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 COPY package.json package-lock.json ./
 # Full npm ci (not --omit=dev) — mastra CLI is a devDependency
@@ -19,7 +21,7 @@ RUN npx mastra build
 FROM node:22-slim AS runner
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends git curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends git curl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # .mastra/output/ is self-contained (includes its own node_modules)
 COPY --from=builder /app/.mastra/output/ ./.mastra/output/
