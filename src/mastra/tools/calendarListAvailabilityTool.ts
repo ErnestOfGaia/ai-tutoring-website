@@ -26,7 +26,7 @@ export const calendarListAvailabilityTool = createTool({
   description:
     'List open meeting slots on Ernest\'s calendar over the next N days. ' +
     'Use this whenever a visitor asks about availability, open times, or when ' +
-    'Ernest can meet. Returns slots in his configured timezone (' + TIMEZONE + ').',
+    'Ernest can meet. Returns slots in their configured timezone (' + TIMEZONE + ').',
   inputSchema: z.object({
     days: z.number().int().min(1).max(30).default(14)
       .describe('How many days ahead to check (default 14, max 30).'),

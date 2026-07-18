@@ -166,7 +166,7 @@ const eogbookData = {
     {
       question: "How does the nonprofit giveback actually work?",
       answer:
-        "After 12 hours of paid coaching, you pick the nonprofit — I reach out and set up the session, in person or online, and you can sit in. No nonprofit in mind? Your hours can roll into Ernest's volunteer work with Team Rubicon, where he's been a Grey Shirt for a decade.",
+        "After 12 hours of paid coaching, you pick the nonprofit — I reach out and set up the session, in person or online, and you can sit in. No nonprofit in mind? Your hours can roll into Ernest's volunteer work with Team Rubicon, where they've been a Grey Shirt for a decade.",
       url: "/begin-learning/giveback",
     },
     {

@@ -64,7 +64,7 @@ export const searchKnowledgeTool = createTool({
   id: 'search-knowledge',
   description:
     'Search the agentic-brain knowledge base for facts about Ernest Of Gaia — ' +
-    'his services, pricing tiers, background, professional history, infrastructure, ' +
+    'their services, pricing tiers, background, professional history, infrastructure, ' +
     'booking process, and brand identity. Call this before answering any question ' +
     'that requires specific details.',
   inputSchema: z.object({

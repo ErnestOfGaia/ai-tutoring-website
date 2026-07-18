@@ -6,7 +6,7 @@
  * (slot generation) and calendarBookEventTool (the server-side booking guard)
  * import from here, so the availability a visitor is shown and the times the
  * booking tool will actually accept can never drift apart — or from what Ernest
- * has actually set as his days off.
+ * has actually set as their days off.
  *
  * Env (all optional — defaults are Ernest's current Sun/Mon/Tue, noon–8 PM):
  *   AUTO_BOOK_DAYS   comma-separated JS weekday indices, Sun=0 … Sat=6.  Default "0,1,2".
