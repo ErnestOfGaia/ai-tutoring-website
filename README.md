@@ -26,9 +26,49 @@ Main coaching site. Home of the **Router**, **Marketer**, **Secretary**, and **R
 
   Leave unset in prod — the voice spec ("plain text only, no markdown") takes over.
 
+## Deploy
+
+**CI does not deploy.** [`build-push.yml`](.github/workflows/build-push.yml) builds the two images and pushes them to GHCR — that is all it does. A green check means "images are on the shelf," not "the site changed." Production changes only when someone runs the runbook below.
+
+**Prod:** Hostinger VPS `srv1403158` (72.61.56.148), compose project at `/docker/ernestofgaia-mastra`, behind Nginx Proxy Manager.
+
+### Runbook — ship the latest images
+
+```bash
+ssh root@72.61.56.148            # or the Hostinger hPanel browser terminal
+cd /docker/ernestofgaia-mastra
+docker compose pull              # fetch the images CI pushed
+docker compose up -d             # recreate changed containers
+docker compose ps                # both services should show "Up" with a fresh start time
+docker image prune -f            # optional: reclaim disk from old image layers
+```
+
+### If `docker-compose.yml` changed in the repo
+
+`docker compose pull` ships **images only** — compose-file edits never arrive on their own. Copy the current file onto the VPS first (the repo is public, so no auth needed):
+
+```bash
+cd /docker/ernestofgaia-mastra
+cp docker-compose.yml docker-compose.yml.bak
+curl -fsSL https://raw.githubusercontent.com/ErnestOfGaia/ai-tutoring-website/main/docker-compose.yml -o docker-compose.yml
+docker compose config -q         # preflight: errors on bad YAML, warns on unset ${VARS}
+```
+
+If the new compose file references a new `${VAR}`, add it to `/docker/ernestofgaia-mastra/.env` **before** `up -d` (e.g. `OCHI_BOOKING_SECRET`, added 2026-07-19). Secrets never travel through git — `.env` edits are always a manual step.
+
+### Verify what's actually live (a check that can fail)
+
+Pick a string the change added to served HTML and count its occurrences on prod:
+
+```bash
+curl -s https://ernestofgaia.xyz | grep -c "umami"   # example: Umami analytics script, added 2026-07-19
+```
+
+Read the number: `0` = not deployed, `≥1` = live. A `0` after running the runbook means the deploy did not take — go look at `docker compose ps` and logs. Green CI is never evidence of deployment; the curl is.
+
 ## Known Gaps (see Master DNA §4 for full list)
 
-- Deployed to the Hostinger VPS (Docker → GHCR → `docker compose pull`), behind Nginx Proxy Manager.
+- Deployment is **manual** — see [Deploy](#deploy). An automated deploy job (SSH push vs. Watchtower pull) was evaluated 2026-07-19 and deliberately deferred; the workflow was renamed `deploy.yml` → `build-push.yml` the same day so the name stops overpromising.
 - Current findings + hardening backlog live in the vault: `REVIEW - ernestofgaia.xyz Code & UX Review (2026-07-06)` and `Backlog - ernestofgaia.xyz` (in `AI Coaching or Tutoring Business/`).
 
 ## Startup
