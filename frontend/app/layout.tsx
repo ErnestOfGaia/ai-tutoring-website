@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import ChatOverlay from "./_components/ChatOverlay";
 import TopBar from "./_components/TopBar";
@@ -57,6 +58,12 @@ export default function RootLayout({
         <TopBar />
         {children}
         <ChatOverlay />
+        <Script
+          defer
+          src="https://analytics.ernestofgaia.xyz/script.js"
+          data-website-id="6c3937c8-81e4-4ab5-a392-73e2223b236d"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
