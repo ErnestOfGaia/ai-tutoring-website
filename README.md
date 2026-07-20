@@ -34,6 +34,8 @@ Main coaching site. Home of the **Router**, **Marketer**, **Secretary**, and **R
 
 ### Runbook — ship the latest images
 
+**Step 0 — look before you pull.** Keeping deploys manual is a security choice, not a gap: no deploy credentials exist in GitHub, so a GitHub-account compromise cannot reach the VPS on its own — *you* are the checkpoint between the two. The checkpoint only works if you look: skim [the commits on `main`](https://github.com/ErnestOfGaia/ai-tutoring-website/commits/main) and make sure you recognize everything since the last deploy. `pull && up -d` runs whatever `main` built, with every secret in `.env` in its environment — never deploy a commit you can't account for.
+
 ```bash
 ssh root@72.61.56.148            # or the Hostinger hPanel browser terminal
 cd /docker/ernestofgaia-mastra
