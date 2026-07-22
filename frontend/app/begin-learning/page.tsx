@@ -59,7 +59,13 @@ const localBusinessJsonLd = {
   ],
 };
 
-const tiles = [
+const tiles: {
+  num: string;
+  title: string;
+  desc: string;
+  href: string;
+  external?: boolean;
+}[] = [
   {
     num: "01",
     title: "Who Is Ernest",
@@ -102,6 +108,13 @@ const tiles = [
     desc: "Contact me and book your free call",
     href: "/begin-learning/get-started",
   },
+  {
+    num: "08",
+    title: "The Blog",
+    desc: "Notes on building, learning & putting AI to work",
+    href: "/blog",
+    external: true,
+  },
 ];
 
 export default function EOGbookHome() {
@@ -122,26 +135,44 @@ export default function EOGbookHome() {
         <h2>Explore the coaching experience</h2>
 
         <p>
-          Seven pages. Everything you need to know about working with me — from
-          my story to how to book your first free call.
+          Eight pages. Everything you need to know about working with me — from
+          my story to how to book your first free call — plus the blog.
         </p>
 
         <nav
           className="eogbook-tiles"
           aria-label="EOGbook pages"
         >
-          {tiles.map((tile) => (
-            <Link
-              key={tile.href}
-              href={tile.href}
-              className="eogbook-tile"
-              aria-label={`${tile.title}: ${tile.desc}`}
-            >
-              <span className="eogbook-tile-num">{tile.num}</span>
-              <span className="eogbook-tile-title">{tile.title}</span>
-              <span className="eogbook-tile-desc">{tile.desc}</span>
-            </Link>
-          ))}
+          {tiles.map((tile) => {
+            const inner = (
+              <>
+                <span className="eogbook-tile-num">{tile.num}</span>
+                <span className="eogbook-tile-title">{tile.title}</span>
+                <span className="eogbook-tile-desc">{tile.desc}</span>
+              </>
+            );
+            // The Blog lives in a separate container at /blog (via NPM), not a route
+            // in this app — use a plain anchor for a real navigation.
+            return tile.external ? (
+              <a
+                key={tile.href}
+                href={tile.href}
+                className="eogbook-tile"
+                aria-label={`${tile.title}: ${tile.desc}`}
+              >
+                {inner}
+              </a>
+            ) : (
+              <Link
+                key={tile.href}
+                href={tile.href}
+                className="eogbook-tile"
+                aria-label={`${tile.title}: ${tile.desc}`}
+              >
+                {inner}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="eogbook-cta-row">
