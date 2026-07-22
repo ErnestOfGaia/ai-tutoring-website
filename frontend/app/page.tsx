@@ -29,7 +29,9 @@ export default function Home() {
 
             <div className="services">
               <Link href="/begin-learning/services" className="service-card">Services</Link>
-              <Link href="/begin-learning/what-i-do" className="service-card">About</Link>
+              {/* The Blog is served by a separate container at /blog (via NPM), not a
+                  route in this app — use a plain anchor for a real navigation. */}
+              <a href="/blog" className="service-card">The Blog</a>
               <Link href="/begin-learning/giveback" className="service-card">Give Back</Link>
             </div>
 
